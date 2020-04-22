@@ -49,9 +49,6 @@ namespace egret {
      * @language zh_CN
      */
     export function stopTick(callBack:(timeStamp:number)=>boolean,thisObject:any):void{
-        if (DEBUG && !callBack) {
-            $error(1003, "callBack");
-        }
         ticker.$stopTick(callBack,thisObject);
     }
 }

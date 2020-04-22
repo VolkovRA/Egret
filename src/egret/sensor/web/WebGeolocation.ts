@@ -1,3 +1,5 @@
+/// <reference path="../../events/EventDispatcher.ts" />
+
 /**
  * @private
  */

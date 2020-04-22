@@ -27,6 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../events/EventDispatcher.ts" />
+
 namespace egret {
 	/**
      * The Timer class is the interface to timers, which let you run code on a specified time sequence. Use the start()

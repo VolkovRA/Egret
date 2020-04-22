@@ -71,11 +71,4 @@ namespace egret {
         getDefinitionByNameCache[name] = definition;
         return definition;
     }
-
-    if (DEBUG) {
-        egret["cleanCache"] = function (): void {
-            getDefinitionByNameCache = {};
-        }
-    }
-
 }

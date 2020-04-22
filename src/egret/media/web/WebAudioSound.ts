@@ -176,10 +176,6 @@ namespace egret.web {
 
             this.url = url;
 
-            if (DEBUG && !url) {
-                egret.$error(3002);
-            }
-
             let request = new XMLHttpRequest();
             request.open("GET", url, true);
             request.responseType = "arraybuffer";
@@ -219,10 +215,6 @@ namespace egret.web {
         public play(startTime?:number, loops?:number):SoundChannel {
             startTime = +startTime || 0;
             loops = +loops || 0;
-
-            if (DEBUG && this.loaded == false) {
-                egret.$error(1049);
-            }
 
             let channel = new WebAudioSoundChannel();
             channel.$url = this.url;

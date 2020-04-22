@@ -27,6 +27,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../utils/HashObject.ts" />
 
 namespace egret {
 
@@ -145,9 +146,6 @@ namespace egret {
          * @private
          */
         $addListener(type:string, listener:Function, thisObject:any, useCapture?:boolean, priority?:number, dispatchOnce?:boolean):void {
-            if (DEBUG && !listener) {
-                $error(1003, "listener");
-            }
             let values = this.$EventDispatcher;
             let eventMap:any = useCapture ? values[Keys.captureEventsMap] : values[Keys.eventsMap];
             let list:egret.sys.EventBin[] = eventMap[type];

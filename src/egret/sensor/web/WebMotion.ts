@@ -1,4 +1,4 @@
-
+/// <reference path="../../events/EventDispatcher.ts" />
 
 namespace egret.web {
 

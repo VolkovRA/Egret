@@ -26,6 +26,9 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
+
+/// <reference path="../display/DisplayObject.ts" />
+
 namespace egret {
     /**
      * Bitmap font adopts the Bitmap+SpriteSheet mode to render text.
@@ -455,7 +458,7 @@ namespace egret {
                             xPos += emptyWidth;
                         }
                         else {
-                            egret.$warn(1046, character);
+                            egret.warn(1046, character);
                         }
                         continue;
                     }
@@ -633,7 +636,7 @@ namespace egret {
                             textureHeight = emptyHeight;
                         }
                         else {
-                            egret.$warn(1046, character);
+                            egret.warn(1046, character);
                             if (isFirstChar) {
                                 isFirstChar = false;
                             }

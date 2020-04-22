@@ -27,6 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../display/DisplayObjectContainer.ts" />
+
 namespace egret {
     /**
      * The Stage class represents the main drawing area.The Stage object is not globally accessible. You need to access
@@ -344,22 +346,4 @@ namespace egret {
             this.dispatchEventWith(egret.Event.RESIZE);
         };
     }
-
-    if (DEBUG) {
-
-        egret.$markCannotUse(Stage, "alpha", 1);
-        egret.$markCannotUse(Stage, "visible", true);
-        egret.$markCannotUse(Stage, "x", 0);
-        egret.$markCannotUse(Stage, "y", 0);
-        egret.$markCannotUse(Stage, "scaleX", 1);
-        egret.$markCannotUse(Stage, "scaleY", 1);
-        egret.$markCannotUse(Stage, "rotation", 0);
-        egret.$markCannotUse(Stage, "cacheAsBitmap", false);
-        egret.$markCannotUse(Stage, "scrollRect", null);
-        egret.$markCannotUse(Stage, "filters", null);
-        egret.$markCannotUse(Stage, "blendMode", null);
-        egret.$markCannotUse(Stage, "touchEnabled", true);
-        egret.$markCannotUse(Stage, "matrix", null);
-    }
-
 }

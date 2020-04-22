@@ -27,6 +27,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../utils/HashObject.ts" />
 
 namespace egret {
     export let $TextureScaleFactor: number = 1;

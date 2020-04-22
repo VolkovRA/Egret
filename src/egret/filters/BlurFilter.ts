@@ -26,6 +26,9 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
+
+/// <reference path="../filters/Filter.ts" />
+
 namespace egret {
     /**
      * The BlurFilter class lets you apply a blur visual effect to display objects. A blur effect softens the details of an image.

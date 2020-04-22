@@ -1,3 +1,5 @@
+/// <reference path="../i18n/tr.ts" />
+
 namespace egret {
 
     $locale_strings = $locale_strings || {};

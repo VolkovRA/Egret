@@ -89,7 +89,7 @@ namespace egret.web {
             listener.call(null, value);
         }
         else {
-            egret.$warn(1050, functionName);
+            egret.warn(1050, functionName);
         }
     }
 
@@ -123,7 +123,7 @@ namespace egret.web {
                 listener.call(null, value);
             }
             else {
-                egret.$warn(1050, functionName);
+                egret.warn(1050, functionName);
             }
         }        
     }

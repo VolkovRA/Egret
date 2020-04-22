@@ -448,14 +448,14 @@ namespace egret {
             let pos = this._position;
             let available = this.write_position - pos;
             if (available < 0) {
-                egret.$error(1025);
+                egret.error(1025);
                 return;
             }
             if (length == 0) {
                 length = available;
             }
             else if (length > available) {
-                egret.$error(1025);
+                egret.error(1025);
                 return;
             }
             const position = bytes._position;
@@ -946,7 +946,7 @@ namespace egret {
             if (bl > 0 && this._position + len <= bl) {
                 return true;
             } else {
-                egret.$error(1025);
+                egret.error(1025);
             }
         }
 
@@ -1107,7 +1107,7 @@ namespace egret {
          * @param code_point
          */
         private encoderError(code_point) {
-            egret.$error(1026, code_point);
+            egret.error(1026, code_point);
         }
 
         /**
@@ -1119,7 +1119,7 @@ namespace egret {
          */
         private decoderError(fatal, opt_code_point?): number {
             if (fatal) {
-                egret.$error(1027);
+                egret.error(1027);
             }
             return opt_code_point || 0xFFFD;
         }

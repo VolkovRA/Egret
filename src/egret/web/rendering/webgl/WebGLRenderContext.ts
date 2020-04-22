@@ -291,17 +291,6 @@ namespace egret.web {
                     info.supportedFormats.push([key, extension[key]]);
                 }
                 //
-                if (DEBUG) {
-                    if (info.supportedFormats.length === 0) {
-                        console.error('buildSupportedCompressedTextureInfo failed = ' + extension.name);
-                    }
-                    else {
-                        egret.log('support: ' + extension.name);
-                        for (const key in extension) {
-                            egret.log(key, extension[key], '0x' + extension[key].toString(16));
-                        }
-                    }
-                }
                 returnValue.push(info);
             }
             return returnValue;

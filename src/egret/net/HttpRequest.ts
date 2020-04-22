@@ -27,6 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../events/EventDispatcher.ts" />
+
 namespace egret {
     /**
      * The HttpRequest class downloads data from a URL as text or binary data. It is useful for downloading text files,

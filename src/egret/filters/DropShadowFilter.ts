@@ -27,6 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../filters/GlowFilter.ts" />
+
 namespace egret {
     /**
      * @class egret.DropShadowFilter

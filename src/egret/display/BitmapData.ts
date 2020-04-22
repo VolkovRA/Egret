@@ -27,6 +27,9 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../utils/HashObject.ts" />
+/// <reference path="../utils/DataStructure.ts" />
+
 namespace egret {
 
     //refactor

@@ -123,7 +123,7 @@ namespace egret.web {
             antialias: WebGLRenderContext.antialias,
             stencil: true//设置可以使用模板（用于不规则遮罩）
         };
-        let gl: CanvasRenderingContext2D | WebGLRenderingContext = null;
+        let gl: CanvasRenderingContext2D | WebGLRenderingContext | ImageBitmapRenderingContext | WebGL2RenderingContext = null;
         //todo 是否使用chrome源码names
         //let contextNames = ["moz-webgl", "webkit-3d", "experimental-webgl", "webgl", "3d"];
         const names = ["webgl", "experimental-webgl"];
@@ -137,7 +137,7 @@ namespace egret.web {
             }
         }
         if (!gl) {
-            $error(1021);
+            error(1021);
         }
         return gl as WebGLRenderingContext;
     }

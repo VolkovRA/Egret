@@ -106,9 +106,6 @@ namespace egret.web {
 
             this.url = url;
 
-            if (DEBUG && !url) {
-                egret.$error(3002);
-            }
             let audio = new Audio(url);
             audio.addEventListener("canplaythrough", onAudioLoaded);
             audio.addEventListener("error", onAudioError);
@@ -164,10 +161,6 @@ namespace egret.web {
         public play(startTime?: number, loops?: number): SoundChannel {
             startTime = +startTime || 0;
             loops = +loops || 0;
-
-            if (DEBUG && this.loaded == false) {
-                egret.$error(1049);
-            }
 
             let audio = HtmlSound.$pop(this.url);
             if (audio == null) {

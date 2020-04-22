@@ -72,17 +72,6 @@ namespace egret {
      * @language zh_CN
      */
     export function registerClass(classDefinition: any, className: string, interfaceNames?: string[]): void {
-        if (DEBUG) {
-            if (!classDefinition) {
-                $error(1003, "classDefinition");
-            }
-            if (!classDefinition.prototype) {
-                $error(1012, "classDefinition")
-            }
-            if (className === void 0) {
-                $error(1003, "className");
-            }
-        }
         let prototype: any = classDefinition.prototype;
         Object.defineProperty(prototype, '__class__', {
             value: className,

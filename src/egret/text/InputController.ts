@@ -26,6 +26,9 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
+
+/// <reference path="../utils/HashObject.ts" />
+
 namespace egret {
     /**
      * @private
