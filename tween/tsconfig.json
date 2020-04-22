@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "strict": true,
+        "composite": true,
+        "sourceMap": true,
+        "declaration": true,
+        "removeComments": true,
+        "allowUnreachableCode": true,
+        "newLine": "LF",
+		"outDir": "bin",
+		"outFile": "bin/egret-tween.js",
+        "lib": [
+            "es5",
+            "dom",
+        ]
+    },
+    "exclude": [
+        "bin"
+    ],
+    "references": [
+        { "path": "../core" }
+    ],
+}
