@@ -1,23 +1,31 @@
+/// <reference path="../Geolocation.ts" />
 /// <reference path="../../events/EventDispatcher.ts" />
+/// <reference path="../../events/GeolocationEvent.ts" />
 
 /**
  * @private
  */
-interface BrowerGeolocation extends Geolocation { }
+interface BrowerGeolocation extends Geolocation {
 
-namespace egret.web {
+}
+
+namespace egret.web
+{
     /**
      * @private
      */
-    export class WebGeolocation extends EventDispatcher implements Geolocation {
+    export class WebGeolocation extends EventDispatcher implements Geolocation
+    {
         /**
          * @private
          */
         private geolocation: BrowerGeolocation;
+
         /**
          * @private
          */
         private watchId: number;
+
         /**
          * @private
          */
@@ -28,7 +36,6 @@ namespace egret.web {
 
         /**
          * @private
-         * 
          */
         public start() {
             let geo = this.geolocation;
@@ -45,7 +52,6 @@ namespace egret.web {
 
         /**
          * @private
-         * 
          */
         public stop() {
             let geo = this.geolocation;

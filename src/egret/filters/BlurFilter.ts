@@ -29,24 +29,17 @@
 
 /// <reference path="../filters/Filter.ts" />
 
-namespace egret {
+namespace egret
+{
     /**
      * The BlurFilter class lets you apply a blur visual effect to display objects. A blur effect softens the details of an image.
      * You can produce blurs that range from a softly unfocused look to a Gaussian blur, a hazy appearance like viewing an image through semi-opaque glass. 
      * @version Egret 3.0.1
      * @platform Web
-     * @see http://edn.egret.com/cn/docs/page/947#模糊滤镜 模糊滤镜
-     * @language en_US
+     * @see http://edn.egret.com/cn/docs/page/947#模糊滤镜 Blur filter.
      */
-    /**
-     * 可使用 BlurFilter 类将模糊视觉效果应用于显示对象。模糊效果可以柔化图像的细节。
-     * 您可以生成一些模糊效果，范围从创建一个柔化的、未聚焦的外观到高斯模糊（就像通过半透明玻璃查看图像一样的朦胧的外观）。
-     * @version Egret 3.1.0
-     * @platform Web
-     * @see http://edn.egret.com/cn/docs/page/947#模糊滤镜 模糊滤镜
-     * @language zh_CN
-     */
-    export class BlurFilter extends Filter {
+    export class BlurFilter extends Filter
+    {
         /**
          * Initializes a BlurFilter object.
          * @param blurX {number} The amount of horizontal blur. Valid values are 0 to 255 (floating point).
@@ -54,16 +47,6 @@ namespace egret {
          * @param quality {number} The number of times to apply the filter.
          * @version Egret 3.1.0
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 创建一个 BlurFilter 对象。
-         * @param blurX {number} 水平模糊量。有效值为 0 到 255（浮点）。
-         * @param blurY {number} 垂直模糊量。有效值为 0 到 255（浮点）。
-         * @param quality {number} 应用滤镜的次数。暂未实现。
-         * @version Egret 3.1.0
-         * @platform Web
-         * @language zh_CN
          */
         constructor(blurX:number = 4, blurY:number = 4, quality:number = 1) {
             super();
@@ -99,13 +82,6 @@ namespace egret {
          * The amount of horizontal blur.
          * @version Egret 3.1.0
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 水平模糊量。
-         * @version Egret 3.1.0
-         * @platform Web
-         * @language zh_CN
          */
         public get blurX():number {
             return this.$blurX;
@@ -130,13 +106,6 @@ namespace egret {
          * The amount of vertical blur.
          * @version Egret 3.1.0
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 垂直模糊量。
-         * @version Egret 3.1.0
-         * @platform Web
-         * @language zh_CN
          */
         public get blurY():number {
             return this.$blurY;

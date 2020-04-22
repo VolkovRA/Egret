@@ -27,16 +27,18 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret {
-
+namespace egret
+{
     /**
      * @private
      */
     export let $callLaterFunctionList:any[] = [];
+
     /**
      * @private
      */
     export let $callLaterThisList:any[] = [];
+
     /**
      * @private
      */
@@ -44,25 +46,14 @@ namespace egret {
 
     /**
      * Delay the function to run unless screen is redrawn.
-     * @param method {Function} The function to be delayed to run
-     * @param thisObject {any} this reference of callback function
-     * @param ...args {any} Function parameter list
+     * @param method {Function} The function to be delayed to run.
+     * @param thisObject {any} This reference of callback function.
+     * @param ...args {any} Function parameter list.
      * @version Egret 2.4
      * @platform Web,Native
      * @includeExample egret/utils/callLater.ts
-     * @language en_US
      */
-    /**
-     * 延迟函数到屏幕重绘前执行。
-     * @param method {Function} 要延迟执行的函数
-     * @param thisObject {any} 回调函数的this引用
-     * @param ...args {any} 函数参数列表
-     * @version Egret 2.4
-     * @platform Web,Native
-     * @includeExample egret/utils/callLater.ts
-     * @language zh_CN
-     */
-    export function callLater(method:Function,thisObject:any,...args):void
+    export function callLater(method:Function, thisObject:any, ...args):void
     {
         $callLaterFunctionList.push(method);
         $callLaterThisList.push(thisObject);
@@ -73,22 +64,25 @@ namespace egret {
      * @private
      */
     export let $callAsyncFunctionList:any[] = [];
+
     /**
      * @private
      */
     export let $callAsyncThisList:any[] = [];
+
     /**
      * @private
      */
     export let $callAsyncArgsList:any[] = [];
+
     /**
-     * 异步调用函数
-     * @param method {Function} 要异步调用的函数
-     * @param thisObject {any} 函数的this引用
-     * @param ...args {any} 函数参数列表
+     * Call functions asynchronously.
+     * @param method {Function} The function to be called asynchronously.
+     * @param thisObject {any} Function this reference.
+     * @param ... args {any} Function parameter list.
      * @private
      */
-    export function $callAsync(method:Function,thisObject:any,...args):void
+    export function $callAsync(method:Function, thisObject:any, ...args):void
     {
         $callAsyncFunctionList.push(method);
         $callAsyncThisList.push(thisObject);

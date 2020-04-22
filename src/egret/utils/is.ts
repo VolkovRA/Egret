@@ -27,51 +27,35 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret {
+namespace egret
+{
     /**
-     * Indicates whether an object is a instance of the class or interface specified as the parameter.This method has better performance
-     * compared width the instanceOf operator,and it can indicate whether an object is a instance of the specific interface.
-     * @param instance the instance to be checked.
-     * @param typeName the string value representing a specific class or interface.
+     * Indicates whether an object is a instance of the class or interface specified as the parameter.
+     * This method has better performance compared width the instanceOf operator, and it can indicate
+     * whether an object is a instance of the specific interface.
+     * @param instance The instance to be checked.
+     * @param typeName The string value representing a specific class or interface.
      * @returns A value of true if the object is a instance of the class or interface specified as the parameter.
      * @example
-     * <pre>
      *     let instance = new egret.Sprite();
-     *     egret.log(egret.is(instance,"egret.Sprite"))  //true
-     *     egret.log(egret.is(instance,"egret.DisplayObjectContainer"))  //true
-     *     egret.log(egret.is(instance,"egret.Bitmap"))  //false
-     * </pre>
+     *     egret.log(egret.is(instance,"egret.Sprite"))  // true
+     *     egret.log(egret.is(instance,"egret.DisplayObjectContainer"))  // true
+     *     egret.log(egret.is(instance,"egret.Bitmap"))  // false
      * @see egret.registerClass()
      * @version Egret 2.4
      * @platform Web,Native
-     * @language en_US
-     */
-    /**
-     * 检查指定对象是否为 Egret 框架内指定接口或类或其子类的实例。此方法与使用 instanceOf 关键字相比具有更高的性能，并且能判断接口的实现。
-     * @param instance 要判断的实例。
-     * @param typeName 类或接口的完全名称.
-     * @returns 返回true表示当前对象是指定类或接口的实例。
-     * @example
-     * <pre>
-     *     let instance = new egret.Sprite();
-     *     egret.log(egret.is(instance,"egret.Sprite"))  //true
-     *     egret.log(egret.is(instance,"egret.DisplayObjectContainer"))  //true
-     *     egret.log(egret.is(instance,"egret.Bitmap"))  //false
-     * </pre>
-     * @see egret.registerClass()
-     * @version Egret 2.4
-     * @platform Web,Native
-     * @language zh_CN
      */
     export function is(instance:any, typeName:string):boolean {
         if (!instance || typeof instance != "object") {
             return false;
         }
+        
         let prototype:any = Object.getPrototypeOf(instance);
         let types = prototype ? prototype.__types__ : null;
         if (!types) {
             return false;
         }
+
         return (types.indexOf(typeName) !== -1);
     }
 }

@@ -27,14 +27,19 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+/// <reference path="../player/Screen.ts" />
+/// <reference path="../utils/HashObject.ts" />
+
+namespace egret.web
+{
     /**
      * @private
      */
-    export class WebPlayer extends egret.HashObject implements egret.sys.Screen {
-
+    export class WebPlayer extends egret.HashObject implements egret.sys.Screen
+    {
         public constructor(container: HTMLDivElement, options: runEgretOptions) {
             super();
+
             this.init(container, options);
             this.initOrientation();
         }
@@ -67,6 +72,7 @@ namespace egret.web {
                     player.displayFPS(option.showFPS, option.showLog, option.logFilter, option.fpsStyles);
                 }
             }
+
             this.playerOption = option;
             this.container = container;
             this.canvas = canvas;
@@ -92,7 +98,7 @@ namespace egret.web {
         }
 
         /**
-         * 读取初始化参数
+         * Read initialization parameters
          */
         private readOption(container: HTMLDivElement, options: runEgretOptions): PlayerOption {
             let option: PlayerOption = {};
@@ -123,7 +129,7 @@ namespace egret.web {
 
         /**
          * @private
-         * 添加canvas到container。
+         * Add canvas to the container.
          */
         private attachCanvas(container: HTMLElement, canvas: HTMLCanvasElement): void {
 
@@ -144,18 +150,19 @@ namespace egret.web {
 
         /**
          * @private
-         * 画布实例
+         * Canvas example.
          */
         private canvas: HTMLCanvasElement;
+
         /**
          * @private
-         * 播放器容器实例
+         * Player container instance.
          */
         private container: HTMLElement;
 
         /**
          * @private
-         * 舞台引用
+         * Stage reference.
          */
         public stage: Stage;
 
@@ -165,12 +172,13 @@ namespace egret.web {
 
         /**
          * @private
-         * 更新播放器视口尺寸
+         * Update player viewport size.
          */
         public updateScreenSize(): void {
             let canvas = this.canvas;
             if (canvas['userTyping'])
                 return;
+            
             let option = this.playerOption;
             let screenRect = this.container.getBoundingClientRect();
             let top = 0;
@@ -243,7 +251,7 @@ namespace egret.web {
             sys.DisplayList.$setCanvasScale(canvasScaleX, canvasScaleY);
             this.webTouchHandler.updateScaleMode(scalex, scaley, rotation);
             this.webInput.$updateSize();
-            this.player.updateStageSize(stageWidth, stageHeight);//不要在这个方法后面修改属性
+            this.player.updateStageSize(stageWidth, stageHeight); // Do not modify properties after this method
             // todo
             if (egret.nativeRender) {
                 canvas.width = stageWidth * canvasScaleX;
@@ -260,12 +268,10 @@ namespace egret.web {
 
         /**
          * @private
-         * 更新触摸数量
+         * Update touch count.
          */
         public updateMaxTouches() {
             this.webTouchHandler.$updateMaxTouches();
         }
     }
-
-
 }

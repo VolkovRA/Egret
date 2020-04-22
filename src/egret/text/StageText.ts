@@ -27,75 +27,74 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="TextField.ts" />
 /// <reference path="../events/EventDispatcher.ts" />
 
-namespace egret {
+namespace egret
+{
     /**
      * @private
      * @version Egret 2.4
      * @platform Web,Native
      */
-    export interface StageText extends EventDispatcher {
+    export interface StageText extends EventDispatcher
+    {
         /**
          * @private
          */
         $textfield:egret.TextField;
+
         /**
          * @private
-         * 
          * @param textfield 
          */
         $setTextField(textfield:egret.TextField):boolean;
 
         /**
          * @private
-         * 
          */
         $resetStageText():void;
 
         /**
          * @private
-         * 
          * @returns 
          */
         $getText():string;
+
         /**
          * @private
-         * 
          * @param value 
          */
         $setText(value:string):boolean;
+
         /**
          * @private
-         *
          * @param value
          */
         $setColor(value:number):boolean;
+
         /**
          * @private
-         * 
          */
         $show():void;
+
         /**
          * @private
-         * 
          */
         $hide():void;
 
         /**
          * @private
-         * 
          */
         $addToStage():void;
+
         /**
          * @private
-         * 
          */
         $removeFromStage():void;
 
         /**
          * @private
-         *
          */
         $onBlur():void;
     }

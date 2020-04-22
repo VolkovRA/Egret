@@ -27,35 +27,49 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+/// <reference path="TextAtlasStrategy.ts" />
+/// <reference path="WebGLRenderBuffer.ts" />
+/// <reference path="WebGLUtils.ts" />
+/// <reference path="../../../geom/Matrix.ts" />
+/// <reference path="../../../display/BitmapData.ts" />
+/// <reference path="../../../player/DisplayList.ts" />
+/// <reference path="../../../player/nodes/RenderNode.ts" />
+/// <reference path="../../../player/nodes/GroupNode.ts" />
+/// <reference path="../../../player/rendering/CanvasRenderer.ts" />
+/// <reference path="../../../utils/HashObject.ts" />
 
+namespace egret.web
+{
     let blendModes = ["source-over", "lighter", "destination-out"];
     let defaultCompositeOp = "source-over";
     let BLACK_COLOR = "#000000";
     let CAPS_STYLES = { none: 'butt', square: 'square', round: 'round' };
-    let renderBufferPool: WebGLRenderBuffer[] = [];//渲染缓冲区对象池
+    let renderBufferPool: WebGLRenderBuffer[] = []; // Render buffer object pool
+    
     /**
      * @private
-     * WebGL渲染器
+     * WebGL Renderer.
      */
-    export class WebGLRenderer implements sys.SystemRenderer {
-
+    export class WebGLRenderer implements sys.SystemRenderer
+    {
         public constructor() {
         }
+
         /**
-         * Do special treatment on wechat ios10
+         * Do special treatment on wechat ios10.
          */
         public wxiOS10: boolean = false;
 
-        private nestLevel: number = 0;//渲染的嵌套层次，0表示在调用堆栈的最外层。
+        private nestLevel: number = 0; // The nesting level of rendering, 0 means at the outermost level of the call stack.
+        
         /**
-         * 渲染一个显示对象
-         * @param displayObject 要渲染的显示对象
-         * @param buffer 渲染缓冲
-         * @param matrix 要对显示对象整体叠加的变换矩阵
-         * @param dirtyList 脏矩形列表
-         * @param forRenderTexture 绘制目标是RenderTexture的标志
-         * @returns drawCall触发绘制的次数
+         * Render a display object.
+         * @param displayObject The display object to be rendered.
+         * @param buffer Rendering buffer.
+         * @param matrix To transform the overall transformation matrix of the display object.
+         * @param dirtyList Dirty rectangular list.
+         * @param forRenderTexture The drawing target is the RenderTexture logo.
+         * @returns DrawCall the number of times to trigger drawing.
          */
         public render(displayObject: DisplayObject, buffer: sys.RenderBuffer, matrix: Matrix, forRenderTexture?: boolean): number {
             this.nestLevel++;
@@ -65,7 +79,7 @@ namespace egret.web {
 
             webglBufferContext.pushBuffer(webglBuffer);
 
-            //绘制显示对象
+            // Draw display objects
             webglBuffer.transform(matrix.a, matrix.b, matrix.c, matrix.d, 0, 0);
             this.drawDisplayObject(displayObject, webglBuffer, matrix.tx, matrix.ty, true);
             webglBufferContext.$drawWebGL();
@@ -80,7 +94,7 @@ namespace egret.web {
 
             this.nestLevel--;
             if (this.nestLevel === 0) {
-                //最大缓存6个渲染缓冲
+                // 6 cache buffers
                 if (renderBufferPool.length > 6) {
                     renderBufferPool.length = 6;
                 }
@@ -89,12 +103,13 @@ namespace egret.web {
                     renderBufferPool[i].resize(0, 0);
                 }
             }
+            
             return drawCall;
         }
 
         /**
          * @private
-         * 绘制一个显示对象
+         * Draw a display object.
          */
         private drawDisplayObject(displayObject: DisplayObject, buffer: WebGLRenderBuffer, offsetX: number, offsetY: number, isStage?: boolean): number {
             let drawCalls = 0;
@@ -150,7 +165,7 @@ namespace egret.web {
             let children = displayObject.$children;
             if (children) {
                 if (displayObject.sortableChildren && displayObject.$sortDirty) {
-                    //绘制排序
+                    // Draw sort
                     displayObject.sortChildren();
                 }
                 let length = children.length;
@@ -281,11 +296,11 @@ namespace egret.web {
                 }
             }
 
-            // 为显示对象创建一个新的buffer
+            // Create a new buffer for the display object
             let displayBuffer = this.createRenderBuffer(displayBoundsWidth, displayBoundsHeight);
             displayBuffer.context.pushBuffer(displayBuffer);
 
-            //todo 可以优化减少draw次数
+            // todo can be optimized to reduce the number of draws
             if (displayObject.$mask) {
                 drawCalls += this.drawWithClip(displayObject, displayBuffer, -displayBoundsX, -displayBoundsY);
             }
@@ -298,13 +313,13 @@ namespace egret.web {
 
             displayBuffer.context.popBuffer();
 
-            //绘制结果到屏幕
+            // Draw the result to the screen
             if (drawCalls > 0) {
                 if (hasBlendMode) {
                     buffer.context.setGlobalCompositeOperation(compositeOp);
                 }
                 drawCalls++;
-                // 绘制结果的时候，应用滤镜
+                // When drawing results, apply filters
                 buffer.$offsetX = offsetX + displayBoundsX;
                 buffer.$offsetY = offsetY + displayBoundsY;
                 let savedMatrix = Matrix.create();
@@ -341,7 +356,7 @@ namespace egret.web {
             if (displayObject.$children) {
                 for (const child of displayObject.$children) {
                     const filters = child.$filters;
-                    // 特殊处理有滤镜的对象
+                    // Special treatment of objects with filters
                     if (filters && filters.length > 0) {
                         return 2;
                     }
@@ -377,18 +392,18 @@ namespace egret.web {
             let mask = displayObject.$mask;
             if (mask) {
                 let maskRenderMatrix = mask.$getMatrix();
-                //遮罩scaleX或scaleY为0，放弃绘制
+                // Mask scaleX or scaleY is 0, give up drawing
                 if ((maskRenderMatrix.a == 0 && maskRenderMatrix.b == 0) || (maskRenderMatrix.c == 0 && maskRenderMatrix.d == 0)) {
                     return drawCalls;
                 }
             }
 
-            //没有遮罩,同时显示对象没有子项
+            // No mask, and the display object has no children
             if (!mask && (!displayObject.$children || displayObject.$children.length == 0)) {
                 if (scrollRect) {
                     buffer.context.pushMask(scrollRect.x + offsetX, scrollRect.y + offsetY, scrollRect.width, scrollRect.height);
                 }
-                //绘制显示对象
+                // Draw display objects
                 if (hasBlendMode) {
                     buffer.context.setGlobalCompositeOperation(compositeOp);
                 }
@@ -410,11 +425,11 @@ namespace egret.web {
                 if (displayBoundsWidth <= 0 || displayBoundsHeight <= 0) {
                     return drawCalls;
                 }
-                //绘制显示对象自身，若有scrollRect，应用clip
+                // Draw the display object itself, if there is scrollRect, apply clip
                 let displayBuffer = this.createRenderBuffer(displayBoundsWidth, displayBoundsHeight);
                 displayBuffer.context.pushBuffer(displayBuffer);
                 drawCalls += this.drawDisplayObject(displayObject, displayBuffer, -displayBoundsX, -displayBoundsY);
-                //绘制遮罩
+                // Paint mask
                 if (mask) {
                     let maskBuffer = this.createRenderBuffer(displayBoundsWidth, displayBoundsHeight);
                     maskBuffer.context.pushBuffer(maskBuffer);
@@ -441,7 +456,7 @@ namespace egret.web {
                 displayBuffer.context.setGlobalCompositeOperation(defaultCompositeOp);
                 displayBuffer.context.popBuffer();
 
-                //绘制结果到屏幕
+                // Draw the result to the screen
                 if (drawCalls > 0) {
                     drawCalls++;
                     if (hasBlendMode) {
@@ -499,7 +514,7 @@ namespace egret.web {
             let m = buffer.globalMatrix;
             let context = buffer.context;
             let scissor = false;
-            if (buffer.$hasScissor || m.b != 0 || m.c != 0) {// 有旋转的情况下不能使用scissor
+            if (buffer.$hasScissor || m.b != 0 || m.c != 0) { // Cannot use scissor in case of rotation
                 buffer.context.pushMask(scrollRect.x + offsetX, scrollRect.y + offsetY, scrollRect.width, scrollRect.height);
             } else {
                 let a = m.a;
@@ -511,7 +526,7 @@ namespace egret.web {
                 let xMax = x + scrollRect.width;
                 let yMax = y + scrollRect.height;
                 let minX: number, minY: number, maxX: number, maxY: number;
-                //优化，通常情况下不缩放的对象占多数，直接加上偏移量即可。
+                // Optimization, usually do not scale the majority of objects, just add the offset.
                 if (a == 1.0 && d == 1.0) {
                     minX = x + tx;
                     minY = y + ty;
@@ -564,18 +579,21 @@ namespace egret.web {
             drawCalls += this.drawDisplayObject(displayObject, buffer, offsetX, offsetY);
             if (scissor) {
                 context.disableScissor();
-            } else {
+            }
+            else {
                 context.popMask();
             }
+
             return drawCalls;
         }
 
         /**
-         * 将一个RenderNode对象绘制到渲染缓冲
-         * @param node 要绘制的节点
-         * @param buffer 渲染缓冲
-         * @param matrix 要叠加的矩阵
-         * @param forHitTest 绘制结果是用于碰撞检测。若为true，当渲染GraphicsNode时，会忽略透明度样式设置，全都绘制为不透明的。
+         * Draw a RenderNode object to the rendering buffer.
+         * @param node The node to be drawn.
+         * @param buffer Rendering buffer.
+         * @param matrix The matrix to be superimposed.
+         * @param forHitTest Drawing result is used for collision detection.
+         * If true, when rendering GraphicsNode, the transparency style setting will be ignored and all will be drawn as opaque.
          */
         public drawNodeToBuffer(node: sys.RenderNode, buffer: WebGLRenderBuffer, matrix: Matrix, forHitTest?: boolean): void {
             let webglBuffer: WebGLRenderBuffer = <WebGLRenderBuffer>buffer;
@@ -593,16 +611,17 @@ namespace egret.web {
         }
 
         /**
-         * 将一个DisplayObject绘制到渲染缓冲，用于RenderTexture绘制
-         * @param displayObject 要绘制的显示对象
-         * @param buffer 渲染缓冲
-         * @param matrix 要叠加的矩阵
+         * Draw a DisplayObject to the rendering buffer for RenderTexture drawing.
+         * @param displayObject The display object to be drawn.
+         * @param buffer Rendering buffer.
+         * @param matrix The matrix to be superimposed.
          */
         public drawDisplayToBuffer(displayObject: DisplayObject, buffer: WebGLRenderBuffer, matrix: Matrix): number {
             buffer.context.pushBuffer(buffer);
             if (matrix) {
                 buffer.setTransform(matrix.a, matrix.b, matrix.c, matrix.d, matrix.tx, matrix.ty);
             }
+
             let node: sys.RenderNode;
             if (displayObject.$renderDirty) {
                 node = displayObject.$getRenderNode();
@@ -610,6 +629,7 @@ namespace egret.web {
             else {
                 node = displayObject.$renderNode;
             }
+
             let drawCalls = 0;
             if (node) {
                 drawCalls++;
@@ -713,6 +733,7 @@ namespace egret.web {
             if (!image) {
                 return;
             }
+
             //buffer.imageSmoothingEnabled = node.smoothing;
             let data = node.drawData;
             let length = data.length;
@@ -737,7 +758,8 @@ namespace egret.web {
                 buffer.useOffset();
                 buffer.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
             }
-            //这里不考虑嵌套
+
+            // Nesting is not considered here
             if (blendMode) {
                 buffer.context.setGlobalCompositeOperation(blendModes[blendMode]);
             }
@@ -785,7 +807,7 @@ namespace egret.web {
          */
         private renderMesh(node: sys.MeshNode, buffer: WebGLRenderBuffer): void {
             let image = node.image;
-            //buffer.imageSmoothingEnabled = node.smoothing;
+            // buffer.imageSmoothingEnabled = node.smoothing;
             let data = node.drawData;
             let length = data.length;
             let pos = 0;
@@ -809,7 +831,7 @@ namespace egret.web {
                 buffer.useOffset();
                 buffer.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
             }
-            //这里不考虑嵌套
+            // Nesting is not considered here
             if (blendMode) {
                 buffer.context.setGlobalCompositeOperation(blendModes[blendMode]);
             }
@@ -854,6 +876,7 @@ namespace egret.web {
 
         private canvasRenderer: CanvasRenderer;
         private canvasRenderBuffer: CanvasRenderBuffer;
+       
         /**
          * @private
          */
@@ -889,10 +912,10 @@ namespace egret.web {
             }
             const drawCommands = node[property_drawLabel] as Array<DrawLabel>;
             if (drawCommands && drawCommands.length > 0) {
-                //存一下
+                // Save it
                 const saveOffsetX = buffer.$offsetX;
                 const saveOffsetY = buffer.$offsetY;
-                //开始画
+                // Start drawing
                 let cmd: DrawLabel = null;
                 let anchorX = 0;
                 let anchorY = 0;
@@ -920,7 +943,7 @@ namespace egret.web {
                         buffer.$offsetX += (tb.contentWidth - tb.canvasWidthOffset);
                     }
                 }
-                //还原回去
+                // Revert back
                 buffer.$offsetX = saveOffsetX;
                 buffer.$offsetY = saveOffsetY;
             }
@@ -929,12 +952,13 @@ namespace egret.web {
             }
             node.dirtyRender = false;
         }
+
         /**
          * @private
          */
         private renderText(node: sys.TextNode, buffer: WebGLRenderBuffer): void {
             if (textAtlasRenderEnable) {
-                //新的文字渲染机制
+                // New text rendering mechanism
                 this.___renderText____(node, buffer);
                 return;
             }
@@ -943,6 +967,7 @@ namespace egret.web {
             if (width <= 0 || height <= 0 || !width || !height || node.drawData.length == 0) {
                 return;
             }
+
             let canvasScaleX = sys.DisplayList.$canvasScaleX;
             let canvasScaleY = sys.DisplayList.$canvasScaleY;
             let maxTextureSize = buffer.context.$maxTextureSize;
@@ -952,6 +977,7 @@ namespace egret.web {
             if (height * canvasScaleY > maxTextureSize) {
                 canvasScaleY *= maxTextureSize / (height * canvasScaleY);
             }
+
             width *= canvasScaleX;
             height *= canvasScaleY;
             let x = node.x * canvasScaleX;
@@ -1005,17 +1031,17 @@ namespace egret.web {
                     node.$texture = surface;
                 }
                 else {
-                    // 拷贝canvas到texture
+                    // Copy canvas to texture
                     let texture = node.$texture;
                     if (!texture) {
                         texture = buffer.context.createTexture(<BitmapData><any>surface);
                         node.$texture = texture;
                     } else {
-                        // 重新拷贝新的图像
+                        // Recopy new image
                         buffer.context.updateTexture(texture, <BitmapData><any>surface);
                     }
                 }
-                // 保存材质尺寸
+                // Save material size
                 node.$textureWidth = surface.width;
                 node.$textureHeight = surface.height;
             }
@@ -1052,7 +1078,8 @@ namespace egret.web {
                 node.$canvasScaleY = canvasScaleY;
                 node.dirtyRender = true;
             }
-            //缩放叠加 width2 / width 填满整个区域
+
+            // Zoom overlay width2 / width to fill the entire area
             width = width * canvasScaleX;
             height = height * canvasScaleY;
             var width2 = Math.ceil(width);
@@ -1114,17 +1141,18 @@ namespace egret.web {
                         node.$texture = surface;
                     }
                     else {
-                        // 拷贝canvas到texture
+                        // Copy canvas to texture
                         let texture = node.$texture;
                         if (!texture) {
                             texture = buffer.context.createTexture(<BitmapData><any>surface);
                             node.$texture = texture;
                         } else {
-                            // 重新拷贝新的图像
+                            // Recopy new image
                             buffer.context.updateTexture(texture, <BitmapData><any>surface);
                         }
                     }
-                    // 保存材质尺寸
+
+                    // Save material size
                     node.$textureWidth = surface.width;
                     node.$textureHeight = surface.height;
                 }
@@ -1196,6 +1224,7 @@ namespace egret.web {
                 buffer = new WebGLRenderBuffer(width, height);
                 buffer.$computeDrawCall = false;
             }
+
             return buffer;
         }
     }

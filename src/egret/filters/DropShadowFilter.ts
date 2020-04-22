@@ -29,16 +29,18 @@
 
 /// <reference path="../filters/GlowFilter.ts" />
 
-namespace egret {
+namespace egret
+{
     /**
      * @class egret.DropShadowFilter
      * @classdesc
-     * 可使用 DropShadowFilter 类向显示对象添加投影。
+     * You can use the DropShadowFilter class to add a projection to the display object.
      * @extends egret.GlowFilter
      * @version Egret 3.1.4
      * @platform Web,Native
      */
-    export class DropShadowFilter extends GlowFilter {
+    export class DropShadowFilter extends GlowFilter
+    {
         /**
          * Initializes a new DropShadowFilter instance.
          * @method egret.DropShadowFilter#constructor
@@ -55,25 +57,6 @@ namespace egret {
          * @param hideObject {number} Indicates whether or not the object is hidden. The value true indicates that the object itself is not drawn; only the shadow is visible. The default is false, meaning that the object is shown.
          * @version Egret 3.1.4
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 初始化 DropShadowFilter 对象
-         * @method egret.DropShadowFilter#constructor
-         * @param distance {number} 阴影的偏移距离，以像素为单位。
-         * @param angle {number} 阴影的角度，0 到 360 度（浮点）。
-         * @param color {number} 光晕颜色，采用十六进制格式 0xRRGGBB。默认值为 0xFF0000。
-         * @param alpha {number} 颜色的 Alpha 透明度值。有效值为 0 到 1。例如，0.25 设置透明度值为 25%。
-         * @param blurX {number} 水平模糊量。有效值为 0 到 255（浮点）。
-         * @param blurY {number} 垂直模糊量。有效值为 0 到 255（浮点）。
-         * @param strength {number} 印记或跨页的强度。该值越高，压印的颜色越深，而且发光与背景之间的对比度也越强。有效值为 0 到 255。
-         * @param quality {number} 应用滤镜的次数。暂未实现。
-         * @param inner {boolean} 指定发光是否为内侧发光。值 true 指定发光是内侧发光。值 false 指定发光是外侧发光（对象外缘周围的发光）。
-         * @param knockout {number} 指定对象是否具有挖空效果。值为 true 将使对象的填充变为透明，并显示文档的背景颜色。
-         * @param hideObject {number} 表示是否隐藏对象。如果值为 true，则表示没有绘制对象本身，只有阴影是可见的。默认值为 false（显示对象）。
-         * @version Egret 3.1.4
-         * @platform Web
-         * @language zh_CN
          */
         constructor(distance:number = 4.0, angle:number = 45, color:number = 0, alpha:number = 1.0, blurX:number = 4.0, blurY:number = 4.0, strength:number = 1.0, quality:number = 1, inner:boolean = false, knockout:boolean = false, hideObject:boolean = false) {
             super(color, alpha, blurX, blurY, strength, quality, inner, knockout);
@@ -97,13 +80,6 @@ namespace egret {
          * The offset distance of the bevel.
          * @version Egret 3.1.4
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 阴影的偏移距离，以像素为单位。
-         * @version Egret 3.1.4
-         * @platform Web
-         * @language zh_CN
          */
         public get distance():number {
             return this.$distance;
@@ -128,13 +104,6 @@ namespace egret {
          * The angle of the bevel.
          * @version Egret 3.1.4
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 阴影的角度。
-         * @version Egret 3.1.4
-         * @platform Web
-         * @language zh_CN
          */
         public get angle():number {
             return this.$angle;
@@ -159,13 +128,6 @@ namespace egret {
          * Indicates whether or not the object is hidden.
          * @version Egret 3.1.4
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 表示是否隐藏对象。
-         * @version Egret 3.1.4
-         * @platform Web
-         * @language zh_CN
          */
         public get hideObject():boolean {
             return this.$hideObject;

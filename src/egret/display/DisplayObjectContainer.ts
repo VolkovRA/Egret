@@ -29,27 +29,21 @@
 
 /// <reference path="../display/DisplayObject.ts" />
 
-namespace egret {
+namespace egret
+{
     /**
      * The DisplayObjectContainer class is a basic display list building block: a display list node that can contain children.
      * @version Egret 2.4
      * @platform Web,Native
      * @includeExample egret/display/DisplayObjectContainer.ts
-     * @language en_US
      */
-    /**
-     * DisplayObjectContainer 类是基本显示列表构造块：一个可包含子项的显示列表节点。
-     * @version Egret 2.4
-     * @platform Web,Native
-     * @includeExample egret/display/DisplayObjectContainer.ts
-     * @language zh_CN
-     */
-    export class DisplayObjectContainer extends DisplayObject {
-
+    export class DisplayObjectContainer extends DisplayObject
+    {
         /**
          * @private
          */
         static $EVENT_ADD_TO_STAGE_LIST: DisplayObject[] = [];
+
         /**
          * @private
          */
@@ -59,13 +53,6 @@ namespace egret {
          * Creates a new DisplayObjectContainer instance.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 实例化一个容器
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
@@ -76,13 +63,6 @@ namespace egret {
          * Returns the number of children of this object.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 返回此对象的子项数目。
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get numChildren(): number {
             return this.$children.length;
@@ -94,15 +74,6 @@ namespace egret {
          * @see egret.ChildrenSortMode
          * @version Egret 5.2.19
          * @platform Native
-         * @language en_US
-         */
-        /**
-         * 设置子项目的排序方式
-         * @param value {string} 排序方式
-         * @see egret.ChildrenSortMode
-         * @version Egret 5.2.19
-         * @platform Native
-         * @language en_US
          */
         public setChildrenSortMode(value: string): void {
             if (egret.nativeRender && this.$nativeDisplayObject.setChildrenSortMode) {
@@ -116,30 +87,19 @@ namespace egret {
          * use the addChildAt() method.)If you add a child object that already has a different display object container
          * as a parent, the object is removed from the child list of the other display object container.
          * @param child The DisplayObject instance to add as a child of this DisplayObjectContainer instance.
-         * @returns 在 child The DisplayObject instance that you pass in the child parameter.
+         * @returns In child The DisplayObject instance that you pass in the child parameter.
          * @see #addChildAt()
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 将一个 DisplayObject 子实例添加到该 DisplayObjectContainer 实例中。子项将被添加到该 DisplayObjectContainer 实例中其他
-         * 所有子项的前（上）面。（要将某子项添加到特定索引位置，请使用 addChildAt() 方法。）
-         * @param child 要作为该 DisplayObjectContainer 实例的子项添加的 DisplayObject 实例。
-         * @returns 在 child 参数中传递的 DisplayObject 实例。
-         * @see #addChildAt()
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public addChild(child: DisplayObject): DisplayObject {
             let index: number = this.$children.length;
 
             if (child.$parent == this)
                 index--;
+            
             return this.$doAddChild(child, index);
         }
-
 
         /**
          * Adds a child DisplayObject instance to this DisplayObjectContainer instance. The child is added at the index position
@@ -153,18 +113,6 @@ namespace egret {
          * @see #addChild()
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 将一个 DisplayObject 子实例添加到该 DisplayObjectContainer 实例中。该子项将被添加到指定的索引位置。索引为 0 表示该
-         * DisplayObjectContainer 对象的显示列表的后（底）部。如果添加一个已将其它显示对象容器作为父项的子对象，则会从其它显示对象容器的子列表中删除该对象。
-         * @param child 要作为该 DisplayObjectContainer 实例的子项添加的 DisplayObject 实例。
-         * @param index 添加该子项的索引位置。 如果指定当前占用的索引位置，则该位置以及所有更高位置上的子对象会在子级列表中上移一个位置。
-         * @returns 在 child 参数中传递的 DisplayObject 实例。
-         * @see #addChild()
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public addChildAt(child: DisplayObject, index: number): DisplayObject {
             index = +index | 0;
@@ -199,7 +147,7 @@ namespace egret {
             }
 
             let stage: Stage = self.$stage;
-            if (stage) {//当前容器在舞台
+            if (stage) {// The current container is on stage.
                 child.$onAddToStage(stage, self.$nestLevel + 1);
             }
             if (notifyListeners) {
@@ -245,16 +193,6 @@ namespace egret {
          * @returns true if the child object is a child of the DisplayObjectContainer or the container itself; otherwise false.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 确定指定显示对象是 DisplayObjectContainer 实例的子项或该实例本身。搜索包括整个显示列表（其中包括此 DisplayObjectContainer 实例）。
-         * 孙项、曾孙项等，每项都返回 true。
-         * @param child 要测试的子对象。
-         * @returns 如果 child 对象是 DisplayObjectContainer 的子项或容器本身，则为 true；否则为 false。
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public contains(child: DisplayObject): boolean {
             while (child) {
@@ -273,16 +211,6 @@ namespace egret {
          * @see #getChildByName()
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 返回位于指定索引处的子显示对象实例。
-         * @param index 子对象的索引位置。
-         * @returns 位于指定索引位置处的子显示对象。
-         * @see #getChildByName()
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public getChildAt(index: number): DisplayObject {
             index = +index | 0;
@@ -299,15 +227,6 @@ namespace egret {
          * @returns The index position of the child display object to identify.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 返回 DisplayObject 的 child 实例的索引位置。
-         * @param child 要测试的子对象。
-         * @returns 要查找的子显示对象的索引位置。
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public getChildIndex(child: egret.DisplayObject): number {
             return this.$children.indexOf(child);
@@ -324,18 +243,6 @@ namespace egret {
          * @see egret.DisplayObject#name
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 返回具有指定名称的子显示对象。如果多个子显示对象具有指定名称，则该方法会返回子级列表中的第一个对象。
-         * getChildAt() 方法比 getChildByName() 方法快。getChildAt() 方法从缓存数组中访问子项，而 getChildByName() 方法则必须遍历链接的列表来访问子项。
-         * @param name 要返回的子项的名称。
-         * @returns 具有指定名称的子显示对象。
-         * @see #getChildAt()
-         * @see egret.DisplayObject#name
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public getChildByName(name: string): DisplayObject {
             let children = this.$children;
@@ -360,17 +267,6 @@ namespace egret {
          * @see #removeChildAt()
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 从 DisplayObjectContainer 实例的子列表中删除指定的 child DisplayObject 实例。将已删除子项的 parent 属性设置为 null；
-         * 如果不存在对该子项的任何其它引用，则将该对象作为垃圾回收。DisplayObjectContainer 中该子项之上的任何显示对象的索引位置都减去 1。
-         * @param child 要删除的 DisplayObject 实例。
-         * @returns 在 child 参数中传递的 DisplayObject 实例。
-         * @see #removeChildAt()
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public removeChild(child: DisplayObject): DisplayObject {
             let index = this.$children.indexOf(child);
@@ -390,17 +286,6 @@ namespace egret {
          * @see #removeChild()
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 从 DisplayObjectContainer 的子列表中指定的 index 位置删除子 DisplayObject。将已删除子项的 parent 属性设置为 null；
-         * 如果没有对该子项的任何其他引用，则将该对象作为垃圾回收。DisplayObjectContainer 中该子项之上的任何显示对象的索引位置都减去 1。
-         * @param index 要删除的 DisplayObject 的子索引。
-         * @returns 已删除的 DisplayObject 实例。
-         * @see #removeChild()
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public removeChildAt(index: number): DisplayObject {
             index = +index | 0;
@@ -423,7 +308,7 @@ namespace egret {
             if (notifyListeners) {
                 child.dispatchEventWith(Event.REMOVED, true);
             }
-            if (this.$stage) {//在舞台上
+            if (this.$stage) { // On stage
                 child.$onRemoveFromStage();
                 let list = DisplayObjectContainer.$EVENT_REMOVE_FROM_STAGE_LIST
                 while (list.length > 0) {
@@ -474,17 +359,6 @@ namespace egret {
          * @see #getChildAt()
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 更改现有子项在显示对象容器中的位置。这会影响子对象的分层。
-         * @param child 要为其更改索引编号的 DisplayObject 子实例。
-         * @param index 生成的 child 显示对象的索引编号。当新的索引编号小于0或大于已有子元件数量时，新加入的DisplayObject对象将会放置于最上层。
-         * @see #addChildAt()
-         * @see #getChildAt()
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public setChildIndex(child: DisplayObject, index: number): void {
             index = +index | 0;
@@ -504,9 +378,9 @@ namespace egret {
                 return;
             }
             this.$childRemoved(child, lastIndex);
-            //从原来的位置删除
+            // Remove from original location.
             this.$children.splice(lastIndex, 1);
-            //放到新的位置
+            // Put in a new location.
             this.$children.splice(index, 0, child);
             this.$childAdded(child, index);
             if (egret.nativeRender) {
@@ -531,23 +405,13 @@ namespace egret {
         }
 
         /**
-         * Swaps the z-order (front-to-back order) of the child objects at the two specified index positions in the child
-         * list. All other child objects in the display object container remain in the same index positions.
+         * Swaps the z-order (front-to-back order) of the child objects at the two specified index positions in the child list.
+         * All other child objects in the display object container remain in the same index positions.
          * @param index1 The index position of the first child object.
          * @param index2 The index position of the second child object.
          * @see #swapChildren()
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 在子级列表中两个指定的索引位置，交换子对象的 Z 轴顺序（前后顺序）。显示对象容器中所有其他子对象的索引位置保持不变。
-         * @param index1 第一个子对象的索引位置。
-         * @param index2 第二个子对象的索引位置。
-         * @see #swapChildren()
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public swapChildrenAt(index1: number, index2: number): void {
             index1 = +index1 | 0;
@@ -558,23 +422,13 @@ namespace egret {
         }
 
         /**
-         * Swaps the z-order (front-to-back order) of the two specified child objects. All other child objects in the
-         * display object container remain in the same index positions.
+         * Swaps the z-order (front-to-back order) of the two specified child objects.
+         * All other child objects in the display object container remain in the same index positions.
          * @param child1 The first child object.
          * @param child2 The second child object.
          * @see #swapChildrenAt()
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 交换两个指定子对象的 Z 轴顺序（从前到后顺序）。显示对象容器中所有其他子对象的索引位置保持不变。
-         * @param child1 第一个子对象。
-         * @param child2 第二个子对象。
-         * @see #swapChildrenAt()
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public swapChildren(child1: DisplayObject, child2: DisplayObject): void {
             let index1 = this.$children.indexOf(child1);
@@ -636,15 +490,6 @@ namespace egret {
          * @see #removeChildAt()
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 从 DisplayObjectContainer 实例的子级列表中删除所有 child DisplayObject 实例。
-         * @see #removeChild()
-         * @see #removeChildAt()
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public removeChildren(): void {
             let children = this.$children;
@@ -655,8 +500,9 @@ namespace egret {
 
         /**
          * @private
-         * 一个子项被添加到容器内，此方法不仅在操作addChild()时会被回调，在操作setChildIndex()或swapChildren时也会回调。
-         * 当子项索引发生改变时，会先触发$childRemoved()方法，然后触发$childAdded()方法。
+         * A child is added to the container.
+         * This method will be called not only when the addChild () operation is operated, but also when setChildIndex () or swapChildren is operated.
+         * When the child index changes, the $ childRemoved () method will be triggered first, and then the $ childAdded () method will be triggered.
          */
         $childAdded(child: DisplayObject, index: number): void {
 
@@ -664,8 +510,9 @@ namespace egret {
 
         /**
          * @private
-         * 一个子项从容器内移除，此方法不仅在操作removeChild()时会被回调，在操作setChildIndex()或swapChildren时也会回调。
-         * 当子项索引发生改变时，会先触发$childRemoved()方法，然后触发$childAdded()方法。
+         * A child is removed from the container.
+         * This method will be called not only when removeChild () is operated, but also when setChildIndex () or swapChildren is operated.
+         * When the child index changes, the $ childRemoved () method will be triggered first, and then the $ childAdded () method will be triggered.
          */
         $childRemoved(child: DisplayObject, index: number): void {
 
@@ -690,7 +537,6 @@ namespace egret {
 
         /**
          * @private
-         *
          */
         $onRemoveFromStage(): void {
             super.$onRemoveFromStage();
@@ -701,7 +547,6 @@ namespace egret {
                 child.$onRemoveFromStage();
             }
         }
-
 
         /**
          * @private
@@ -752,14 +597,6 @@ namespace egret {
          * @default true
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 确定对象的子级是否支持触摸或用户输入设备。如果对象支持触摸或用户输入设备，用户可以通过使用触摸或用户输入设备与之交互。
-         * @default true
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get touchChildren(): boolean {
             return this.$getTouchChildren();
@@ -767,7 +604,6 @@ namespace egret {
 
         /**
          * @private
-         *
          * @returns
          */
         $getTouchChildren(): boolean {
@@ -845,10 +681,10 @@ namespace egret {
             return a.zIndex - b.zIndex;
         }
         public sortChildren(): void {
-            //关掉脏的标记
+            // Turn off dirty marks.
             super.sortChildren();
             this.$sortDirty = false;
-            //准备重新排序
+            // Ready to reorder.
             let sortRequired = false;
             const children = this.$children;
             let child: DisplayObject = null;
@@ -860,7 +696,7 @@ namespace egret {
                 }
             }
             if (sortRequired && children.length > 1) {
-                //开始排
+                // Start row.
                 children.sort(this._sortChildrenFunc);
             }
         }

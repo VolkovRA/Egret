@@ -26,31 +26,19 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-namespace egret {
+
+namespace egret
+{
     /**
-    * @language en_US
     * The Base64Util class provides methods for encoding and decoding base64.
     * @version Egret 2.4
     * @platform Web,Native
     * @includeExample egret/utils/Base64Util.ts
     */
-    /**
-     * @language zh_CN
-     * Base64Util 类提供用于编解码base64的方法。
-     * @version Egret 2.4
-     * @platform Web,Native
-     * @includeExample egret/utils/Base64Util.ts
-     */
-    export class Base64Util {
+    export class Base64Util
+    {
         /**
-         * @language en_US
-         * encode base64.
-         * @version Egret 2.4
-         * @platform Web,Native
-         */
-        /**
-         * @language zh_CN
-         * 编码base64。
+         * Encode base64.
          * @version Egret 2.4
          * @platform Web,Native
          */
@@ -74,15 +62,9 @@ namespace egret {
 
             return base64;
         }
+
         /**
-         * @language en_US
-         * decode base64.
-         * @version Egret 2.4
-         * @platform Web,Native
-         */
-        /**
-         * @language zh_CN
-         * 解码base64。
+         * Decode base64.
          * @version Egret 2.4
          * @platform Web,Native
          */
@@ -120,10 +102,12 @@ namespace egret {
         }
     }
 }
+
 /**
  * @private
  */
 let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
 /**
  * @private
  */

@@ -29,13 +29,15 @@
 
 /// <reference path="../utils/HashObject.ts" />
 
-namespace egret {
+namespace egret
+{
     /**
      * @private
      * @version Egret 2.4
      * @platform Web,Native
      */
-    export class Filter extends HashObject {
+    export class Filter extends HashObject
+    {
         /**
          * @version Egret 2.4
          * @platform Web,Native
@@ -47,7 +49,6 @@ namespace egret {
          */
         public $id: number = null;
 
-
         /**
          * @private 
          */
@@ -57,14 +58,17 @@ namespace egret {
          * @private 
          */
         protected paddingTop: number = 0;
+
         /**
          * @private 
          */
         protected paddingBottom: number = 0;
+
         /**
          * @private 
          */
         protected paddingLeft: number = 0;
+        
         /**
          * @private 
          */

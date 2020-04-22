@@ -27,27 +27,29 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.sys {
+namespace egret.sys
+{
     /**
      * @private
-     * 设备屏幕
+     * Device screen.
      */
-    export interface Screen {
+    export interface Screen
+    {
         /**
          * @private
-         * 更新屏幕视口尺寸
+         * Update screen viewport size.
          */
         updateScreenSize();
 
         /**
          * @private
-         * 更新触摸数量
+         * Update touch count.
          */
         updateMaxTouches();
 
         /**
          * @private
-         * 设置分辨率尺寸
+         * Set resolution size.
          */
         setContentSize(width:number, height:number);
     }

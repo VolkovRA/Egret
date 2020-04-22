@@ -26,26 +26,20 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-namespace egret {
 
+/// <reference path="ITextElement.ts" />
+
+namespace egret
+{
     /**
-     * Convert the text in html format to the object that can be assigned to the egret.TextField#textFlow property
-     * @see http://edn.egret.com/cn/docs/page/146 Text mixed in a variety of style
+     * Convert the text in html format to the object that can be assigned to the egret.TextField#textFlow property.
+     * @see http://edn.egret.com/cn/docs/page/146 Text mixed in a variety of style.
      * @version Egret 2.4
      * @platform Web,Native
      * @includeExample egret/text/HtmlTextParser.ts
-     * @language en_US
      */
-    /**
-     * 将html格式文本转换为可赋值给 egret.TextField#textFlow 属性的对象
-     * @see http://edn.egret.com/cn/docs/page/146 多种样式文本混合
-     * @version Egret 2.4
-     * @platform Web,Native
-     * @includeExample egret/text/HtmlTextParser.ts
-     * @language zh_CN
-     */
-    export class HtmlTextParser {
-
+    export class HtmlTextParser
+    {
         /**
          * @version Egret 2.4
          * @platform Web,Native
@@ -63,9 +57,9 @@ namespace egret {
             this.replaceArr.push([/&quot;/g, "\""]);
             this.replaceArr.push([/&apos;/g, "\'"]);
         }
+
         /**
          * @private
-         * 
          * @param value 
          * @returns 
          */
@@ -85,26 +79,17 @@ namespace egret {
         private resutlArr: Array<egret.ITextElement> = [];
 
         /**
-         * Convert the text in html format to the object that can be assigned to the egret.TextField#textFlow property
-         * @param htmltext {string} Text in html
-         * @returns {Array<egret.ITextElement>} 可赋值给 egret.TextField#textFlow Object that can be assigned to the egret.TextField#textFlow property
+         * Convert the text in html format to the object that can be assigned to the egret.TextField#textFlow property.
+         * @param htmltext {string} Text in html.
+         * @returns {Array<egret.ITextElement>} Assignable to egret.TextField#textFlow Object that can be assigned to the egret.TextField#textFlow property.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 将html格式文本转换为可赋值给 egret.TextField#textFlow 属性的对象
-         * @param htmltext {string} html文本
-         * @returns {Array<egret.ITextElement>} 可赋值给 egret.TextField#textFlow 属性的对象
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public parse(htmltext: string): egret.ITextElement[] {
             this.stackArray = [];
             this.resutlArr = [];
 
-            let firstIdx = 0;//文本段开始位置
+            let firstIdx = 0; // Start of text segment.
             let length: number = htmltext.length;
             while (firstIdx < length) {
                 let starIdx: number = htmltext.indexOf("<", firstIdx);
@@ -120,7 +105,7 @@ namespace egret {
                         egret.error(1038);
                         fontEnd = starIdx;
                     }
-                    else if (htmltext.charAt(starIdx + 1) == "\/") {//关闭
+                    else if (htmltext.charAt(starIdx + 1) == "\/") { // Shut down.
                         this.stackArray.pop();
                     }
                     else {
@@ -140,7 +125,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          * @param value 
          */
         private addToResultArr(value: string): void {
@@ -158,7 +142,7 @@ namespace egret {
             }
         }
 
-        //将字符数据转成Json数据
+        // Convert character data to Json data.
         private changeStringToObject(str: string): egret.ITextStyle {
             str = str.trim();
             let info: any = {};
@@ -202,7 +186,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          * @returns 
          */
         private getHeadReg(): RegExp {
@@ -211,7 +194,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          * @param info 
          * @param head 
          * @param value 
@@ -264,7 +246,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          * @param infoStr 
          */
         private addToArray(infoStr: string): void {
@@ -284,5 +265,4 @@ namespace egret {
             }
         }
     }
-
 }

@@ -27,72 +27,76 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.sys {
+namespace egret.sys
+{
     /**
      * @private
-     * 共享的用于碰撞检测的渲染缓冲
+     * Shared rendering buffer for collision detection.
      */
     export let customHitTestBuffer:sys.RenderBuffer;
+
     /**
      * @private
-     * 共享的用于canvas碰撞检测的渲染缓冲
+     * Shared rendering buffer for canvas collision detection.
      */
     export let canvasHitTestBuffer:sys.RenderBuffer;
+
     /**
      * @private
-     * 渲染缓冲
+     * Render buffer.
      */
-    export interface RenderBuffer {
+    export interface RenderBuffer
+    {
         /**
-         * 呈现最终绘图结果的画布。
+         * 呈The canvas of the final drawing result.
          * @readOnly
          */
         surface:any;
 
         /**
-         * 渲染上下文。
+         * Rendering context.
          * @readOnly
          */
         context:any;
 
         /**
-         * 渲染缓冲的宽度，以像素为单位。
+         * The width of the rendering buffer, in pixels.
          * @readOnly
          */
         width: number;
 
         /**
-         * 渲染缓冲的高度，以像素为单位。
+         * The height of the rendering buffer, in pixels.
          * @readOnly
          */
         height: number;
 
         /**
-         * 改变渲染缓冲的大小并清空缓冲区
-         * @param width 改变后的宽
-         * @param height 改变后的高
-         * @param useMaxSize 若传入true，则将改变后的尺寸与已有尺寸对比，保留较大的尺寸。
+         * Change the size of the rendering buffer and clear the buffer.
+         * @param width Changed width.
+         * @param height Changed height.
+         * @param useMaxSize If true is passed, the changed size is compared with the existing size, and the larger size is retained.
          */
         resize(width:number,height:number,useMaxSize?:boolean):void;
 
         /**
-         * 获取指定区域的像素
+         * Get the pixels of the specified area.
          */
         getPixels(x:number,y:number,width?:number,height?:number):number[];
 
         /**
-         * 转换成base64字符串，如果图片（或者包含的图片）跨域，则返回null
-         * @param type 转换的类型，如: "image/png","image/jpeg"
+         * Converted to base64 string, if the picture (or contained picture) cross domain, then return null.
+         * @param type Conversion type, such as: "image/png", "image/jpeg".
          */
         toDataURL(type?: string, ...args: any[]): string;
 
         /**
-         * 清空缓冲区数据
+         * Clear the buffer data.
          */
         clear():void;
 
         /**
-         * 销毁渲染缓冲
+         * Destroy the rendering buffer.
          */
         destroy():void;
     }
@@ -100,13 +104,14 @@ namespace egret.sys {
     /**
      * @private
      */
-    export let RenderBuffer:{
+    export let RenderBuffer:
+    {
         /**
-         * 创建一个RenderTarget。
-         * 注意：若内存不足或创建缓冲区失败，将会抛出错误异常。
-         * @param width 渲染缓冲的初始宽
-         * @param height 渲染缓冲的初始高
-         * @param root 是否为舞台buffer
+         * Create a RenderTarget.
+         * Note: If there is insufficient memory or the buffer creation fails, an error exception will be thrown.
+         * @param width The initial width of the rendering buffer.
+         * @param height The initial height of the rendering buffer.
+         * @param root Is a stage buffer.
          */
         new(width?:number, height?:number, root?:boolean):RenderBuffer;
     };
@@ -114,12 +119,13 @@ namespace egret.sys {
     /**
      * @private
      */
-    export let CanvasRenderBuffer:{
+    export let CanvasRenderBuffer:
+    {
         /**
-         * 创建一个CanvasRenderBuffer。
-         * 注意：若内存不足或创建缓冲区失败，将会抛出错误异常。
-         * @param width 渲染缓冲的初始宽
-         * @param height 渲染缓冲的初始高
+         * Create a CanvasRenderBuffer.
+         * Note: If there is insufficient memory or the buffer creation fails, an error exception will be thrown.
+         * @param width The initial width of the rendering buffer.
+         * @param height The initial height of the rendering buffer.
          */
         new(width?:number, height?:number):RenderBuffer;
     };

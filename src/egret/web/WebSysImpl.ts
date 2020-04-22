@@ -27,11 +27,13 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+namespace egret.web
+{
     /**
      * @private  
      */
-    export const enum WEBGL_ATTRIBUTE_TYPE {
+    export const enum WEBGL_ATTRIBUTE_TYPE
+    {
         FLOAT_VEC2 = 0x8B50,
         FLOAT_VEC3 = 0x8B51,
         FLOAT_VEC4 = 0x8B52,
@@ -40,10 +42,12 @@ namespace egret.web {
         UNSIGNED_BYTE = 0x1401,
         UNSIGNED_SHORT = 0x1403
     }
+
     /**
      * @private  
      */
-    export const enum WEBGL_UNIFORM_TYPE {
+    export const enum WEBGL_UNIFORM_TYPE
+    {
         FLOAT_VEC2 = 0x8B50,
         FLOAT_VEC3 = 0x8B51,
         FLOAT_VEC4 = 0x8B52,
@@ -67,8 +71,9 @@ namespace egret.web {
         UNSIGNED_INT = 0x1405,
         FLOAT = 0x1406
     }
+
     /**
-     * 创建一个canvas。
+     * Create a canvas.
      */
     function mainCanvas(width?: number, height?: number): HTMLCanvasElement {
         return createCanvas(width, height);
@@ -114,23 +119,23 @@ namespace egret.web {
     }
     egret.sys.resizeContext = resizeContext;
 
-
     /**
      * sys.getContextWebGL
      */
     function getContextWebGL(surface: HTMLCanvasElement): WebGLRenderingContext {
         const options = {
             antialias: WebGLRenderContext.antialias,
-            stencil: true//设置可以使用模板（用于不规则遮罩）
+            stencil: true // Settings can use templates (for irregular masks)
         };
         let gl: CanvasRenderingContext2D | WebGLRenderingContext | ImageBitmapRenderingContext | WebGL2RenderingContext = null;
-        //todo 是否使用chrome源码names
-        //let contextNames = ["moz-webgl", "webkit-3d", "experimental-webgl", "webgl", "3d"];
+        // todo whether to use chrome source names.
+        // let contextNames = ["moz-webgl", "webkit-3d", "experimental-webgl", "webgl", "3d"];
         const names = ["webgl", "experimental-webgl"];
         for (let i = 0; i < names.length; ++i) {
             try {
                 gl = surface.getContext(names[i], options);
-            } catch (e) {
+            }
+            catch (e) {
             }
             if (gl) {
                 break;
@@ -142,6 +147,7 @@ namespace egret.web {
         return gl as WebGLRenderingContext;
     }
     egret.sys.getContextWebGL = getContextWebGL;
+
     /**
      * sys.getContext2d
      */
@@ -151,14 +157,14 @@ namespace egret.web {
     egret.sys.getContext2d = getContext2d;
 
     /**
-     * 创建一个WebGLTexture
+     * Create a WebGLTexture.
      */
     function createTexture(renderContext: egret.sys.RenderContext, bitmapData: BitmapData): WebGLTexture {
         const webglrendercontext = <WebGLRenderContext>renderContext;
         const gl: any = webglrendercontext.context;
         const texture = gl.createTexture() as WebGLTexture;
         if (!texture) {
-            //先创建texture失败,然后lost事件才发出来..
+            // Failed to create the texture first, then the lost event is sent out.
             webglrendercontext.contextLost = true;
             return;
         }
@@ -176,14 +182,14 @@ namespace egret.web {
     egret.sys.createTexture = createTexture;
 
     /**
-     * 创建一个WebGLTexture
+     * Create a WebGLTexture.
      */
     function _createTexture(renderContext: egret.sys.RenderContext, width: number, height: number, data: any): WebGLTexture {
         const webglrendercontext = <WebGLRenderContext>renderContext;
         const gl = webglrendercontext.context as WebGLRenderingContext;
         const texture: WebGLTexture = gl.createTexture() as WebGLTexture;
         if (!texture) {
-            //先创建texture失败,然后lost事件才发出来..
+            // Failed to create the texture first, then the lost event is sent out.
             webglrendercontext.contextLost = true;
             return null;
         }
@@ -202,8 +208,8 @@ namespace egret.web {
     egret.sys._createTexture = _createTexture;
 
     /**
-     * 画texture
-     **/
+     * Painting texture.
+     */
     function drawTextureElements(renderContext: egret.sys.RenderContext, data: any, offset: number): number {
         const webglrendercontext = <WebGLRenderContext>renderContext;
         const gl: WebGLRenderingContext = webglrendercontext.context;
@@ -216,7 +222,7 @@ namespace egret.web {
     egret.sys.drawTextureElements = drawTextureElements;
     
     /**
-     * 测量文本的宽度
+     * Measure the width of text.
      * @param context 
      * @param text 
      */
@@ -226,7 +232,7 @@ namespace egret.web {
     egret.sys.measureTextWith = measureTextWith;
 
     /**
-     * 为CanvasRenderBuffer创建一个HTMLCanvasElement
+     * Create an HTMLCanvasElement for CanvasRenderBuffer.
      * @param defaultFunc 
      * @param width 
      * @param height 
@@ -238,7 +244,7 @@ namespace egret.web {
     egret.sys.createCanvasRenderBufferSurface = createCanvasRenderBufferSurface;
     
     /**
-     * 改变渲染缓冲的大小并清空缓冲区
+     * Change the size of the rendering buffer and clear the buffer.
      * @param renderContext 
      * @param width 
      * @param height 
@@ -257,7 +263,7 @@ namespace egret.web {
                 surface.height = height;
                 change = true;
             }
-            //尺寸没有变化时,将绘制属性重置
+            // When the size does not change, reset the drawing properties.
             if (!change) {
                 canvasRenderBuffer.context.globalCompositeOperation = "source-over";
                 canvasRenderBuffer.context.setTransform(1, 0, 0, 1, 0, 0);
@@ -279,5 +285,3 @@ namespace egret.web {
     egret.Geolocation = egret.web.WebGeolocation;
     egret.Motion = egret.web.WebMotion;
 }
-
-

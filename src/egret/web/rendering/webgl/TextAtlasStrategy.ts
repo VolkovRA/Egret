@@ -29,13 +29,13 @@
 
 /// <reference path="../../../utils/HashObject.ts" />
 
-/*
-*** 一个管理模型，逐级包含: back -> page -> line -> textBlock
-*/
-namespace egret.web {
-
-    export class TextBlock extends HashObject {
-
+/**
+ * A management model, including: back-> page-> line-> textBlock.
+ */
+namespace egret.web
+{
+    export class TextBlock extends HashObject
+    {
         private readonly _width: number = 0;
         private readonly _height: number = 0;
         private readonly _border: number = 0;
@@ -51,7 +51,6 @@ namespace egret.web {
         public readonly canvasHeightOffset: number = 0;
         public readonly stroke2: number = 0;
         
-
         constructor(width: number, height: number, measureWidth: number, measureHeight: number, canvasWidthOffset: number, canvasHeightOffset: number, stroke2: number, border: number) {
             super();
             this._width = width;
@@ -91,7 +90,7 @@ namespace egret.web {
         public updateUV(): boolean {
             const line = this.line;
             if (!line) {
-                return false;//不属于任何的line就是错的
+                return false; // It is wrong to not belong to any line.
             }
             this.u = line.x + this.x + this.border * 1;
             this.v = line.y + this.y + this.border * 1;
@@ -116,7 +115,6 @@ namespace egret.web {
     }
 
     export class Line extends HashObject {
-
         public page: Page = null;
         private readonly textBlocks: TextBlock[] = [];
         public dynamicMaxHeight: number = 0;
@@ -143,12 +141,12 @@ namespace egret.web {
             }
             //
             if (posx + textBlock.width > this.maxWidth) {
-                return false;//宽度不够
+                return false; // Not enough width
             }
             //
             if (this.dynamicMaxHeight > 0) {
                 if (textBlock.height > this.dynamicMaxHeight || (textBlock.height / this.dynamicMaxHeight < 0.5)) {
-                    return false;//如果有已经有动态高度，到这里，要么高度不够，要么小于动态高度的0.6差距, 就不填充
+                    return false; // If there is already a dynamic height, here, either the height is not enough or less than the 0.6 gap of the dynamic height, it will not be filled
                 }
             }
             return true;
@@ -192,7 +190,6 @@ namespace egret.web {
     }
 
     export class Page extends HashObject {
-
         public readonly lines: Line[] = [];
         public readonly pageWidth: number = 0;
         public readonly pageHeight: number = 0;
@@ -220,12 +217,12 @@ namespace egret.web {
             }
             if (line.maxWidth > this.pageWidth) {
                 console.error('line.maxWidth = ' + line.maxWidth + ', ' + 'this.pageWidth = ' + this.pageWidth);
-                return false;//宽度不够
+                return false; // Not enough width
             }
             if (posy + line.dynamicMaxHeight > this.pageHeight) {
-                return false;//满了
+                return false; // full
             }
-            //更新数据
+            // update data
             line.x = posx;
             line.y = posy;
             line.page = this;
@@ -235,7 +232,6 @@ namespace egret.web {
     }
 
     export class Book extends HashObject {
-
         private readonly _pages: Page[] = [];
         private _sortLines: Line[] = [];
         private readonly _maxSize: number = 1024;
@@ -252,9 +248,9 @@ namespace egret.web {
             if (!result) {
                 return false;
             }
-            //更新下uv
+            // Update uv.
             textBlock.updateUV();
-            //没有才要添加
+            // No need to add.
             let exist = false;
             const cast = result as [Page, Line];
             const _sortLines = this._sortLines;
@@ -267,7 +263,7 @@ namespace egret.web {
             if (!exist) {
                 _sortLines.push(cast[1]);
             }
-            //重新排序
+            // Rearrange.
             this.sort();
             return true;
         }
@@ -277,10 +273,10 @@ namespace egret.web {
                 return null;
             }
             if (textBlock.width > this._maxSize || textBlock.height > this._maxSize) {
-                //console.log('this._maxSize = ' + this._maxSize + ', textBlock.width = ' + textBlock.width + ', textBlock.height = ' + textBlock.height);
+                // console.log('this._maxSize = ' + this._maxSize + ', textBlock.width = ' + textBlock.width + ', textBlock.height = ' + textBlock.height);
                 return null;
             }
-            //找到最合适的
+            // Find the most suitable.
             const _sortLines = this._sortLines;
             for (let i = 0, length = _sortLines.length; i < length; ++i) {
                 const line = _sortLines[i];
@@ -291,13 +287,13 @@ namespace egret.web {
                     return [line.page, line];
                 }
             }
-            //做新的行
+            // Make a new line.
             const newLine = new Line(this._maxSize);
             if (!newLine.addTextBlock(textBlock, true)) {
                 console.error('_addTextBlock !newLine.addTextBlock(textBlock, true)');
                 return null;
             }
-            //现有的page中插入
+            // Insert into existing page.
             const _pages = this._pages;
             for (let i = 0, length = _pages.length; i < length; ++i) {
                 const page = _pages[i];
@@ -305,8 +301,8 @@ namespace egret.web {
                     return [page, newLine];
                 }
             }
-            //都没有，就做新的page
-            //添加目标行
+            // Nothing, just make a new page.
+            // Add target line.
             const newPage = this.createPage(this._maxSize, this._maxSize);
             if (!newPage.addLine(newLine)) {
                 console.error('_addText newPage.addLine failed');
@@ -314,7 +310,7 @@ namespace egret.web {
             }
             return [newPage, newLine];
         }
-
+        
         private createPage(pageWidth: number, pageHeight: number): Page {
             const newPage = new Page(pageWidth, pageHeight);
             this._pages.push(newPage);
@@ -334,8 +330,8 @@ namespace egret.web {
         public createTextBlock(tag: string, width: number, height: number, measureWidth: number, measureHeight: number, canvasWidthOffset: number, canvasHeightOffset: number, stroke2: number): TextBlock {
             const txtBlock = new TextBlock(width, height, measureWidth, measureHeight, canvasWidthOffset, canvasHeightOffset, stroke2, this._border);
             if (!this.addTextBlock(txtBlock)) {
-                //走到这里几乎是不可能的，除非内存分配没了
-                //暂时还没有到提交纹理的地步，现在都是虚拟的
+                // It's almost impossible to get here unless the memory allocation is gone.
+                // It has not yet reached the point of submitting textures, now it is all virtual.
                 return null;
             }
             txtBlock.tag = tag;
@@ -343,4 +339,3 @@ namespace egret.web {
         }
     }
 }
-

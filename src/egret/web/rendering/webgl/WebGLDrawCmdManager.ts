@@ -26,13 +26,18 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-namespace egret.web {
+
+/// <reference path="../../../filters/Filter.ts" />
+
+namespace egret.web 
+{
     /**
      * @private
-     * draw类型，所有的绘图操作都会缓存在drawData中，每个drawData都是一个drawable对象
-     * $renderWebGL方法依据drawable对象的类型，调用不同的绘制方法
+     * Draw type, all drawing operations will be cached in drawData, each drawData is a drawable object.
+     * The $ renderWebGL method calls different drawing methods according to the type of drawable object.
      */
-    export const enum DRAWABLE_TYPE {
+    export const enum DRAWABLE_TYPE
+    {
         TEXTURE,
         RECT,
         PUSH_MASK,
@@ -46,12 +51,13 @@ namespace egret.web {
         SMOOTHING
     }
 
-    export interface IDrawData {
+    export interface IDrawData
+    {
         type: number,
         count: number,
         texture: WebGLTexture,
         filter : Filter,
-        //uv: any,
+        // uv: any,
         value: string,
         buffer: WebGLRenderBuffer,
         width: number,
@@ -65,13 +71,13 @@ namespace egret.web {
 
     /**
      * @private
-     * 绘制指令管理器
-     * 用来维护drawData数组
+     * Drawing instruction manager.
+     * Used to maintain drawData array.
      */
-    export class WebGLDrawCmdManager {
-
+    export class WebGLDrawCmdManager
+    {
         /**
-         * 用于缓存绘制命令的数组
+         * Array used to cache drawing commands.
          */
         public readonly drawData: IDrawData[] = [];
 
@@ -82,7 +88,7 @@ namespace egret.web {
         }
 
         /**
-         * 压入绘制矩形指令
+         * Press in the draw rectangle command.
          */
         public pushDrawRect():void {
             if(this.drawDataLen == 0 || this.drawData[this.drawDataLen - 1].type != DRAWABLE_TYPE.RECT) {
@@ -96,11 +102,11 @@ namespace egret.web {
         }
 
         /**
-         * 压入绘制texture指令
+         * Push in the draw texture command.
          */
         public pushDrawTexture(texture:any, count:number = 2, filter?:any, textureWidth?:number, textureHeight?:number):void {
             if(filter) {
-                // 目前有滤镜的情况下不会合并绘制
+                // If there is a filter, it will not be drawn together.
                 let data = this.drawData[this.drawDataLen] || <IDrawData>{};
                 data.type = DRAWABLE_TYPE.TEXTURE;
                 data.texture = texture;
@@ -110,8 +116,8 @@ namespace egret.web {
                 data.textureHeight = textureHeight;
                 this.drawData[this.drawDataLen] = data;
                 this.drawDataLen++;
-            } else {
-
+            }
+            else {
                 if (this.drawDataLen == 0 || this.drawData[this.drawDataLen - 1].type != DRAWABLE_TYPE.TEXTURE || texture != this.drawData[this.drawDataLen - 1].texture || this.drawData[this.drawDataLen - 1].filter) {
                     let data = this.drawData[this.drawDataLen] || <IDrawData>{};
                     data.type = DRAWABLE_TYPE.TEXTURE;
@@ -136,7 +142,7 @@ namespace egret.web {
         }
 
         /**
-         * 压入pushMask指令
+         * Push the pushMask instruction.
          */
         public pushPushMask(count:number = 1):void {
             let data = this.drawData[this.drawDataLen] || <IDrawData>{};
@@ -147,7 +153,7 @@ namespace egret.web {
         }
 
         /**
-         * 压入popMask指令
+         * Push the popMask instruction.
          */
         public pushPopMask(count:number = 1):void {
             let data = this.drawData[this.drawDataLen] || <IDrawData>{};
@@ -158,32 +164,33 @@ namespace egret.web {
         }
 
         /**
-         * 压入混色指令
+         * Press the color mixing instruction.
          */
         public pushSetBlend(value:string):void {
             let len = this.drawDataLen;
-            // 有无遍历到有效绘图操作
+            // Have you traversed to an effective drawing operation.
             let drawState = false;
-            for(let i = len - 1; i >= 0; i--) {
+            for (let i = len - 1; i >= 0; i--) {
                 let data = this.drawData[i];
 
-                if(data){
+                if (data){
                     if(data.type == DRAWABLE_TYPE.TEXTURE || data.type == DRAWABLE_TYPE.RECT) {
                         drawState = true;
                     }
 
-                    // 如果与上一次blend操作之间无有效绘图，上一次操作无效
-                    if(!drawState && data.type == DRAWABLE_TYPE.BLEND) {
+                    // If there is no valid drawing with the last blend operation, the last operation is invalid.
+                    if (!drawState && data.type == DRAWABLE_TYPE.BLEND) {
                         this.drawData.splice(i, 1);
                         this.drawDataLen--;
                         continue;
                     }
 
-                    // 如果与上一次blend操作重复，本次操作无效
-                    if(data.type == DRAWABLE_TYPE.BLEND) {
-                        if(data.value == value) {
+                    // If repeated with the last blend operation, this operation is invalid.
+                    if (data.type == DRAWABLE_TYPE.BLEND) {
+                        if (data.value == value) {
                             return;
-                        } else {
+                        }
+                        else {
                             break;
                         }
                     }
@@ -197,8 +204,8 @@ namespace egret.web {
             this.drawDataLen++;
         }
 
-        /*
-         * 压入resize render target命令
+        /**
+         * Press the resize render target command.
          */
         public pushResize(buffer:WebGLRenderBuffer, width:number, height:number) {
             let data = this.drawData[this.drawDataLen] || <IDrawData>{};
@@ -210,8 +217,8 @@ namespace egret.web {
             this.drawDataLen++;
         }
 
-        /*
-         * 压入clear color命令
+        /**
+         * Press the clear color command.
          */
         public pushClearColor() {
             let data = this.drawData[this.drawDataLen] || <IDrawData>{};
@@ -221,11 +228,11 @@ namespace egret.web {
         }
 
         /**
-         * 压入激活buffer命令
+         * Push the activate buffer command.
          */
         public pushActivateBuffer(buffer:WebGLRenderBuffer) {
             let len = this.drawDataLen;
-            // 有无遍历到有效绘图操作
+            // Have you traversed to an effective drawing operation.
             let drawState = false;
             for(let i = len - 1; i >= 0; i--) {
                 let data = this.drawData[i];
@@ -235,14 +242,14 @@ namespace egret.web {
                         drawState = true;
                     }
 
-                    // 如果与上一次buffer操作之间无有效绘图，上一次操作无效
+                    // If there is no valid drawing with the last buffer operation, the last operation is invalid.
                     if(!drawState && data.type == DRAWABLE_TYPE.ACT_BUFFER) {
                         this.drawData.splice(i, 1);
                         this.drawDataLen--;
                         continue;
                     }
 
-                    // 如果与上一次buffer操作重复，本次操作无效
+                    // If it is repeated with the last buffer operation, this operation is invalid.
                     // if(data.type == DRAWABLE_TYPE.ACT_BUFFER) {
                     //     if(data.buffer == buffer) {
                     //         return;
@@ -262,8 +269,8 @@ namespace egret.web {
             this.drawDataLen++;
         }
 
-        /*
-         * 压入enabel scissor命令
+        /**
+         * Press the enabel scissor command.
          */
         public pushEnableScissor(x:number, y:number, width:number, height:number) {
             let data = this.drawData[this.drawDataLen] || <IDrawData>{};
@@ -276,8 +283,8 @@ namespace egret.web {
             this.drawDataLen++;
         }
 
-        /*
-         * 压入disable scissor命令
+        /**
+         * Press the disable scissor command.
          */
         public pushDisableScissor() {
             let data = this.drawData[this.drawDataLen] || <IDrawData>{};
@@ -287,7 +294,7 @@ namespace egret.web {
         }
 
         /**
-         * 清空命令数组
+         * Clear command array.
          */
         public clear():void {
             for(let i = 0; i < this.drawDataLen; i++) {
@@ -307,9 +314,7 @@ namespace egret.web {
                 data.x = 0;
                 data.y = 0;
             }
-
             this.drawDataLen = 0;
         }
-
     }
 }

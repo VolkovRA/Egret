@@ -1,7 +1,7 @@
 /// <reference path="../i18n/tr.ts" />
 
-namespace egret {
-
+namespace egret
+{
     $locale_strings = $locale_strings || {};
     $locale_strings["en_US"] = $locale_strings["en_US"] || {};
     let locale_strings = $locale_strings["en_US"];
@@ -87,5 +87,4 @@ namespace egret {
 
     //4500-5000 platform
     locale_strings[4500] = "The platform does not support {0} adapter mode and has been automatically replaced with {1} mode, please modify your code adapter logic";
-
 }

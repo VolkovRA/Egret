@@ -27,6 +27,10 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../../events/EventDispatcher.ts" />
+/// <reference path="../SoundChannel.ts" />
+/// <reference path="../Sound.ts" />
+
 /**
  * @private
  */
@@ -41,12 +45,13 @@ interface AudioBufferSourceNodeEgret {
     disconnect();
 }
 
-namespace egret.web {
-
+namespace egret.web
+{
     /**
      * @private
      */
-    export class WebAudioDecode {
+    export class WebAudioDecode
+    {
         /**
          * @private
          */
@@ -56,6 +61,7 @@ namespace egret.web {
          * @private
          */
         public static decodeArr:any[] = [];
+
         /**
          * @private
          */
@@ -92,39 +98,25 @@ namespace egret.web {
                 WebAudioDecode.decodeAudios();
             });
         }
-
     }
 
     /**
      * @private
      * @inheritDoc
      */
-    export class WebAudioSound extends egret.EventDispatcher implements egret.Sound {
+    export class WebAudioSound extends egret.EventDispatcher implements egret.Sound
+    {
         /**
-         * Background music
+         * Background music.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 背景音乐
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public static MUSIC:string = "music";
 
         /**
-         * EFFECT
+         * Effect.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 音效
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public static EFFECT:string = "effect";
 
@@ -137,6 +129,7 @@ namespace egret.web {
          * @private
          */
         private url:string;
+
         /**
          * @private
          */
@@ -150,12 +143,10 @@ namespace egret.web {
             super();
         }
 
-
         /**
          * @private
          */
         private audioBuffer:AudioBuffer;
-
 
         public get length():number {
             if (this.audioBuffer) {
@@ -166,7 +157,6 @@ namespace egret.web {
 
             //return 0;
         }
-
 
         /**
          * @inheritDoc

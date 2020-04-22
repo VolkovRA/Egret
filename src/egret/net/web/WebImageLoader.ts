@@ -29,32 +29,36 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 /// <reference path="../../events/EventDispatcher.ts" />
+/// <reference path="../../events/Event.ts" />
+/// <reference path="../ImageLoader.ts" />
 
-namespace egret.web {
-
+namespace egret.web
+{
     let winURL = window["URL"] || window["webkitURL"];
 
     /**
      * @private
-     * ImageLoader 类可用于加载图像（JPG、PNG 或 GIF）文件。使用 load() 方法来启动加载。被加载的图像对象数据将存储在 ImageLoader.data 属性上 。
+     * ImageLoader Classes can be used to load image (JPG, PNG, or GIF) files. Use the load () method to start loading.
+     * The loaded image object data will be stored in the ImageLoader.data property.
      */
-    export class WebImageLoader extends EventDispatcher implements ImageLoader {
+    export class WebImageLoader extends EventDispatcher implements ImageLoader
+    {
         /**
          * @private
-         * 使用 load() 方法加载成功的 BitmapData 图像数据。
+         * Use the load () method to load the successful BitmapData image data.
          */
         public data:BitmapData = null;
 
         /**
          * @private
-         * 当从其他站点加载一个图片时，指定是否启用跨域资源共享(CORS)，默认值为null。
-         * 可以设置为"anonymous","use-credentials"或null,设置为其他值将等同于"anonymous"。
+         * When loading an image from another site, specify whether to enable cross-domain resource sharing (CORS), the default value is null.
+         * Can be set to "anonymous", "use-credentials" or null, set to other values will be equivalent to "anonymous".
          */
         private _crossOrigin:string = null;
 
         /**
          * @private
-         * 标记crossOrigin有没有被设置过,设置过之后使用设置的属性
+         * Mark whether crossOrigin has been set, use the set properties after setting.
          */
         private _hasCrossOriginSet:boolean = false;
 
@@ -69,7 +73,8 @@ namespace egret.web {
 
         /**
          * @private
-         * 指定是否启用跨域资源共享,如果ImageLoader实例有设置过crossOrigin属性将使用设置的属性
+         * Specify whether to enable cross-domain resource sharing.
+         * If the ImageLoader instance has the crossOrigin property set, the set property will be used.
          */
         public static crossOrigin:string = null;
 
@@ -90,15 +95,15 @@ namespace egret.web {
 
         /**
          * @private
-         * 启动一次图像加载。注意：若之前已经调用过加载请求，重新调用 load() 将终止先前的请求，并开始新的加载。
-         * @param url 要加载的图像文件的地址。
+         * Start an image load. Note: If the load request has already been called before, calling load () again will terminate the previous request and start a new load.
+         * @param url The address of the image file to be loaded.
          */
         public load(url:string):void {
             if (Html5Capatibility._canUseBlob
-                && url.indexOf("wxLocalResource:") != 0//微信专用不能使用 blob
+                && url.indexOf("wxLocalResource:") != 0 // We cannot use blob for WeChat.
                 && url.indexOf("data:") != 0
                 && url.indexOf("http:") != 0
-                && url.indexOf("https:") != 0) {//如果是base64编码或跨域访问的图片，直接使用Image.src解析。
+                && url.indexOf("https:") != 0) {// If it is a base64-encoded or cross-domain access picture, use Image.src directly to parse.
                 let request = this.request;
                 if (!request) {
                     request = this.request = new egret.web.WebHttpRequest();
@@ -149,7 +154,7 @@ namespace egret.web {
                 }
             }
             /*else {
-                if (image.hasAttribute("crossOrigin")) {//兼容猎豹
+                if (image.hasAttribute("crossOrigin")) {// Compatible with cheetah
                     image.removeAttribute("crossOrigin");
                 }
             }*/
@@ -213,7 +218,6 @@ namespace egret.web {
             this.currentImage = null;
             return image;
         }
-
     }
 
     ImageLoader = WebImageLoader;

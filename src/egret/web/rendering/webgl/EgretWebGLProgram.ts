@@ -27,8 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
-
+namespace egret.web
+{
     function loadShader(gl:WebGLRenderingContext, type:number, source:string):WebGLShader {
         let shader = gl.createShader(type);
 
@@ -38,7 +38,7 @@ namespace egret.web {
 
         let compiled = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
         if(!compiled) {
-            console.log("shader not compiled!");
+            console.log("Shader not compiled!");
             console.log(gl.getShaderInfoLog(shader));
         }
 
@@ -109,8 +109,8 @@ namespace egret.web {
         private static programCache:ProgramCache = {};
 
         /**
-         * 获取所需的WebGL Program
-         * @param key {string} 对于唯一的program程序，对应唯一的key 
+         * Get the required WebGL Program.
+         * @param key {string} For a unique program program, corresponding to a unique key.
          */
         public static getProgram(gl:WebGLRenderingContext, vertSource:string, fragSource:string, key:string):EgretWebGLProgram {
 

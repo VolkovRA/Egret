@@ -27,14 +27,14 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
-
+namespace egret.web
+{
     /**
      * @private
-     * XML节点基类
+     * XML Node base class.
      */
-    export class XMLNode {
-
+    export class XMLNode
+    {
         /**
          * @private
          */
@@ -45,22 +45,26 @@ namespace egret.web {
 
         /**
          * @private
-         * 节点类型，1：XML，2：XMLAttribute，3：XMLText
+         * Node type:
+         * * 1 - XML.
+         * * 2 - XMLAttribute.
+         * * 3 - XMLText.
          */
         public nodeType:number;
+
         /**
          * @private
-         * 节点所属的父级节点
+         * The parent node to which the node belongs.
          */
         public parent:XML;
     }
 
     /**
      * @private
-     * XML节点对象
+     * XML Node object.
      */
-    export class XML extends XMLNode {
-
+    export class XML extends XMLNode
+    {
         /**
          * @private
          */
@@ -74,41 +78,51 @@ namespace egret.web {
 
         /**
          * @private
-         * 当前节点上的属性列表
+         * List of attributes on the current node.
          */
         public attributes:{[key:string]:string} = {};
+
         /**
          * @private
-         * 当前节点的子节点列表
+         * List of children of current node.
          */
         public children:XMLNode[] = [];
+
         /**
          * @private
-         * 节点完整名称。例如节点 <s:Button/> 的 name 为：s:Button
+         * The full name of the node.
+         * For example, the name of the node <s Button/> is: s:Button
          */
         public name:string;
+
         /**
          * @private
-         * 节点的命名空间前缀。例如节点 <s:Button/> 的 prefix 为：s
+         * The namespace prefix of the node.
+         * For example, the prefix of node <s:Button/> is: s
          */
         public prefix:string;
+
         /**
          * @private
-         * 节点的本地名称。例如节点 <s:Button/> 的 localName 为：Button
+         * The local name of the node.
+         * For example, the localName of the node <s:Button/> is: Button
          */
         public localName:string;
+
         /**
          * @private
-         * 节点的命名空间地址。例如节点 <s:Skin xmlns:s="http://ns.egret.com/eui"/> 的 namespace 为： http://ns.egret.com/eui
+         * The namespace address of the node.
+         * For example, the namespace of the node <s:Skin xmlns: s="http://ns.egret.com/eui"/> is: http://ns.egret.com/eui
          */
         public namespace:string;
     }
 
     /**
      * @private
-     * XML文本节点
+     * XML Text node.
      */
-    export class XMLText extends XMLNode {
+    export class XMLText extends XMLNode
+    {
         /**
          * @private
          */
@@ -119,18 +133,17 @@ namespace egret.web {
 
         /**
          * @private
-         * 文本内容
+         * Text content.
          */
         public text:string;
     }
-
 
     let parser = new DOMParser();
 
     /**
      * @private
-     * 解析字符串为XML对象
-     * @param text 要解析的字符串
+     * Parse the string as an XML object.
+     * @param text The string to be parsed.
      */
     function parse(text:string):XML {
         let xmlDoc = parser.parseFromString(text, "text/xml");
@@ -141,17 +154,19 @@ namespace egret.web {
                 return parseNode(node, null);
             }
         }
+        
         return null;
     }
 
     /**
      * @private
-     * 解析一个节点
+     * Resolve a node.
      */
     function parseNode(node:Node, parent:XML):XML {
         if(node["localName"]=="parsererror"){
             throw new Error(node.textContent);
         }
+
         let xml = new XML(node["localName"], parent, node["prefix"], node.namespaceURI, node.nodeName);
         let nodeAttributes = node["attributes"];
         let attributes = xml.attributes;
@@ -165,6 +180,7 @@ namespace egret.web {
             attributes[name] = attributeNode.value;
             xml["$" + name] = attributeNode.value;
         }
+        
         let childNodes = node.childNodes;
         length = childNodes.length;
         let children = xml.children;

@@ -27,15 +27,21 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="StageText.ts" />
+/// <reference path="TextField.ts" />
 /// <reference path="../utils/HashObject.ts" />
+/// <reference path="../events/TouchEvent.ts" />
+/// <reference path="../events/FocusEvent.ts" />
 
-namespace egret {
+namespace egret
+{
     /**
      * @private
      * @version Egret 2.4
      * @platform Web,Native
      */
-    export class InputController extends HashObject {
+    export class InputController extends HashObject
+    {
         /**
          * @private
          */
@@ -55,6 +61,7 @@ namespace egret {
          * @private
          */
         private _isFocus: boolean = false;
+
         /**
          * @version Egret 2.4
          * @platform Web,Native
@@ -74,7 +81,7 @@ namespace egret {
             this.stageText = new egret.StageText();
             this.stageText.$setTextField(this._text);
         }
-
+        
         /**
          * @private
          * 
@@ -103,7 +110,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          */
         public _removeStageText(): void {
             if (!this.stageTextAdded) {
@@ -128,7 +134,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          * @returns 
          */
         public _getText(): string {
@@ -137,7 +142,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          * @param value 
          */
         public _setText(value: string) {
@@ -152,11 +156,10 @@ namespace egret {
 
         /**
          * @private
-         * 
          * @param event 
          */
         private focusHandler(event: Event): void {
-            //不再显示竖线，并且输入框显示最开始
+            // The vertical line is no longer displayed, and the input box is displayed at the beginning.
             if (!this._isFocus) {
                 this._isFocus = true;
                 if (!event["showing"]) {
@@ -169,25 +172,25 @@ namespace egret {
 
         /**
          * @private
-         * 
          * @param event 
          */
         private blurHandler(event: Event): void {
             if (this._isFocus) {
-                //不再显示竖线，并且输入框显示最开始
+                // The vertical line is no longer displayed, and the input box is displayed at the beginning.
                 this._isFocus = false;
                 this.tempStage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onStageDownHandler, this);
 
                 this._text.$setIsTyping(false);
-                //失去焦点后调用
+                // Called after losing focus.
                 this.stageText.$onBlur();
 
                 this._text.dispatchEvent(new egret.FocusEvent(egret.FocusEvent.FOCUS_OUT, true));
             }
         }
-
+        
         private tempStage: egret.Stage;
-        //点中文本
+
+        // Click on the text
         private onMouseDownHandler(event: TouchEvent) {
             this.$onFocus();
         }
@@ -215,20 +218,19 @@ namespace egret {
                 this.stageText.$setText(this._text.$TextField[egret.sys.TextKeys.text]);
             }
 
-            //强制更新输入框位置
+            // Force update of input box position.
             this.stageText.$show();
         }
 
-        //未点中文本
+        // Unclicked text.
         private onStageDownHandler(event: TouchEvent) {
             if (event.$target != this._text) {
                 this.stageText.$hide();
             }
         }
-
+        
         /**
          * @private
-         * 
          * @param event 
          */
         private updateTextHandler(event: Event): void {
@@ -237,7 +239,7 @@ namespace egret {
             let isChanged: boolean = false;
             let reg: RegExp;
             let result: string[];
-            if (values[sys.TextKeys.restrictAnd] != null) {//内匹配
+            if (values[sys.TextKeys.restrictAnd] != null) { // Inner match.
                 reg = new RegExp("[" + values[sys.TextKeys.restrictAnd] + "]", "g");
                 result = textValue.match(reg);
                 if (result) {
@@ -248,7 +250,7 @@ namespace egret {
                 }
                 isChanged = true;
             }
-            if (values[sys.TextKeys.restrictNot] != null) {//外匹配
+            if (values[sys.TextKeys.restrictNot] != null) { // Outer match.
                 reg = new RegExp("[^" + values[sys.TextKeys.restrictNot] + "]", "g");
                 result = textValue.match(reg);
                 if (result) {
@@ -265,13 +267,12 @@ namespace egret {
             }
             this.resetText();
 
-            //抛出change事件
+            // Throw change event.
             this._text.dispatchEvent(new egret.Event(egret.Event.CHANGE, true));
         }
 
         /**
          * @private
-         * 
          */
         private resetText(): void {
             this._text.$setBaseText(this.stageText.$getText());
@@ -279,7 +280,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          */
         public _hideInput(): void {
             this.stageText.$removeFromStage();
@@ -287,7 +287,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          */
         private updateInput(): void {//
             if (!this._text.$visible && this.stageText) {
@@ -297,11 +296,10 @@ namespace egret {
 
         /**
          * @private
-         * 
          */
         public _updateProperties(): void {
             if (this._isFocus) {
-                //整体修改
+                // Overall modification.
                 this.stageText.$resetStageText();
                 this.updateInput();
                 return;
@@ -309,7 +307,7 @@ namespace egret {
 
             this.stageText.$setText(this._text.$TextField[egret.sys.TextKeys.text]);
 
-            //整体修改
+            // Overall modification.
             this.stageText.$resetStageText();
 
             this.updateInput();

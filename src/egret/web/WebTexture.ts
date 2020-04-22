@@ -27,9 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace egret.web {
-
+namespace egret.web
+{
     let sharedCanvas: HTMLCanvasElement;
     let sharedContext: CanvasRenderingContext2D;
 
@@ -67,7 +66,7 @@ namespace egret.web {
 
         if (Capabilities.renderMode == "webgl") {
             let renderTexture: RenderTexture;
-            //webgl下非RenderTexture纹理先画到RenderTexture
+            // The non-RenderTexture texture under webgl is first drawn to the RenderTexture
             if (!(<RenderTexture>texture).$renderBuffer) {
                 renderTexture = new egret.RenderTexture();
                 renderTexture.drawToTexture(new egret.Bitmap(texture));
@@ -75,7 +74,7 @@ namespace egret.web {
             else {
                 renderTexture = <RenderTexture>texture;
             }
-            //从RenderTexture中读取像素数据，填入canvas
+            // Read pixel data from RenderTexture and fill in canvas
             let pixels = renderTexture.$renderBuffer.getPixels(rect.x, rect.y, iWidth, iHeight);
             let imageData = new ImageData(iWidth, iHeight);
             for (let i = 0; i < pixels.length; i++) {
@@ -97,6 +96,7 @@ namespace egret.web {
             let bitmapHeight: number = bitmapData.$bitmapHeight;
             sharedContext.drawImage(bitmapData.$bitmapData.source, bitmapData.$bitmapX + rect.x / $TextureScaleFactor, bitmapData.$bitmapY + rect.y / $TextureScaleFactor,
                 bitmapWidth * rect.width / w, bitmapHeight * rect.height / h, offsetX, offsetY, rect.width, rect.height);
+            
             return surface;
         }
     }
@@ -113,11 +113,12 @@ namespace egret.web {
         catch (e) {
             egret.error(1033);
         }
+
         return null;
     }
 
     /**
-     * 有些杀毒软件认为 saveToFile 可能是一个病毒文件
+     * Some antivirus software thinks that saveToFile may be a virus file.
      */
     function eliFoTevas(type: string, filePath: string, rect?: egret.Rectangle, encoderOptions?): void {
         let base64 = toDataURL.call(this, type, rect, encoderOptions);
@@ -141,10 +142,10 @@ namespace egret.web {
     }
 
     function getPixels(x: number, y: number, width: number = 1, height: number = 1): number[] {
-        //webgl环境下不需要转换成canvas获取像素信息
+        // No need to convert to canvas to get pixel information in webgl environment
         if (Capabilities.renderMode == "webgl") {
             let renderTexture: RenderTexture;
-            //webgl下非RenderTexture纹理先画到RenderTexture
+            // The non-RenderTexture texture under webgl is first drawn to the RenderTexture
             if (!(<RenderTexture>this).$renderBuffer) {
                 renderTexture = new egret.RenderTexture();
                 renderTexture.drawToTexture(new egret.Bitmap(this));
@@ -152,7 +153,7 @@ namespace egret.web {
             else {
                 renderTexture = <RenderTexture>this;
             }
-            //从RenderTexture中读取像素数据
+            // Read pixel data from RenderTexture
             let pixels = renderTexture.$renderBuffer.getPixels(x, y, width, height);
             return pixels;
         }

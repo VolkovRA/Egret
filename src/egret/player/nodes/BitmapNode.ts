@@ -27,60 +27,73 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../../display/BitmapData.ts" />
+/// <reference path="../../geom/Rectangle.ts" />
+/// <reference path="../../geom/Matrix.ts" />
+/// <reference path="../../filters/ColorMatrixFilter.ts" />
 /// <reference path="RenderNode.ts" />
+/// <reference path="NormalBitmapNode.ts" />
 
-namespace egret.sys {
-
-
-
+namespace egret.sys
+{
     /**
      * @private
-     * 位图渲染节点
+     * Bitmap rendering node.
      */
-    export class BitmapNode extends RenderNode {
-
+    export class BitmapNode extends RenderNode
+    {
         public constructor() {
             super();
             this.type = RenderNodeType.BitmapNode;
         }
+
         /**
-         * 要绘制的位图
+         * Bitmap to draw.
          */
         public image: BitmapData = null;
+
         /**
-         * 控制在缩放时是否对位图进行平滑处理。
+         * Controls whether to smooth the bitmap when zooming.
          */
         public smoothing: boolean = true;
+
         /**
-         * 相对偏移矩阵。
+         * Relative offset matrix.
          */
         public matrix: egret.Matrix;
+
         /**
-         * 图片宽度。WebGL渲染使用
+         * Picture width. WebGL rendering use.
          */
         public imageWidth: number;
+
         /**
-         * 图片高度。WebGL渲染使用
+         * Picture height. WebGL rendering use.
          */
         public imageHeight: number;
+
         /**
-         * 使用的混合模式
+         * Mixed mode used.
          */
         public blendMode: number = null;
+
         /**
-         * 相对透明度
+         * Relative transparency.
          */
         public alpha: number = NaN;
+
         /**
-         * 颜色变换滤镜
+         * Color transformation filter.
          */
         public filter: ColorMatrixFilter = null;
+
         /**
-         * 翻转
+         * Flip.
          */
         public rotated: boolean = false;
+
         /**
-         * 绘制一次位图
+         * Draw a bitmap.
          */
         public drawImage(sourceX: number, sourceY: number, sourceW: number, sourceH: number,
             drawX: number, drawY: number, drawW: number, drawH: number): void {
@@ -89,7 +102,7 @@ namespace egret.sys {
         }
 
         /**
-         * 在显示对象的$updateRenderNode()方法被调用前，自动清空自身的drawData数据。
+         * Before the $ updateRenderNode () method of the display object is called, it automatically clears its own drawData data.
          */
         public cleanBeforeRender(): void {
             super.cleanBeforeRender();
@@ -143,7 +156,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 绘制九宫格位图
+         * Draw the nine-grid bitmap.
          */
         static $updateTextureDataWithScale9Grid(node: sys.NormalBitmapNode, image: BitmapData, scale9Grid: egret.Rectangle, bitmapX: number, bitmapY: number,
             bitmapWidth: number, bitmapHeight: number, offsetX: number, offsetY: number,
@@ -168,7 +181,7 @@ namespace egret.sys {
             let sourceH1 = scale9Grid.height / $TextureScaleFactor;
 
 
-            //防止空心的情况出现。
+            // Prevent the appearance of hollow.
             if (sourceH1 == 0) {
                 sourceH1 = 1;
                 if (sourceH0 >= imageHeight) {

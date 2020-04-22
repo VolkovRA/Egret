@@ -27,12 +27,13 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+namespace egret.web
+{
     /**
      * @private 
      */
-    export class EgretWebGLUniform {
-
+    export class EgretWebGLUniform
+    {
         private gl:WebGLRenderingContext;
 
         private name:string;

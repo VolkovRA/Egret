@@ -26,7 +26,13 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-namespace egret.sys {
+
+/// <reference path="Player.ts" />
+/// <reference path="../events/Event.ts" />
+/// <reference path="../display/Stage.ts" />
+
+namespace egret.sys
+{
     /**
      * @private
      */
@@ -34,19 +40,21 @@ namespace egret.sys {
 
     /**
      * @private
-     * 是否要广播Event.RENDER事件的标志。
+     * Whether to broadcast the Event.RENDER event flag.
      */
     export let $invalidateRenderFlag: boolean = false;
+
     /**
      * @private
-     * 需要立即刷新屏幕的标志
+     * Need to refresh the screen immediately.
      */
     export let $requestRenderingFlag: boolean = false;
 
     /**
-     * Egret心跳计时器
+     * Egret heartbeat timer.
      */
-    export class SystemTicker {
+    export class SystemTicker
+    {
         /**
          * @private
          */
@@ -63,7 +71,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 注册一个播放器实例并运行
+         * Register a player instance and run.
          */
         $addPlayer(player: Player): void {
             if (this.playerList.indexOf(player) != -1) {
@@ -76,7 +84,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 停止一个播放器实例的运行。
+         * Stop the running of a player instance.
          */
         $removePlayer(player: Player): void {
             let index = this.playerList.indexOf(player);
@@ -90,6 +98,7 @@ namespace egret.sys {
          * @private
          */
         private callBackList: Function[] = [];
+
         /**
          * @private
          */
@@ -129,7 +138,7 @@ namespace egret.sys {
             let thisObjectList = this.thisObjectList;
             for (let i = callBackList.length - 1; i >= 0; i--) {
                 if (callBackList[i] == callBack &&
-                    thisObjectList[i] == thisObject) {//这里不能用===，因为有可能传入undefined和null.
+                    thisObjectList[i] == thisObject) { // === cannot be used here, because it is possible to pass in undefined and null.
                     return i;
                 }
             }
@@ -147,7 +156,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 全局帧率
+         * Global frame rate.
          */
         $frameRate: number = 30;
 
@@ -155,10 +164,12 @@ namespace egret.sys {
          * @private
          */
         private frameInterval: number;
+
         /**
          * @private
          */
         private frameDeltaTime: number;
+
         /**
          * @private
          */
@@ -166,7 +177,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 设置全局帧率
+         * Set global frame rate.
          */
         $setFrameRate(value: number): boolean {
             if (value <= 0) {
@@ -180,7 +191,7 @@ namespace egret.sys {
                 value = 60;
             }
             this.frameDeltaTime = 1000 / value;
-            //这里用60*1000来避免浮点数计算不准确的问题。
+            // Here 60 * 1000 is used to avoid the problem of inaccurate calculation of floating point numbers.
             this.lastCount = this.frameInterval = Math.round(60000 / value);
             return true;
         }
@@ -189,16 +200,16 @@ namespace egret.sys {
          * @private
          */
         private lastCount: number;
+
         /**
          * @private
-         * ticker 花销的时间
+         * Ticker time spent.
          */
         private costEnterFrame: number = 0;
 
-
         /**
          * @private
-         * 是否被暂停
+         * Whether to be suspended.
          */
         private isPaused: boolean = false;
 
@@ -206,13 +217,6 @@ namespace egret.sys {
          * Pause the ticker.
          * @version Egret 5.0.2
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 暂停心跳
-         * @version Egret 5.0.2
-         * @platform Web,Native
-         * @language zh_CN
          */
         public pause(): void {
             this.isPaused = true;
@@ -222,13 +226,6 @@ namespace egret.sys {
          * Resume the ticker.
          * @version Egret 5.0.2
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 恢复心跳
-         * @version Egret 5.0.2
-         * @platform Web,Native
-         * @language zh_CN
          */
         public resume(): void {
             this.isPaused = false;
@@ -236,7 +233,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 执行一次刷新
+         * Perform a refresh.
          */
         public update(forceUpdate?: boolean): void {
             let t1 = egret.getTimer();
@@ -286,7 +283,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 执行一次屏幕渲染
+         * Perform a screen rendering.
          */
         private render(triggerByFrame: boolean, costTicker: number): void {
             let playerList = this.playerList;
@@ -307,7 +304,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 广播EnterFrame事件。
+         * Broadcast EnterFrame event.
          */
         private broadcastEnterFrame(): void {
             let list: any[] = DisplayObject.$enterFrameCallBackList;
@@ -323,7 +320,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 广播Render事件。
+         * Broadcast Render events.
          */
         private broadcastRender(): void {
             let list = DisplayObject.$renderCallBackList;
@@ -481,7 +478,7 @@ module egret {
     }
 
     /**
-     * 心跳计时器单例
+     * Single heartbeat timer.
      */
     export let ticker: sys.SystemTicker = new sys.SystemTicker();
 }

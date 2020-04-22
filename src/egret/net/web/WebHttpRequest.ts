@@ -27,15 +27,16 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../../events/IOErrorEvent.ts" />
 /// <reference path="../../events/EventDispatcher.ts" />
 
-namespace egret.web {
-
+namespace egret.web
+{
     /**
      * @private
      */
-    export class WebHttpRequest extends EventDispatcher implements HttpRequest {
-
+    export class WebHttpRequest extends EventDispatcher implements HttpRequest
+    {
         /**
          * @private
          */
@@ -55,9 +56,8 @@ namespace egret.web {
 
         /**
          * @private
-         * 本次请求返回的数据，数据类型根据responseType设置的值确定。
+         * The data returned by this request is determined by the value set in responseType.
          */
-
         public get response(): any {
             if (!this._xhr) {
                 return null;
@@ -96,7 +96,8 @@ namespace egret.web {
 
         /**
          * @private
-         * 设置返回的数据格式，请使用 HttpResponseType 里定义的枚举值。设置非法的值或不设置，都将使用HttpResponseType.TEXT。
+         * To set the returned data format, please use the enumeration value defined in HttpResponseType.
+         * Setting an illegal value or not setting will use HttpResponseType.TEXT.
          */
         public get responseType(): "" | "arraybuffer" | "blob" | "document" | "json" | "text" {
             return this._responseType;
@@ -113,7 +114,8 @@ namespace egret.web {
 
         /**
          * @private
-         * 表明在进行跨站(cross-site)的访问控制(Access-Control)请求时，是否使用认证信息(例如cookie或授权的header)。 默认为 false。(这个标志不会影响同站的请求)
+         * Indicates whether to use authentication information (such as cookies or authorized headers) when making cross-site access control (Access-Control) requests.
+         * The default is false. (This flag will not affect requests from the same site)
          */
         public get withCredentials(): boolean {
             return this._withCredentials;
@@ -131,7 +133,6 @@ namespace egret.web {
 
         /**
          * @private
-         *
          * @returns
          */
         private getXHR(): any {
@@ -144,9 +145,9 @@ namespace egret.web {
 
         /**
          * @private
-         * 初始化一个请求.注意，若在已经发出请求的对象上调用此方法，相当于立即调用abort().
-         * @param url 该请求所要访问的URL该请求所要访问的URL
-         * @param method 请求所使用的HTTP方法， 请使用 HttpMethod 定义的枚举值.
+         * Initialize a request. Note that calling this method on an object that has already made a request is equivalent to calling abort () immediately.
+         * @param url URL to be accessed by the request URL to be accessed by the request.
+         * @param method The HTTP method used for the request, please use the enumeration value defined by HttpMethod.
          */
         public open(url: string, method: string = "GET"): void {
             this._url = url;
@@ -155,7 +156,7 @@ namespace egret.web {
                 this._xhr.abort();
                 this._xhr = null;
             }
-            let xhr = this.getXHR();//new XMLHttpRequest();
+            let xhr = this.getXHR(); // new XMLHttpRequest();
             if (window["XMLHttpRequest"]) {
                 xhr.addEventListener("load", this.onload.bind(this));
                 xhr.addEventListener("error", this.onerror.bind(this));
@@ -170,8 +171,8 @@ namespace egret.web {
 
         /**
          * @private
-         * 发送请求.
-         * @param data 需要发送的数据
+         * Send request.
+         * @param data Data to be sent.
          */
         public send(data?: any): void {
             if (this._responseType != null) {
@@ -191,7 +192,7 @@ namespace egret.web {
 
         /**
          * @private
-         * 如果请求已经被发送,则立刻中止请求.
+         * If the request has been sent, the request is aborted immediately.
          */
         public abort(): void {
             if (this._xhr) {
@@ -201,7 +202,7 @@ namespace egret.web {
 
         /**
          * @private
-         * 返回所有响应头信息(响应头名和值), 如果响应头还没接受,则返回"".
+         * Return all response header information (response header name and value), if the response header has not been accepted, then return "".
          */
         public getAllResponseHeaders(): string {
             if (!this._xhr) {
@@ -212,11 +213,12 @@ namespace egret.web {
         }
 
         private headerObj: any;
+
         /**
          * @private
-         * 给指定的HTTP请求头赋值.在这之前,您必须确认已经调用 open() 方法打开了一个url.
-         * @param header 将要被赋值的请求头名称.
-         * @param value 给指定的请求头赋的值.
+         * Assign a value to the specified HTTP request header. Before that, you must confirm that a url has been opened by calling the open () method.
+         * @param header The name of the request header to be assigned.
+         * @param value The value assigned to the specified request header.
          */
         public setRequestHeader(header: string, value: string): void {
             if (!this.headerObj) {
@@ -227,8 +229,8 @@ namespace egret.web {
 
         /**
          * @private
-         * 返回指定的响应头的值, 如果响应头还没被接受,或该响应头不存在,则返回"".
-         * @param header 要返回的响应头名称
+         * Returns the value of the specified response header, if the response header has not been accepted, or the response header does not exist, it returns "".
+         * @param header The name of the response header to be returned.
          */
         public getResponseHeader(header: string): string {
             if (!this._xhr) {
@@ -237,6 +239,7 @@ namespace egret.web {
             let result = this._xhr.getResponseHeader(header);
             return result ? result : "";
         }
+
         /**
          * @private
          */
@@ -254,7 +257,7 @@ namespace egret.web {
                 let url = this._url;
                 let self = this;
                 window.setTimeout(function (): void {
-                    if (ioError) {//请求错误
+                    if (ioError) {//Request error
                         self.dispatchEventWith(IOErrorEvent.IO_ERROR);
                     }
                     else {
@@ -274,7 +277,6 @@ namespace egret.web {
             }
         }
 
-
         /**
          * @private
          */
@@ -284,7 +286,7 @@ namespace egret.web {
             let url = this._url;
             let ioError = (xhr.status >= 400);
             window.setTimeout(function (): void {
-                if (ioError) {//请求错误
+                if (ioError) {//Request error
                     self.dispatchEventWith(IOErrorEvent.IO_ERROR);
                 }
                 else {
@@ -305,5 +307,4 @@ namespace egret.web {
         }
     }
     HttpRequest = WebHttpRequest;
-
 }

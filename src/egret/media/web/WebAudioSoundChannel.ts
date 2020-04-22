@@ -27,23 +27,27 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+/// <reference path="../../events/EventDispatcher.ts" />
+/// <reference path="../SoundChannel.ts" />
 
+namespace egret.web
+{
     /**
      * @private
      * @inheritDoc
      */
-    export class WebAudioSoundChannel extends egret.EventDispatcher implements egret.SoundChannel {
-
-
+    export class WebAudioSoundChannel extends egret.EventDispatcher implements egret.SoundChannel
+    {
         /**
          * @private
          */
         $url:string;
+
         /**
          * @private
          */
         $loops:number;
+
         /**
          * @private
          */
@@ -51,14 +55,16 @@ namespace egret.web {
 
         /**
          * @private
-         * audio音频对象
+         * Audio object.
          * @member {any} egret.Sound#audio
          */
         $audioBuffer:AudioBuffer;
+
         /**
          * @private
          */
         private gain;
+
         /**
          * @private
          */
@@ -69,7 +75,7 @@ namespace egret.web {
          */
         private context = WebAudioDecode.ctx;
 
-        //声音是否已经播放完成
+        // Whether the sound has been played.
         private isStopped:boolean = false;
 
         /**
@@ -90,6 +96,7 @@ namespace egret.web {
          * @private
          */
         private _currentTime:number = 0;
+
         /**
          * @private
          */
@@ -186,6 +193,7 @@ namespace egret.web {
          * @private
          */
         private _startTime:number = 0;
+        
         /**
          * @private
          * @inheritDoc

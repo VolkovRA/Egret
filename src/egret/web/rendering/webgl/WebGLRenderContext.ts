@@ -27,48 +27,59 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+/// <reference path="WebGLRenderBuffer.ts" />
+/// <reference path="EgretWebGLProgram.ts" />
+/// <reference path="shaders/EgretShaderLib.ts" />
+/// <reference path="../../../display/BitmapData.ts" />
+/// <reference path="../../../filters/BlurFilter.ts" />
+/// <reference path="../../../filters/ColorMatrixFilter.ts" />
 
+namespace egret.web
+{
     ///
-    interface SupportedCompressedTextureInfo {
+    interface SupportedCompressedTextureInfo
+    {
         extensionName: string,
         supportedFormats: Array<[string, number]>,
     }
 
-    //TO DO
+    // TO DO
     const debugLogCompressedTextureNotSupported = {};
 
     /**
      * @private
-     * WebGL上下文对象，提供简单的绘图接口
-     * 抽象出此类，以实现共用一个context
+     * WebGL context object, providing a simple drawing interface.
+     * Abstract this class to share a context.
      */
-    export class WebGLRenderContext implements egret.sys.RenderContext {
-
+    export class WebGLRenderContext implements egret.sys.RenderContext
+    {
         public static antialias: boolean;
 
         //
         public _defaultEmptyTexture: WebGLTexture = null;
 
         /**
-         * 渲染上下文
+         * Rendering context.
          */
         public context: WebGLRenderingContext;
+
         /**
-         * 呈现最终绘图结果的画布
+         * Canvas that presents the final drawing result.
          */
         public surface: HTMLCanvasElement;
 
         /**
-         * WebGLRenderContext单例
+         * WebGLRenderContext.
+         * Singleton.
          */
         private static instance: WebGLRenderContext;
-        //for 3D&2D
+
+        // for 3D&2D
         public static getInstance(width?: number, height?: number, context?: WebGLRenderingContext): WebGLRenderContext {
             if (this.instance) {
                 return this.instance;
             }
-            //for 3D&2D
+            // for 3D&2D
             this.instance = new WebGLRenderContext(width, height, context);
             return this.instance;
         }
@@ -76,34 +87,32 @@ namespace egret.web {
         public $maxTextureSize: number;
 
         /**
-         * 顶点数组管理器
+         * Vertex array manager.
          */
         private vao: WebGLVertexArrayObject;
 
         /**
-         * 绘制命令管理器
+         * Drawing command manager.
          */
         public drawCmdManager: WebGLDrawCmdManager;
 
         /**
-         * render buffer 堆栈
+         * Render buffer stack.
          */
         public $bufferStack: WebGLRenderBuffer[];
 
         /**
-         * 当前绑定的render buffer
+         * Currently bound render buffer.
          */
         private currentBuffer: WebGLRenderBuffer;
 
         /**
-         * 推入一个RenderBuffer并绑定
+         * Push in a RenderBuffer and bind.
          */
         public pushBuffer(buffer: WebGLRenderBuffer): void {
-
             this.$bufferStack.push(buffer);
 
             if (buffer != this.currentBuffer) {
-
                 if (this.currentBuffer) {
                     // this.$drawWebGL();
                 }
@@ -112,24 +121,22 @@ namespace egret.web {
             }
 
             this.currentBuffer = buffer;
-
         }
 
         /**
-         * 推出一个RenderBuffer并绑定上一个RenderBuffer
+         * Launch a RenderBuffer and bind a RenderBuffer.
          */
         public popBuffer(): void {
-            // 如果只剩下一个buffer，则不执行pop操作
-            // 保证舞台buffer永远在最开始
+            // If there is only one buffer left, no pop operation is performed.
+            // Ensure that the stage buffer is always at the beginning.
             if (this.$bufferStack.length <= 1) {
                 return;
             }
 
             let buffer = this.$bufferStack.pop();
-
             let lastBuffer = this.$bufferStack[this.$bufferStack.length - 1];
 
-            // 重新绑定
+            // Rebind
             if (buffer != lastBuffer) {
                 // this.$drawWebGL();
 
@@ -140,8 +147,9 @@ namespace egret.web {
         }
 
         private bindIndices: boolean;
+
         /**
-         * 启用RenderBuffer
+         * Enable RenderBuffer.
          */
         private activateBuffer(buffer: WebGLRenderBuffer, width: number, height: number): void {
 
@@ -159,7 +167,7 @@ namespace egret.web {
         }
 
         /**
-         * 上传顶点数据
+         * Upload vertex data.
          */
         private uploadVerticesArray(array: any): void {
             let gl: any = this.context;
@@ -169,7 +177,7 @@ namespace egret.web {
         }
 
         /**
-         * 上传索引数据
+         * Upload index data.
          */
         private uploadIndicesArray(array: any): void {
             let gl: any = this.context;
@@ -189,7 +197,7 @@ namespace egret.web {
                 return;
             }
 
-            //for 3D&2D
+            // for 3D&2D
             this.initWebGL(context);
 
             this.getSupportedCompressedTexture();
@@ -210,7 +218,7 @@ namespace egret.web {
         }
 
         /**
-         * 销毁绘制对象
+         * Destroy the drawing object.
          */
         public destroy(): void {
             this.surface.width = this.surface.height = 0;
@@ -227,10 +235,10 @@ namespace egret.web {
         }
 
         /**
-         * 改变渲染缓冲的大小并清空缓冲区
-         * @param width 改变后的宽
-         * @param height 改变后的高
-         * @param useMaxSize 若传入true，则将改变后的尺寸与已有尺寸对比，保留较大的尺寸。
+         * Change the size of the rendering buffer and clear the buffer.
+         * @param width The changed width.
+         * @param height Changed height.
+         * @param useMaxSize If true is passed, the changed size is compared with the existing size, and the larger size is retained.
          */
         public resize(width: number, height: number, useMaxSize?: boolean): void {
             egret.sys.resizeContext(this, width, height, useMaxSize);
@@ -265,7 +273,7 @@ namespace egret.web {
 
         public contextLost: boolean = false;
 
-        //refactor
+        // refactor
         private _supportedCompressedTextureInfo: SupportedCompressedTextureInfo[] = [];
         public pvrtc: any;
         public etc1: any;
@@ -296,7 +304,7 @@ namespace egret.web {
             return returnValue;
         }
 
-        //for 3D&2D
+        // for 3D&2D
         private initWebGL(context?: WebGLRenderingContext): void {
             this.onResize();
 
@@ -323,7 +331,6 @@ namespace egret.web {
             //     'WEBGL_compressed_texture_s3tc', 'WEBKIT_WEBGL_compressed_texture_s3tc',
             //     'WEBGL_compressed_texture_es3_0'];
             //
-
         }
 
         public getSupportedCompressedTexture() {
@@ -345,8 +352,6 @@ namespace egret.web {
             this._supportedCompressedTextureInfo = this._buildSupportedCompressedTextureInfo(/*this.context, compressedTextureExNames,*/[this.etc1, this.pvrtc]);
         }
 
-
-
         private handleContextLost() {
             this.contextLost = true;
         }
@@ -360,11 +365,11 @@ namespace egret.web {
             /*
             let options = {
                 antialias: WebGLRenderContext.antialias,
-                stencil: true//设置可以使用模板（用于不规则遮罩）
+                stencil: true // Settings can use templates (for irregular masks)
             };
             let gl: any;
-            //todo 是否使用chrome源码names
-            //let contextNames = ["moz-webgl", "webkit-3d", "experimental-webgl", "webgl", "3d"];
+            // todo whether to use chrome source names
+            // let contextNames = ["moz-webgl", "webkit-3d", "experimental-webgl", "webgl", "3d"];
             let names = ["webgl", "experimental-webgl"];
             for (let i = 0; i < names.length; i++) {
                 try {
@@ -394,12 +399,12 @@ namespace egret.web {
             gl.enable(gl.BLEND);
             gl.colorMask(true, true, true, true);
 
-            // 目前只使用0号材质单元，默认开启
+            // Currently only use material unit No. 0, open by default
             gl.activeTexture(gl.TEXTURE0);
         }
 
         /**
-         * 开启模版检测
+         * Turn on template detection.
          */
         public enableStencilTest(): void {
             let gl: any = this.context;
@@ -407,7 +412,7 @@ namespace egret.web {
         }
 
         /**
-         * 关闭模版检测
+         * Turn off template detection.
          */
         public disableStencilTest(): void {
             let gl: any = this.context;
@@ -415,7 +420,7 @@ namespace egret.web {
         }
 
         /**
-         * 开启scissor检测
+         * Turn on scissor detection.
          */
         public enableScissorTest(rect: egret.Rectangle): void {
             let gl: any = this.context;
@@ -424,7 +429,7 @@ namespace egret.web {
         }
 
         /**
-         * 关闭scissor检测
+         * Turn off scissor detection.
          */
         public disableScissorTest(): void {
             let gl: any = this.context;
@@ -432,7 +437,7 @@ namespace egret.web {
         }
 
         /**
-         * 获取像素信息
+         * Get pixel information.
          */
         public getPixels(x, y, width, height, pixels): void {
             let gl: any = this.context;
@@ -440,15 +445,15 @@ namespace egret.web {
         }
 
         /**
-         * 创建一个WebGLTexture
+         * Create a WebGLTexture.
          */
         public createTexture(bitmapData: BitmapData | HTMLCanvasElement): WebGLTexture {
             return egret.sys.createTexture(this, bitmapData);
         }
 
-        /*
-        * TO DO
-        */
+        /**
+         * TO DO
+         */
         private checkCompressedTextureInternalFormat(supportedCompressedTextureInfo: SupportedCompressedTextureInfo[], internalFormat: number): boolean {
             //width: number, height: number max ?
             for (let i = 0, length = supportedCompressedTextureInfo.length; i < length; ++i) {
@@ -469,9 +474,9 @@ namespace egret.web {
             return false;
         }
 
-        /*
-        * TO DO
-        */
+        /**
+         * TO DO
+         */
         private $debugLogCompressedTextureNotSupported(supportedCompressedTextureInfo: SupportedCompressedTextureInfo[], internalFormat: number): void {
             if (!debugLogCompressedTextureNotSupported[internalFormat]) {
                 debugLogCompressedTextureNotSupported[internalFormat] = true;
@@ -518,7 +523,7 @@ namespace egret.web {
         }
 
         /**
-         * 更新材质的bitmapData
+         * Update the bitmapData of the material.
          */
         public updateTexture(texture: WebGLTexture, bitmapData: BitmapData): void {
             let gl: any = this.context;
@@ -530,7 +535,7 @@ namespace egret.web {
             if (!this._defaultEmptyTexture) {
                 const size = 16;
                 const canvas = egret.sys.createCanvas(size, size);
-                const context = egret.sys.getContext2d(canvas);//canvas.getContext('2d');
+                const context = egret.sys.getContext2d(canvas); // canvas.getContext('2d');
                 context.fillStyle = 'white';
                 context.fillRect(0, 0, size, size);
                 this._defaultEmptyTexture = this.createTexture(canvas);
@@ -571,7 +576,7 @@ namespace egret.web {
                     bitmapData.clearCompressedTextureData();
                 }
                 if (bitmapData.webGLTexture) {
-                    //todo 默认值
+                    //todo defaults
                     bitmapData.webGLTexture["smoothing"] = true;
                 }
             }
@@ -579,7 +584,7 @@ namespace egret.web {
         }
 
         /**
-         * 清除矩形区域
+         * Clear rectangular area.
          */
         public clearRect(x: number, y: number, width: number, height: number): void {
             if (x != 0 || y != 0 || width != this.surface.width || height != this.surface.height) {
@@ -610,14 +615,14 @@ namespace egret.web {
         }
 
         /**
-         * 设置混色
+         * Set color mixing.
          */
         public setGlobalCompositeOperation(value: string) {
             this.drawCmdManager.pushSetBlend(value);
         }
 
         /**
-         * 绘制图片，image参数可以是BitmapData或者renderTarget
+         * Draw picture, image parameter can be BitmapData or renderTarget.
          */
         public drawImage(image: BitmapData,
             sourceX: number, sourceY: number, sourceWidth: number, sourceHeight: number,
@@ -632,16 +637,18 @@ namespace egret.web {
             let offsetX;
             let offsetY;
             if (image["texture"] || (image.source && image.source["texture"])) {
-                // 如果是render target
+                // If it is a render target.
                 texture = image["texture"] || image.source["texture"];
                 buffer.saveTransform();
                 offsetX = buffer.$offsetX;
                 offsetY = buffer.$offsetY;
                 buffer.useOffset();
-                buffer.transform(1, 0, 0, -1, 0, destHeight + destY * 2);// 翻转
-            } else if (!image.source && !image.webGLTexture) {
+                buffer.transform(1, 0, 0, -1, 0, destHeight + destY * 2); // Flip
+            }
+            else if (!image.source && !image.webGLTexture) {
                 return;
-            } else {
+            }
+            else {
                 texture = this.getWebGLTexture(image);
             }
 
@@ -661,9 +668,9 @@ namespace egret.web {
                 buffer.restoreTransform();
             }
         }
-
+        
         /**
-         * 绘制Mesh
+         * Draw Mesh.
          */
         public drawMesh(image: BitmapData,
             sourceX: number, sourceY: number, sourceWidth: number, sourceHeight: number,
@@ -680,16 +687,18 @@ namespace egret.web {
             let offsetX;
             let offsetY;
             if (image["texture"] || (image.source && image.source["texture"])) {
-                // 如果是render target
+                // If it is a render target
                 texture = image["texture"] || image.source["texture"];
                 buffer.saveTransform();
                 offsetX = buffer.$offsetX;
                 offsetY = buffer.$offsetY;
                 buffer.useOffset();
-                buffer.transform(1, 0, 0, -1, 0, destHeight + destY * 2);// 翻转
-            } else if (!image.source && !image.webGLTexture) {
+                buffer.transform(1, 0, 0, -1, 0, destHeight + destY * 2); // Flip
+            }
+            else if (!image.source && !image.webGLTexture) {
                 return;
-            } else {
+            }
+            else {
                 texture = this.getWebGLTexture(image);
             }
 
@@ -710,7 +719,7 @@ namespace egret.web {
         }
 
         /**
-         * 绘制材质
+         * Paint material.
          */
         public drawTexture(texture: WebGLTexture,
             sourceX: number, sourceY: number, sourceWidth: number, sourceHeight: number,
@@ -725,7 +734,8 @@ namespace egret.web {
                 if (this.vao.reachMaxSize(meshVertices.length / 2, meshIndices.length)) {
                     this.$drawWebGL();
                 }
-            } else {
+            }
+            else {
                 if (this.vao.reachMaxSize()) {
                     this.$drawWebGL();
                 }
@@ -740,7 +750,7 @@ namespace egret.web {
             }
 
             let count = meshIndices ? meshIndices.length / 3 : 2;
-            // 应用$filter，因为只可能是colorMatrixFilter，最后两个参数可不传
+            // Apply $ filter, because it can only be colorMatrixFilter, the last two parameters can not be passed.
             this.drawCmdManager.pushDrawTexture(texture, count, this.$filter, textureWidth, textureHeight);
             buffer.currentTexture = texture;
             this.vao.cacheArrays(buffer, sourceX, sourceY, sourceWidth, sourceHeight,
@@ -749,7 +759,7 @@ namespace egret.web {
         }
 
         /**
-         * 绘制矩形（仅用于遮罩擦除等）
+         * Draw rectangle (only for mask erasure etc.)
          */
         public drawRect(x: number, y: number, width: number, height: number): void {
             let buffer = this.currentBuffer;
@@ -767,24 +777,26 @@ namespace egret.web {
         }
 
         /**
-         * 绘制遮罩
+         * Paint mask.
          */
         public pushMask(x: number, y: number, width: number, height: number): void {
             let buffer = this.currentBuffer;
             if (this.contextLost || !buffer) {
                 return;
             }
+
             buffer.$stencilList.push({ x, y, width, height });
             if (this.vao.reachMaxSize()) {
                 this.$drawWebGL();
             }
+
             this.drawCmdManager.pushPushMask();
             buffer.currentTexture = null;
             this.vao.cacheArrays(buffer, 0, 0, width, height, x, y, width, height, width, height);
         }
 
         /**
-         * 恢复遮罩
+         * Recovery mask.
          */
         public popMask(): void {
             let buffer = this.currentBuffer;
@@ -803,15 +815,16 @@ namespace egret.web {
         }
 
         /**
-         * 清除颜色缓存
+         * Clear the color cache.
          */
         public clear(): void {
             this.drawCmdManager.pushClearColor();
         }
 
         public $scissorState: boolean = false;
+
         /**
-         * 开启scissor test
+         * Open scissor test.
          */
         public enableScissor(x: number, y: number, width: number, height: number): void {
             let buffer = this.currentBuffer;
@@ -820,7 +833,7 @@ namespace egret.web {
         }
 
         /**
-         * 关闭scissor test
+         * Close scissor test.
          */
         public disableScissor(): void {
             let buffer = this.currentBuffer;
@@ -829,7 +842,7 @@ namespace egret.web {
         }
 
         /**
-         * 执行目前缓存在命令列表里的命令并清空
+         * Execute the command currently cached in the command list and clear it.
          */
         public activatedBuffer: WebGLRenderBuffer;
         public $drawWebGL() {
@@ -839,7 +852,7 @@ namespace egret.web {
 
             this.uploadVerticesArray(this.vao.getVertices());
 
-            // 有mesh，则使用indicesForMesh
+            // If mesh is available, indicesForMesh is used.
             if (this.vao.isMesh()) {
                 this.uploadIndicesArray(this.vao.getMeshIndices());
             }
@@ -849,7 +862,7 @@ namespace egret.web {
             for (let i = 0; i < length; i++) {
                 let data = this.drawCmdManager.drawData[i];
                 offset = this.drawData(data, offset);
-                // 计算draw call
+                // Calculate draw call
                 if (data.type == DRAWABLE_TYPE.ACT_BUFFER) {
                     this.activatedBuffer = data.buffer;
                 }
@@ -860,18 +873,18 @@ namespace egret.web {
                 }
             }
 
-            // 切换回默认indices
+            // Switch back to default indices
             if (this.vao.isMesh()) {
                 this.uploadIndicesArray(this.vao.getIndices());
             }
 
-            // 清空数据
+            // Clear data
             this.drawCmdManager.clear();
             this.vao.clear();
         }
 
         /**
-         * 执行绘制命令
+         * Execute drawing commands.
          */
         private drawData(data: any, offset: number) {
             if (!data) {
@@ -884,11 +897,12 @@ namespace egret.web {
 
             switch (data.type) {
                 case DRAWABLE_TYPE.TEXTURE:
-                    //这段的切换可以优化
+                    // This switch can be optimized
                     if (filter) {
                         if (filter.type === "custom") {
                             program = EgretWebGLProgram.getProgram(gl, filter.$vertexSrc, filter.$fragmentSrc, filter.$shaderKey);
-                        } else if (filter.type === "colorTransform") {
+                        }
+                        else if (filter.type === "colorTransform") {
                             if (data.texture[etc_alpha_mask]) {
                                 gl.activeTexture(gl.TEXTURE1);
                                 gl.bindTexture(gl.TEXTURE_2D, data.texture[etc_alpha_mask]);
@@ -897,17 +911,21 @@ namespace egret.web {
                             else {
                                 program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.colorTransform_frag, "colorTransform");
                             }
-                        } else if (filter.type === "blurX") {
+                        }
+                        else if (filter.type === "blurX") {
                             program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.blur_frag, "blur");
-                        } else if (filter.type === "blurY") {
+                        }
+                        else if (filter.type === "blurY") {
                             program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.blur_frag, "blur");
-                        } else if (filter.type === "glow") {
+                        }
+                        else if (filter.type === "glow") {
                             program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.glow_frag, "glow");
                         }
-                    } else {
+                    }
+                    else {
                         if (data.texture[etc_alpha_mask]) {
                             program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.texture_etc_alphamask_frag, etc_alpha_mask);
-                            ///need refactor
+                            /// need refactor
                             gl.activeTexture(gl.TEXTURE1);
                             gl.bindTexture(gl.TEXTURE_2D, data.texture[etc_alpha_mask]);
                         }
@@ -918,7 +936,7 @@ namespace egret.web {
 
                     this.activeProgram(gl, program);
                     this.syncUniforms(program, filter, data.textureWidth, data.textureHeight);
-
+                    
                     offset += this.drawTextureElements(data, offset);
                     break;
                 case DRAWABLE_TYPE.RECT:
@@ -1001,17 +1019,19 @@ namespace egret.web {
             if (program != this.currentProgram) {
                 gl.useProgram(program.id);
 
-                // 目前所有attribute buffer的绑定方法都是一致的
+                // At present, all attribute buffer binding methods are consistent
                 let attribute = program.attributes;
 
                 for (let key in attribute) {
                     if (key === "aVertexPosition") {
                         gl.vertexAttribPointer(attribute["aVertexPosition"].location, 2, gl.FLOAT, false, 5 * 4, 0);
                         gl.enableVertexAttribArray(attribute["aVertexPosition"].location);
-                    } else if (key === "aTextureCoord") {
+                    }
+                    else if (key === "aTextureCoord") {
                         gl.vertexAttribPointer(attribute["aTextureCoord"].location, 2, gl.FLOAT, false, 5 * 4, 2 * 4);
                         gl.enableVertexAttribArray(attribute["aTextureCoord"].location);
-                    } else if (key === "aColor") {
+                    }
+                    else if (key === "aColor") {
                         gl.vertexAttribPointer(attribute["aColor"].location, 4, gl.UNSIGNED_BYTE, true, 5 * 4, 4 * 4);
                         gl.enableVertexAttribArray(attribute["aColor"].location);
                     }
@@ -1020,16 +1040,18 @@ namespace egret.web {
                 this.currentProgram = program;
             }
         }
-
+        
         private syncUniforms(program: EgretWebGLProgram, filter: Filter, textureWidth: number, textureHeight: number): void {
             let uniforms = program.uniforms;
             let isCustomFilter: boolean = filter && filter.type === "custom";
             for (let key in uniforms) {
                 if (key === "projectionVector") {
                     uniforms[key].setValue({ x: this.projectionX, y: this.projectionY });
-                } else if (key === "uTextureSize") {
+                }
+                else if (key === "uTextureSize") {
                     uniforms[key].setValue({ x: textureWidth, y: textureHeight });
-                } else if (key === "uSampler") {
+                }
+                else if (key === "uSampler") {
                     uniforms[key].setValue(0);
                 }
                 else if (key === "uSamplerAlphaMask") {
@@ -1039,7 +1061,8 @@ namespace egret.web {
                     let value = filter.$uniforms[key];
                     if (value !== undefined) {
                         uniforms[key].setValue(value);
-                    } else {
+                    }
+                    else {
                         // egret.warn("filter custom: uniform " + key + " not defined!");
                     }
                 }
@@ -1047,8 +1070,8 @@ namespace egret.web {
         }
 
         /**
-         * 画texture
-         **/
+         * Painting texture.
+         */
         private drawTextureElements(data: any, offset: number): number {
             return egret.sys.drawTextureElements(this, data, offset);
             /*
@@ -1063,8 +1086,8 @@ namespace egret.web {
 
         /**
          * @private
-         * 画rect
-         **/
+         * Painting rect.
+         */
         private drawRectElements(data: any, offset: number): number {
             let gl: any = this.context;
             // gl.bindTexture(gl.TEXTURE_2D, null);
@@ -1074,21 +1097,20 @@ namespace egret.web {
         }
 
         /**
-         * 画push mask
-         **/
+         * Draw push mask.
+         */
         private drawPushMaskElements(data: any, offset: number): number {
             let gl: any = this.context;
-
             let size = data.count * 3;
-
             let buffer = this.activatedBuffer;
+
             if (buffer) {
                 if (buffer.rootRenderTarget) {
                     buffer.rootRenderTarget.enabledStencil();
                 }
                 if (buffer.stencilHandleCount == 0) {
                     buffer.enableStencil();
-                    gl.clear(gl.STENCIL_BUFFER_BIT);// clear
+                    gl.clear(gl.STENCIL_BUFFER_BIT); // clear
                 }
 
                 let level = buffer.stencilHandleCount;
@@ -1110,8 +1132,8 @@ namespace egret.web {
         }
 
         /**
-         * 画pop mask
-         **/
+         * Draw pop mask.
+         */
         private drawPopMaskElements(data: any, offset: number) {
             let gl: any = this.context;
 
@@ -1122,8 +1144,9 @@ namespace egret.web {
                 buffer.stencilHandleCount--;
 
                 if (buffer.stencilHandleCount == 0) {
-                    buffer.disableStencil();// skip this draw
-                } else {
+                    buffer.disableStencil(); // skip this draw
+                }
+                else {
                     let level = buffer.stencilHandleCount;
                     gl.colorMask(false, false, false, false);
                     gl.stencilFunc(gl.EQUAL, level + 1, 0xFF);
@@ -1144,7 +1167,7 @@ namespace egret.web {
         private vertSize: number = 5;
 
         /**
-         * 设置混色
+         * Set color mixing.
          */
         private setBlendMode(value: string): void {
             let gl: any = this.context;
@@ -1154,21 +1177,23 @@ namespace egret.web {
             }
         }
 
-        // 记录一个colorTransformFilter
-        // 这是一个优化，实现物体在只有一个变色滤镜的情况下，以最简单方式渲染
-        // 在$filter有值的情况下，drawImage要注意应用此filter
-        public $filter: ColorMatrixFilter;
-
         /**
-         * 应用滤镜绘制给定的render target
-         * 此方法不会导致input被释放，所以如果需要释放input，需要调用此方法后手动调用release
+         * Record a colorTransformFilter.
+         * This is an optimization that allows objects to be rendered in the simplest way with only one color-changing filter.
+         * In the case of $ filter value, drawImage should pay attention to the application of this filter.
+         */
+        public $filter: ColorMatrixFilter;
+        
+        /**
+         * Apply the filter to draw the given render target.
+         * This method will not cause the input to be released, so if you need to release the input, you need to manually call release after calling this method.
          */
         public drawTargetWidthFilters(filters: Filter[], input: WebGLRenderBuffer): void {
             let originInput = input,
                 filtersLen: number = filters.length,
                 output: WebGLRenderBuffer;
 
-            // 应用前面的滤镜
+            // Apply the front filter
             if (filtersLen > 1) {
                 for (let i = 0; i < filtersLen - 1; i++) {
                     let filter = filters[i];
@@ -1185,19 +1210,19 @@ namespace egret.web {
                 }
             }
 
-            // 应用最后一个滤镜并绘制到当前场景中
+            // Apply the last filter and draw into the current scene
             let filter = filters[filtersLen - 1];
             this.drawToRenderTarget(filter, input, this.currentBuffer);
 
-            // 释放掉用于交换的buffer
+            // Release the buffer for exchange
             if (input != originInput) {
                 WebGLRenderBuffer.release(input);
             }
         }
 
         /**
-         * 向一个renderTarget中绘制
-         * */
+         * Draw to a renderTarget.
+         */
         private drawToRenderTarget(filter: Filter, input: WebGLRenderBuffer, output: WebGLRenderBuffer): void {
             if (this.contextLost) {
                 return;
@@ -1214,7 +1239,7 @@ namespace egret.web {
                 width: number = input.rootRenderTarget.width,
                 height: number = input.rootRenderTarget.height;
 
-            // 模糊滤镜分别处理blurX与blurY
+            // Blur filters handle blurX and blurY separately
             if (filter.type == "blur") {
                 let blurXFilter = (<BlurFilter>filter).blurXFilter;
                 let blurYFilter = (<BlurFilter>filter).blurYFilter;
@@ -1227,15 +1252,16 @@ namespace egret.web {
                     if (input != originInput) {
                         WebGLRenderBuffer.release(input);
                     }
-                    input = temp;
 
+                    input = temp;
                     filter = blurYFilter;
-                } else {
+                }
+                else {
                     filter = blurXFilter.blurX === 0 ? blurYFilter : blurXFilter;
                 }
             }
 
-            // 绘制input结果到舞台
+            // Draw input results to the stage
             output.saveTransform();
             output.transform(1, 0, 0, -1, 0, height);
             output.currentTexture = input.rootRenderTarget.texture;
@@ -1244,7 +1270,7 @@ namespace egret.web {
 
             this.drawCmdManager.pushDrawTexture(input.rootRenderTarget.texture, 2, filter, width, height);
 
-            // 释放掉input
+            // Release input
             if (input != originInput) {
                 WebGLRenderBuffer.release(input);
             }
@@ -1255,7 +1281,7 @@ namespace egret.web {
         public static blendModesForGL: any = null;
 
         public static initBlendMode(): void {
-            /*参考
+            /*Reference
             gl.ZERO = 0
             gl.ONE = 1
             gl.SRC_COLOR = 768
@@ -1280,7 +1306,7 @@ namespace egret.web {
             WebGLRenderContext.blendModesForGL["destination-in"] = [0, 770];
         }
 
-        //for 3D&2D
+        // for 3D&2D
         /**
          * @private
          */
@@ -1294,14 +1320,12 @@ namespace egret.web {
             gl.disable(gl.STENCIL_TEST);
             gl.colorMask(true, true, true, true);
             this.setBlendMode("source-over");
-            // 目前只使用0号材质单元，默认开启
+            // Currently only use material unit No. 0, open by default
             gl.activeTexture(gl.TEXTURE0);
             this.currentProgram = null;
         };
     }
 
     WebGLRenderContext.initBlendMode();
-
     egret.sys.WebGLRenderContext = WebGLRenderContext;
-
 }

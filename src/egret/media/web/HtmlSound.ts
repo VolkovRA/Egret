@@ -27,24 +27,21 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+/// <reference path="../../events/EventDispatcher.ts" />
+/// <reference path="../Sound.ts" />
 
+namespace egret.web
+{
     /**
      * @private
      * @inheritDoc
      */
-    export class HtmlSound extends egret.EventDispatcher implements egret.Sound {
+    export class HtmlSound extends egret.EventDispatcher implements egret.Sound
+    {
         /**
-         * Background music
+         * Background music.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 背景音乐
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public static MUSIC: string = "music";
 
@@ -52,13 +49,6 @@ namespace egret.web {
          * EFFECT
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 音效
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public static EFFECT: string = "effect";
 
@@ -71,10 +61,12 @@ namespace egret.web {
          * @private
          */
         private url: string;
+
         /**
          * @private
          */
         private originAudio: HTMLAudioElement;
+
         /**
          * @private
          */
@@ -111,11 +103,11 @@ namespace egret.web {
             audio.addEventListener("error", onAudioError);
 
             let ua: string = navigator.userAgent.toLowerCase();
-            if (ua.indexOf("firefox") >= 0) {//火狐兼容
+            if (ua.indexOf("firefox") >= 0) { // Firefox compatible
                 audio.autoplay = !0;
                 audio.muted = true;
             }
-            //edge and ie11
+            // Edge and ie11
             let ie = ua.indexOf("edge") >= 0 || ua.indexOf("trident") >= 0;
             if (ie) {
                 document.body.appendChild(audio);
@@ -129,7 +121,7 @@ namespace egret.web {
             function onAudioLoaded(): void {
                 HtmlSound.$recycle(self.url, audio);
                 removeListeners();
-                if (ua.indexOf("firefox") >= 0) {//火狐兼容
+                if (ua.indexOf("firefox") >= 0) { // Firefox compatible
                     audio.pause();
                     audio.muted = false;
                 }
@@ -167,7 +159,7 @@ namespace egret.web {
                 audio = <HTMLAudioElement>this.originAudio.cloneNode();
             }
             else {
-                //audio.load();
+                // Audio.load();
             }
             audio.autoplay = true;
 

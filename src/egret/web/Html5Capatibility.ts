@@ -29,16 +29,18 @@
 
 /// <reference path="../utils/HashObject.ts" />
 
-namespace egret.web {
-
+namespace egret.web
+{
     /**
      * @private
      */
-    export class AudioType {
+    export class AudioType
+    {
         /**
          * @private
          */
         static WEB_AUDIO: number = 2;
+
         /**
          * @private
          */
@@ -46,15 +48,17 @@ namespace egret.web {
     }
 
     /**
-     * html5兼容性配置
+     * HTML5 Compatibility configuration.
      * @private
      */
-    export class Html5Capatibility extends HashObject {
-        //当前浏览器版本是否支持blob
+    export class Html5Capatibility extends HashObject
+    {
+        // Whether the current browser version supports blob.
         public static _canUseBlob: boolean = false;
 
-        //当前浏览器版本是否支持webaudio
+        // Does the current browser version support webaudio.
         public static _audioType: number = 0;
+
         /**
          * @private
          */
@@ -74,7 +78,6 @@ namespace egret.web {
 
         /**
          * @private
-         *
          */
         public static $init(): void {
             let ua: string = navigator.userAgent.toLowerCase();
@@ -85,7 +88,7 @@ namespace egret.web {
             let isIos = ua.indexOf("iphone") >= 0 || ua.indexOf("ipad") >= 0 || ua.indexOf("ipod") >= 0;
             if (canUseWebAudio) {
                 try {
-                    //防止某些chrome版本创建异常问题
+                    // Prevent some chrome versions from creating abnormal problems
                     WebAudioDecode.ctx = new (window["AudioContext"] || window["webkitAudioContext"] || window["mozAudioContext"])();
                 }
                 catch (e) {
@@ -108,12 +111,12 @@ namespace egret.web {
                 Html5Capatibility.setAudioType(AudioType.HTML5_AUDIO);
             }
 
-            if (ua.indexOf("android") >= 0) {//android
+            if (ua.indexOf("android") >= 0) { // Android
                 if (checkAudioType && canUseWebAudio) {
                     Html5Capatibility.setAudioType(AudioType.WEB_AUDIO);
                 }
             }
-            else if (isIos) {//ios
+            else if (isIos) { // IOS
                 if (Html5Capatibility.getIOSVersion() >= 7) {
                     Html5Capatibility._canUseBlob = true;
                     if (checkAudioType && canUseWebAudio) {
@@ -127,7 +130,7 @@ namespace egret.web {
                 Html5Capatibility._canUseBlob = false;
             }
 
-            if (ua.indexOf("egretnative") >= 0) {// Egret Native
+            if (ua.indexOf("egretnative") >= 0) { // Egret Native
                 Html5Capatibility.setAudioType(AudioType.HTML5_AUDIO);
                 Html5Capatibility._canUseBlob = true;
             }
@@ -149,7 +152,7 @@ namespace egret.web {
 
         /**
          * @private
-         * 获取ios版本
+         * Get ios version.
          * @returns {string}
          */
         private static getIOSVersion(): number {
@@ -157,11 +160,12 @@ namespace egret.web {
             if(! matches || matches.length == 0) {
                 return 0;
             }
+
             let value = matches[0];
+            
             return parseInt(value.match(/\d+(_\d)*/)[0]) || 0;
         }
     }
-
 
     /**
      * @private

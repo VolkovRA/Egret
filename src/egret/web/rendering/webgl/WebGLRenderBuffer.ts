@@ -27,47 +27,53 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../../../geom/Rectangle.ts" />
+/// <reference path="../../../geom/Matrix.ts" />
+/// <reference path="../../../display/BitmapData.ts" />
 /// <reference path="../../../utils/HashObject.ts" />
+/// <reference path="../../../player/RenderBuffer.ts" />
+/// <reference path="../../../system/NativeContext.ts" />
+/// <reference path="../../../web/rendering/webgl/WebGLRenderTarget.ts" />
 
-namespace egret.web {
-
+namespace egret.web
+{
     /**
      * @private
-     * WebGL渲染缓存
+     * WebGL rendering cache.
      */
-    export class WebGLRenderBuffer extends HashObject implements sys.RenderBuffer {
-
+    export class WebGLRenderBuffer extends HashObject implements sys.RenderBuffer
+    {
         public static autoClear: boolean = true;
 
         /**
-         * 渲染上下文
+         * Rendering context.
          */
         public context: WebGLRenderContext;
 
         /**
-         * 如果是舞台缓存，为canvas
-         * 如果是普通缓存，为renderTarget
+         * If it is stage cache, it is canvas.
+         * If it is an ordinary cache, it is renderTarget.
          */
         public surface: any;
 
         /**
-         * root render target
-         * 根渲染目标，用来执行主渲染
+         * Root render target.
+         * The root rendering target, used to perform the main rendering.
          */
         public rootRenderTarget: WebGLRenderTarget;
 
         /**
-         * 是否为舞台buffer
+         * Whether it is a stage buffer.
          */
         private root: boolean;
 
         //
         public currentTexture: WebGLTexture = null;
 
-
         public constructor(width?: number, height?: number, root?: boolean) {
             super();
-            // 获取webglRenderContext
+
+            // Get webglRenderContext.
             this.context = WebGLRenderContext.getInstance(width, height);
 
             if (egret.nativeRender) {
@@ -81,23 +87,24 @@ namespace egret.web {
                 return;
             }
 
-            // buffer 对应的 render target
+            // Render target corresponding to buffer
             this.rootRenderTarget = new WebGLRenderTarget(this.context.context, 3, 3);
             if (width && height) {
                 this.resize(width, height);
             }
 
-            // 如果是第一个加入的buffer，说明是舞台buffer
+            // If it is the first buffer added, it means the stage buffer
             this.root = root;
 
-            // 如果是用于舞台渲染的renderBuffer，则默认添加renderTarget到renderContext中，而且是第一个
+            // If it is a renderBuffer used for stage rendering, the renderTarget is added to the renderContext by default, and it is the first
             if (this.root) {
                 this.context.pushBuffer(this);
-                // 画布
+                // canvas
                 this.surface = this.context.surface;
                 this.$computeDrawCall = true;
-            } else {
-                // 由于创建renderTarget造成的frameBuffer绑定，这里重置绑定
+            }
+            else {
+                // Due to the frameBuffer binding caused by creating renderTarget, reset the binding here
                 let lastBuffer = this.context.activatedBuffer;
                 if (lastBuffer) {
                     lastBuffer.rootRenderTarget.activate();
@@ -110,8 +117,8 @@ namespace egret.web {
         public globalAlpha: number = 1;
         public globalTintColor: number = 0xFFFFFF;
         /**
-         * stencil state
-         * 模版开关状态
+         * Stencil state.
+         * Template switch status.
          */
         private stencilState: boolean = false;
         public $stencilList: { x: number, y: number, width: number, height: number }[] = [];
@@ -140,8 +147,8 @@ namespace egret.web {
         }
 
         /**
-         * scissor state
-         * scissor 开关状态  
+         * Scissor state.
+         * Scissor switch status.
          */
         public $scissorState: boolean = false;
         private scissorRect: Rectangle = new egret.Rectangle();
@@ -172,7 +179,7 @@ namespace egret.web {
         }
 
         /**
-         * 渲染缓冲的宽度，以像素为单位。
+         * The width of the rendering buffer, in pixels.
          * @readOnly
          */
         public get width(): number {
@@ -185,7 +192,7 @@ namespace egret.web {
         }
 
         /**
-         * 渲染缓冲的高度，以像素为单位。
+         * The height of the rendering buffer, in pixels.
          * @readOnly
          */
         public get height(): number {
@@ -198,10 +205,10 @@ namespace egret.web {
         }
 
         /**
-         * 改变渲染缓冲的大小并清空缓冲区
-         * @param width 改变后的宽
-         * @param height 改变后的高
-         * @param useMaxSize 若传入true，则将改变后的尺寸与已有尺寸对比，保留较大的尺寸。
+         * Change the size of the rendering buffer and clear the buffer.
+         * @param width The changed width.
+         * @param height Changed height.
+         * @param useMaxSize If true is passed, the changed size is compared with the existing size, and the larger size is retained.
          */
         public resize(width: number, height: number, useMaxSize?: boolean): void {
             width = width || 1;
@@ -211,14 +218,14 @@ namespace egret.web {
                 return;
             }
             this.context.pushBuffer(this);
-            // render target 尺寸重置
+            // Render target size reset
             if (width != this.rootRenderTarget.width || height != this.rootRenderTarget.height) {
                 this.context.drawCmdManager.pushResize(this, width, height);
-                // 同步更改宽高
+                // Change width and height simultaneously
                 this.rootRenderTarget.width = width;
                 this.rootRenderTarget.height = height;
             }
-            // 如果是舞台的渲染缓冲，执行resize，否则surface大小不随之改变
+            // If it is the stage's rendering buffer, execute resize, otherwise the surface size will not change accordingly
             if (this.root) {
                 this.context.resize(width, height, useMaxSize);
             }
@@ -227,7 +234,7 @@ namespace egret.web {
         }
 
         /**
-         * 获取指定区域的像素
+         * Get the pixels of the specified area.
          */
         public getPixels(x: number, y: number, width: number = 1, height: number = 1): number[] {
             let pixels = new Uint8Array(4 * width * height);
@@ -247,7 +254,7 @@ namespace egret.web {
                 this.rootRenderTarget.useFrameBuffer = useFrameBuffer;
                 this.rootRenderTarget.activate();
             }
-            //图像反转
+            // Image reversal.
             let result = new Uint8Array(4 * width * height);
             for (let i = 0; i < height; i++) {
                 for (let j = 0; j < width; j++) {
@@ -265,15 +272,15 @@ namespace egret.web {
         }
 
         /**
-         * 转换成base64字符串，如果图片（或者包含的图片）跨域，则返回null
-         * @param type 转换的类型，如: "image/png","image/jpeg"
+         * Converted to base64 string, if the picture (or contained picture) cross domain, then return null.
+         * @param type Conversion type, such as: "image/png", "image/jpeg".
          */
         public toDataURL(type?: string, encoderOptions?: number): string {
             return this.context.surface.toDataURL(type, encoderOptions);
         }
 
         /**
-         * 销毁绘制对象
+         * Destroy the drawing object.
          */
         public destroy(): void {
             this.context.destroy();
@@ -284,16 +291,16 @@ namespace egret.web {
         }
 
         /**
-         * 交换frameBuffer中的图像到surface中
-         * @param width 宽度
-         * @param height 高度
+         * Swap the image in frameBuffer to surface.
+         * @param width
+         * @param height
          */
         private drawFrameBufferToSurface(sourceX: number,
             sourceY: number, sourceWidth: number, sourceHeight: number, destX: number, destY: number, destWidth: number, destHeight: number, clear: boolean = false): void {
             this.rootRenderTarget.useFrameBuffer = false;
             this.rootRenderTarget.activate();
 
-            this.context.disableStencilTest();// 切换frameBuffer注意要禁用STENCIL_TEST
+            this.context.disableStencilTest(); // Switch frameBuffer Note to disable STENCIL_TEST
             this.context.disableScissorTest();
 
             this.setTransform(1, 0, 0, 1, 0, 0);
@@ -311,16 +318,16 @@ namespace egret.web {
         }
 
         /**
-         * 交换surface的图像到frameBuffer中
-         * @param width 宽度
-         * @param height 高度
+         * Exchange surface image to frameBuffer.
+         * @param width
+         * @param height
          */
         private drawSurfaceToFrameBuffer(sourceX: number,
             sourceY: number, sourceWidth: number, sourceHeight: number, destX: number, destY: number, destWidth: number, destHeight: number, clear: boolean = false): void {
             this.rootRenderTarget.useFrameBuffer = true;
             this.rootRenderTarget.activate();
 
-            this.context.disableStencilTest();// 切换frameBuffer注意要禁用STENCIL_TEST
+            this.context.disableStencilTest(); // Switch frameBuffer Note to disable STENCIL_TEST
             this.context.disableScissorTest();
 
             this.setTransform(1, 0, 0, 1, 0, 0);
@@ -338,7 +345,7 @@ namespace egret.web {
         }
 
         /**
-         * 清空缓冲区数据
+         * Clear the buffer data.
          */
         public clear(): void {
             this.context.pushBuffer(this);
@@ -413,7 +420,7 @@ namespace egret.web {
         }
 
         /**
-         * 创建一个buffer实例
+         * Create a buffer instance.
          */
         public static create(width: number, height: number): WebGLRenderBuffer {
             let buffer = renderBufferPool.pop();
@@ -440,13 +447,12 @@ namespace egret.web {
         }
 
         /**
-         * 回收一个buffer实例
+         * Recycle a buffer instance.
          */
         public static release(buffer: WebGLRenderBuffer): void {
             renderBufferPool.push(buffer);
         }
-
     }
 
-    let renderBufferPool: WebGLRenderBuffer[] = [];//渲染缓冲区对象池
+    let renderBufferPool: WebGLRenderBuffer[] = []; // Render buffer object pool
 }

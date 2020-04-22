@@ -27,8 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret {
-
+namespace egret
+{
     /** !!!!!!!!inspired by Babylon.js!!!!!!!!!!!!!
      * for description see https://www.khronos.org/opengles/sdk/tools/KTX/
      * for file layout see https://www.khronos.org/opengles/sdk/tools/KTX/file_format_spec/
@@ -47,68 +47,81 @@ namespace egret {
 
         // elements of the header
         /**
-         * Gets the openGL type
+         * Gets the openGL type.
          */
         public glType: number;
+
         /**
-         * Gets the openGL type size
+         * Gets the openGL type size.
          */
         public glTypeSize: number;
+
         /**
-         * Gets the openGL format
+         * Gets the openGL format.
          */
         public glFormat: number;
+
         /**
-         * Gets the openGL internal format
+         * Gets the openGL internal format.
          */
         public glInternalFormat: number;
+
         /**
-         * Gets the base internal format
+         * Gets the base internal format.
          */
         public glBaseInternalFormat: number;
+
         /**
-         * Gets image width in pixel
+         * Gets image width in pixel.
          */
         public pixelWidth: number;
+
         /**
-         * Gets image height in pixel
+         * Gets image height in pixel.
          */
         public pixelHeight: number;
+
         /**
-         * Gets image depth in pixels
+         * Gets image depth in pixels.
          */
         public pixelDepth: number;
+
         /**
-         * Gets the number of array elements
+         * Gets the number of array elements.
          */
         public numberOfArrayElements: number;
+
         /**
-         * Gets the number of faces
+         * Gets the number of faces.
          */
         public numberOfFaces: number;
+
         /**
-         * Gets the number of mipmap levels
+         * Gets the number of mipmap levels.
          */
         public numberOfMipmapLevels: number;
+
         /**
-         * Gets the bytes of key value data
+         * Gets the bytes of key value data.
          */
         public bytesOfKeyValueData: number;
+
         /**
-         * Gets the load type
+         * Gets the load type.
          */
         public loadType: number;
+
         /**
-         * If the container has been made invalid (eg. constructor failed to correctly load array buffer)
+         * If the container has been made invalid. (eg. constructor failed to correctly load array buffer)
          */
         public isInvalid = false;
 
         /**
-         * Creates a new KhronosTextureContainer
-         * @param arrayBuffer contents of the KTX container file
-         * @param facesExpected should be either 1 or 6, based whether a cube texture or or
-         * @param threeDExpected provision for indicating that data should be a 3D texture, not implemented
-         * @param textureArrayExpected provision for indicating that data should be a texture array, not implemented
+         * Creates a new KhronosTextureContainer.
+         * @param arrayBuffer contents of the KTX container file.
+         * @param facesExpected should be either 1 or 6, based whether a cube texture or or.
+         * @param threeDExpected provision for indicating that data should be a 3D texture, not implemented.
+         * @param textureArrayExpected provision for indicating that data should be a texture array, not implemented.
          */
         constructor(/** contents of the KTX container file */public arrayBuffer: any, facesExpected: number, threeDExpected?: boolean, textureArrayExpected?: boolean) {
             // Test that it is a ktx formatted file, based on the first 12 bytes, character representation is:
@@ -146,7 +159,8 @@ namespace egret {
             if (this.glType !== 0) {
                 console.error("only compressed formats currently supported");
                 return;
-            } else {
+            }
+            else {
                 // value of zero is an indication to generate mipmaps @ runtime.  Not usually allowed for compressed, so disregard.
                 this.numberOfMipmapLevels = Math.max(1, this.numberOfMipmapLevels);
             }
@@ -226,6 +240,4 @@ namespace egret {
             }
         }
     }
-
 }
-

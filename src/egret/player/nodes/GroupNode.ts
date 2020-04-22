@@ -29,15 +29,16 @@
 
 /// <reference path="RenderNode.ts" />
 
-namespace egret.sys {
+namespace egret.sys
+{
     /**
      * @private
-     * 组渲染节点,用于组合多个渲染节点
+     * Group rendering nodes for combining multiple rendering nodes.
      */
-    export class GroupNode extends RenderNode {
-
+    export class GroupNode extends RenderNode
+    {
         /**
-         * 相对偏移矩阵。
+         * Relative offset matrix.
          */
         public matrix: egret.Matrix;
         
@@ -51,8 +52,8 @@ namespace egret.sys {
         }
 
         /**
-         * 覆盖父类方法，不自动清空缓存的绘图数据，改为手动调用clear()方法清空。
-         * 这里只是想清空绘制命令，因此不调用super
+         * Override the parent class method, do not automatically clear the cached drawing data, instead manually call the clear () method to clear it.
+         * Here I just want to clear the drawing command, so do not call super
          */
         public cleanBeforeRender():void {
             let data = this.drawData;

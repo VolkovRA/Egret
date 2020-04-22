@@ -27,59 +27,35 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace egret {
+namespace egret
+{
     /**
      * The ChildrenSortMode class defines a pattern enumeration for children sort mode of egret.DisplayObjectContainer.
      * @version Egret 5.2.19
      * @platform Native
-     * @language en_US
      */
-    /**
-     * BitmapFillMode 类定义egret.DisplayObjectContainer的子项目排序方式。
-     * @version Egret 5.2.19
-     * @platform Native
-     * @language zh_CN
-     */
-    export const ChildrenSortMode = {
-
+    export const ChildrenSortMode =
+    {
         /**
          * Default mode.
          * @version Egret 5.2.19
          * @platform Native
-         * @language en_US
-         */
-        /**
-         * 默认方式。
-         * @version Egret 5.2.19
-         * @platform Native
-         * @language zh_CN
          */
         DEFAULT: "default",
+
         /**
-         * Y increase mode. Automatic sorted ascending by y coordinates.
+         * Y Increase mode.
+         * Automatic sorted ascending by y coordinates.
          * @version Egret 5.2.19
          * @platform Native
-         * @language en_US
-         */
-        /**
-         * Y递增模式。自动按y坐标升序排序。
-         * @version Egret 5.2.19
-         * @platform Native
-         * @language en_US
          */
         INCREASE_Y: "increaseY",
+
         /**
-         * Y decrease mode. Automatic sorted descending by y coordinates.
+         * Y Decrease mode.
+         * Automatic sorted descending by y coordinates.
          * @version Egret 5.2.19
          * @platform Native
-         * @language en_US
-         */
-        /**
-         * Y递减模式。自动按y坐标降序排序。
-         * @version Egret 5.2.19
-         * @platform Native
-         * @language en_US
          */
         DECREASE_Y: "decreaseY"
     }

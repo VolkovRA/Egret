@@ -29,8 +29,8 @@
 
 /// <reference path="../display/DisplayObject.ts" />
 
-namespace egret {
-
+namespace egret
+{
     /**
      * The Bitmap class represents display objects that represent bitmap images.
      * The Bitmap() constructor allows you to create a Bitmap object that contains a reference to a BitmapData object.
@@ -44,45 +44,23 @@ namespace egret {
      * @version Egret 2.4
      * @platform Web,Native
      * @includeExample egret/display/Bitmap.ts
-     * @language en_US
      */
-    /**
-     * Bitmap 类表示用于显示位图图片的显示对象。
-     * 利用 Bitmap() 构造函数，可以创建包含对 BitmapData 对象引用的 Bitmap 对象。创建了 Bitmap 对象后，
-     * 使用父级 DisplayObjectContainer 实例的 addChild() 或 addChildAt() 方法可以将位图放在显示列表中。
-     * 一个 Bitmap 对象可在若干 Bitmap 对象之中共享其 texture 引用，与缩放或旋转属性无关。
-     * 由于能够创建引用相同 texture 对象的多个 Bitmap 对象，因此，多个显示对象可以使用相同的 texture 对象，
-     * 而不会因为每个显示对象实例使用一个 texture 对象而产生额外内存开销。
-     *
-     * @see egret.Texture
-     * @version Egret 2.4
-     * @platform Web,Native
-     * @includeExample egret/display/Bitmap.ts
-     * @language zh_CN
-     */
-    export class Bitmap extends DisplayObject {
-
+    export class Bitmap extends DisplayObject
+    {
         /**
          * Initializes a Bitmap object to refer to the specified Texture object.
          * @param value The Texture object being referenced.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 创建一个引用指定 Texture 实例的 Bitmap 对象
-         * @param value 被引用的 Texture 实例
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor(value?: Texture) {
             super();
+
             this.$renderNode = new sys.NormalBitmapNode();
             this.$setTexture(value);
-            if (value) {
+
+            if (value)
                 (<sys.NormalBitmapNode>this.$renderNode).rotated = value.$rotated;
-            }
         }
 
         protected $texture: Texture = null;
@@ -107,7 +85,7 @@ namespace egret {
 
         /**
          * @private
-         * 显示对象添加到舞台
+         * Add display objects to the stage.
          */
         $onAddToStage(stage: Stage, nestLevel: number): void {
             super.$onAddToStage(stage, nestLevel);
@@ -120,7 +98,7 @@ namespace egret {
 
         /**
          * @private
-         * 显示对象从舞台移除
+         * Remove the display object from the stage.
          */
         $onRemoveFromStage(): void {
             super.$onRemoveFromStage();
@@ -137,13 +115,6 @@ namespace egret {
          * @version Egret 2.4
          * @platform Web,Native
          * @language en_US
-         */
-        /**
-         * 被引用的 Texture 对象。
-         * 如果传入构造函数的类型为 BitmapData 或者最后设置的为 bitmapData，则此值返回 null。
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get texture(): Texture {
             return this.$texture;
@@ -288,20 +259,9 @@ namespace egret {
 
         /**
          * Represent a Rectangle Area that the 9 scale area of Image.
-         * Notice: This property is valid only when <code>fillMode</code>
-         * is <code>BitmapFillMode.SCALE</code>.
-         *
+         * Notice: This property is valid only when *fillMode* is *BitmapFillMode.SCALE*.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 矩形区域，它定义素材对象的九个缩放区域。
-         * 注意:此属性仅在<code>fillMode</code>为<code>BitmapFillMode.SCALE</code>时有效。
-         *
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get scale9Grid(): egret.Rectangle {
             return this.$scale9Grid;
@@ -340,29 +300,14 @@ namespace egret {
          * @private
          */
         $fillMode: string = "scale";
+
         /**
          * Determines how the bitmap fills in the dimensions.
-         * <p>When set to <code>BitmapFillMode.REPEAT</code>, the bitmap
-         * repeats to fill the region.</p>
-         * <p>When set to <code>BitmapFillMode.SCALE</code>, the bitmap
-         * stretches to fill the region.</p>
-         *
-         * @default <code>BitmapFillMode.SCALE</code>
-         *
+         * * When set to *BitmapFillMode.REPEAT*, the bitmap repeats to fill the region.
+         * * When set to *BitmapFillMode.SCALE*, the bitmap stretches to fill the region.
+         * @default BitmapFillMode.SCALE
          * @version Egret 2.4
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 确定位图填充尺寸的方式。
-         * <p>设置为 <code>BitmapFillMode.REPEAT</code>时，位图将重复以填充区域。</p>
-         * <p>设置为 <code>BitmapFillMode.SCALE</code>时，位图将拉伸以填充区域。</p>
-         *
-         * @default <code>BitmapFillMode.SCALE</code>
-         *
-         * @version Egret 2.4
-         * @platform Web
-         * @language zh_CN
          */
         public get fillMode(): string {
             return this.$fillMode;
@@ -402,18 +347,9 @@ namespace egret {
         /**
          * The default value of whether or not is smoothed when scaled.
          * When object such as Bitmap is created,smoothing property will be set to this value.
-         * @default true。
+         * @default true
          * @version Egret 3.0
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 控制在缩放时是否进行平滑处理的默认值。
-         * 在 Bitmap 等对象创建时,smoothing 属性会被设置为该值。
-         * @default true。
-         * @version Egret 3.0
-         * @platform Web
-         * @language zh_CN
          */
         public static defaultSmoothing: boolean = true;
 
@@ -421,13 +357,6 @@ namespace egret {
          * Whether or not the bitmap is smoothed when scaled.
          * @version Egret 2.4
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 控制在缩放时是否对位图进行平滑处理。
-         * @version Egret 2.4
-         * @platform Web
-         * @language zh_CN
          */
         public get smoothing(): boolean {
             return this.$smoothing;
@@ -456,7 +385,6 @@ namespace egret {
 
         /**
          * @private
-         *
          * @param value
          */
         $setWidth(value: number): boolean {
@@ -486,7 +414,6 @@ namespace egret {
 
         /**
          * @private
-         *
          * @param value
          */
         $setHeight(value: number): boolean {
@@ -516,7 +443,7 @@ namespace egret {
 
         /**
          * @private
-         * 获取显示宽度
+         * Get display width.
          */
         $getWidth(): number {
             return isNaN(this.$explicitBitmapWidth) ? this.$getContentBounds().width : this.$explicitBitmapWidth;
@@ -524,7 +451,7 @@ namespace egret {
 
         /**
          * @private
-         * 获取显示宽度
+         * Get display height.
          */
         $getHeight(): number {
             return isNaN(this.$explicitBitmapHeight) ? this.$getContentBounds().height : this.$explicitBitmapHeight;
@@ -578,23 +505,16 @@ namespace egret {
         }
 
         private _pixelHitTest: boolean = false;
+
         /**
-         * Specifies whether this object use precise hit testing by checking the alpha value of each pixel.If pixelHitTest
-         * is set to true,the transparent area of the bitmap will be touched through.<br/>
-         * Note:If the image is loaded from cross origin,that we can't access to the pixel data,so it might cause
+         * Specifies whether this object use precise hit testing by checking the alpha value of each pixel.
+         * If pixelHitTest is set to true,the transparent area of the bitmap will be touched through.
+         * 
+         * Note: If the image is loaded from cross origin,that we can't access to the pixel data,so it might cause
          * the pixelHitTest property invalid.
          * @default false
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 是否开启精确像素碰撞。设置为true显示对象本身的透明区域将能够被穿透。<br/>
-         * 注意：若图片资源是以跨域方式从外部服务器加载的，将无法访问图片的像素数据，而导致此属性失效。
-         * @default false
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get pixelHitTest(): boolean {
             return this._pixelHitTest;

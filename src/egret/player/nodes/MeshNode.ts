@@ -28,15 +28,18 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 /// <reference path="RenderNode.ts" />
+/// <reference path="../../geom/Rectangle.ts" />
+/// <reference path="../../geom/Matrix.ts" />
+/// <reference path="../../filters/ColorMatrixFilter.ts" />
 
-namespace egret.sys {
-
+namespace egret.sys
+{
     /**
      * @private
-     * Mesh 渲染节点
+     * Mesh rendering node.
      */
-    export class MeshNode extends RenderNode {
-
+    export class MeshNode extends RenderNode
+    {
         public constructor(){
             super();
             this.type = RenderNodeType.MeshNode;
@@ -44,60 +47,74 @@ namespace egret.sys {
             this.uvs = [];
             this.indices = [];
         }
+
         /**
-         * 要绘制的位图
+         * Bitmap to draw
          */
         public image:BitmapData = null;
+
         /**
-         * 控制在缩放时是否对位图进行平滑处理。
+         * Controls whether to smooth the bitmap when zooming.
          */
         public smoothing:boolean = true;
+
         /**
-         * 图片宽度。WebGL渲染使用
+         * Picture width. WebGL rendering use
          */
         public imageWidth:number;
+
         /**
-         * 图片高度。WebGL渲染使用
+         * Picture height. WebGL rendering use
          */
         public imageHeight:number;
+
         /**
-         * 相对偏移矩阵。
+         * Relative offset matrix.
          */
         public matrix:egret.Matrix;
+
         /**
-         * UV 坐标。
+         * UV coordinates.
          */
         public uvs:number[];
+
         /**
-         * 顶点坐标。
+         * Vertex coordinates.
          */
         public vertices:number[];
+
         /**
-         * 顶点索引。
+         * Vertex index.
          */
         public indices:number[];
+
         /**
-         * 顶点索引。
+         * Vertex index.
          */
         public bounds:Rectangle = new Rectangle();
+
         /**
-         * 使用的混合模式
+         * Mixed mode used.
          */
         public blendMode: number = null;
+
         /**
-         * 相对透明度
+         * Relative transparency.
          */
         public alpha: number = NaN;
+
         /**
-         * 颜色变换滤镜
+         * Color transformation filter.
          */
         public filter: ColorMatrixFilter = null;
+
         /**
-         * 翻转
+         * Flip.
          */
         public rotated: boolean = false;
+
         /**
-         * 绘制一次位图
+         * Draw a bitmap.
          */
         public drawMesh(sourceX:number, sourceY:number, sourceW:number, sourceH:number,
                          drawX:number, drawY:number, drawW:number, drawH:number):void {
@@ -106,7 +123,7 @@ namespace egret.sys {
         }
 
         /**
-         * 在显示对象的$updateRenderNode()方法被调用前，自动清空自身的drawData数据。
+         * Before the $ updateRenderNode () method of the display object is called, it automatically clears its own drawData data.
          */
         public cleanBeforeRender():void{
             super.cleanBeforeRender();

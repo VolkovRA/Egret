@@ -27,19 +27,24 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="TextField.ts" />
+/// <reference path="ITextElement.ts" />
+/// <reference path="HorizontalAlign.ts" />
+/// <reference path="VerticalAlign.ts" />
 
-namespace egret {
+namespace egret
+{
     /**
      * @private
      * @version Egret 2.4
      * @platform Web,Native
      */
-    export class TextFieldUtils {
-
+    export class TextFieldUtils
+    {
         /**
-         * 获取第一个绘制的行数
-         * @param textfield 文本
-         * @returns {number} 行数，从0开始
+         * Get the number of the first line drawn.
+         * @param textfield TextField.
+         * @returns {number} Number of lines, starting from 0.
          * @private
          */
         static $getStartLine(textfield:egret.TextField):number {
@@ -47,11 +52,11 @@ namespace egret {
             let textHeight:number = TextFieldUtils.$getTextHeight(textfield);
             let startLine:number = 0;
             let textFieldHeight: number = values[sys.TextKeys.textFieldHeight];
-            if (!isNaN(textFieldHeight)) {//
-                if (textHeight < textFieldHeight) {//最大高度比需要显示的高度小
+            if (!isNaN(textFieldHeight)) { //
+                if (textHeight < textFieldHeight) { // The maximum height is smaller than the height that needs to be displayed.
 
                 }
-                else if (textHeight > textFieldHeight) {//最大高度比需要显示的高度大
+                else if (textHeight > textFieldHeight) { // The maximum height is greater than the height that needs to be displayed.
                     startLine = Math.max(values[sys.TextKeys.scrollV] - 1, 0);
                     startLine = Math.min(values[sys.TextKeys.numLines] - 1, startLine);
                 }
@@ -68,9 +73,9 @@ namespace egret {
         }
 
         /**
-         * 获取水平比例
-         * @param textfield 文本
-         * @returns {number} 水平比例
+         * Get horizontal ratio.
+         * @param textfield TextField.
+         * @returns {number} Horizontal scale.
          * @private
          */
         static $getHalign(textfield:egret.TextField):number {
@@ -92,7 +97,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          * @param textfield 
          * @returns 
          */
@@ -103,9 +107,9 @@ namespace egret {
         }
 
         /**
-         * 获取垂直比例
-         * @param textfield 文本
-         * @returns {number} 垂直比例
+         * Get vertical scale.
+         * @param textfield TextField.
+         * @returns {number} Vertical scale.
          * @private
          */
         static $getValign(textfield:egret.TextField):number{
@@ -117,8 +121,8 @@ namespace egret {
                 //return 0.5;
             //}
             let textFieldHeight:number = textfield.$TextField[sys.TextKeys.textFieldHeight];
-            if (!isNaN(textFieldHeight)) {//
-                if (textHeight < textFieldHeight) {//最大高度比需要显示的高度小
+            if (!isNaN(textFieldHeight)) { //
+                if (textHeight < textFieldHeight) { // The maximum height is smaller than the height that needs to be displayed.
                     let valign:number = 0;
                     if (textfield.$TextField[sys.TextKeys.verticalAlign] == VerticalAlign.MIDDLE)
                         valign = 0.5;
@@ -132,11 +136,11 @@ namespace egret {
         }
 
         /**
-         * 根据x、y获取文本项
-         * @param textfield 文本
-         * @param x x坐标值
-         * @param y y坐标值
-         * @returns 文本单项
+         * Get text items based on x and y.
+         * @param textfield TextField.
+         * @param x x coordinate value.
+         * @param y y coordinate value.
+         * @returns text item.
          * @private
          */
         static $getTextElement(textfield:egret.TextField, x:number, y:number):ITextElement {
@@ -150,16 +154,16 @@ namespace egret {
         }
 
         /**
-         * 获取文本点击块
-         * @param textfield 文本
-         * @param x x坐标值
-         * @param y y坐标值
-         * @returns 文本点击块
+         * Get text click block.
+         * @param textfield TextField.
+         * @param x X Coordinate value.
+         * @param y Y Coordinate value.
+         * @returns Text click block.
          * @private
          */
         static $getHit(textfield:egret.TextField, x:number, y:number):IHitTextElement {
             let lineArr:Array<egret.ILineElement>  = textfield.$getLinesArr2();
-            if (textfield.$TextField[sys.TextKeys.textFieldWidth] == 0) {//文本可点击区域
+            if (textfield.$TextField[sys.TextKeys.textFieldWidth] == 0) { // Text clickable area
                 return null;
             }
             let line:number = 0;
@@ -223,9 +227,9 @@ namespace egret {
         }
 
         /**
-         * 获取当前显示多少行
-         * @param textfield 文本
-         * @returns {number} 显示的行数
+         * Get how many lines are currently displayed.
+         * @param textfield TextField.
+         * @returns {number} The number of lines displayed.
          * @private
          */
         static $getScrollNum(textfield:egret.TextField):number {
@@ -242,6 +246,5 @@ namespace egret {
             }
             return scrollNum;
         }
-
     }
 }

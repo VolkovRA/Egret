@@ -27,46 +27,59 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.sys {
+/// <reference path="Path2D.ts" />
+
+namespace egret.sys
+{
     /**
      * @private
-     * 线条路径。
-     * 注意：当线条宽度（lineWidth）为1或3像素时，需要特殊处理，往右下角偏移0.5像素，以显示清晰锐利的线条。
+     * Line path.
+     * 
+     * Note: When the line width (lineWidth) is 1 or 3 pixels, special processing is required, and the bottom
+     * right corner is offset by 0.5 pixels to display clear and sharp lines.
      */
-    export class StrokePath extends Path2D {
-
+    export class StrokePath extends Path2D
+    {
         public constructor() {
             super();
             this.type = PathType.Stroke;
         }
 
         /**
-         * 线条宽度。
-         * 注意：绘制时对1像素和3像素要特殊处理，整体向右下角偏移0.5像素，以显示清晰锐利的线条。
+         * Line width.
+         * 
+         * Note: 1 pixel and 3 pixels should be specially treated when drawing, and the overall offset is 0.5
+         * pixels to the lower right corner to display clear and sharp lines.
          */
         public lineWidth: number;
+
         /**
-         * 线条颜色
+         * Line color.
          */
         public lineColor: number;
+
         /**
-         * 线条透明度
+         * Line transparency.
          */
         public lineAlpha: number;
+
         /**
-         * 端点样式,"none":无端点,"round":圆头端点,"square":方头端点
+         * End point style, "none": no end point, "round": round head end point, "square": square head end point.
          */
         public caps: string;
+
         /**
-         * 联接点样式,"bevel":斜角连接,"miter":尖角连接,"round":圆角连接
+         * Connection point style, "bevel": bevel connection, "miter": sharp corner connection, "round": round corner connection.
          */
         public joints: CanvasLineJoin;
+
         /**
-         * 用于表示剪切斜接的极限值的数字。
+         * The number used to represent the limit value of the shear miter.
          */
         public miterLimit: number;
+
         /**
-         * 描述交替绘制线段和间距（坐标空间单位）长度的数字。
+         * A number describing the length of alternating line segments and spacing (coordinate space units).
          */
         public lineDash: number[];
     }

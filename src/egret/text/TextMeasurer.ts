@@ -30,15 +30,15 @@
 /**
  * @private
  */
-namespace egret.sys {
-
+namespace egret.sys
+{
     /**
-     * 测量文本在指定样式下的宽度。
-     * @param text 要测量的文本内容。
-     * @param fontFamily 字体名称
-     * @param fontSize 字体大小
-     * @param bold 是否粗体
-     * @param italic 是否斜体
+     * Measure the width of the text in the specified style.
+     * @param text The text content to be measured.
+     * @param fontFamily Font name.
+     * @param fontSize Font size.
+     * @param bold Is bold.
+     * @param italic Is italic.
      */
     export let measureText:(text:string, fontFamily:string, fontSize:number, bold:boolean, italic:boolean)=>number;
 }

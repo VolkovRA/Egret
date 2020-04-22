@@ -29,13 +29,13 @@
 
 /// <reference path="../utils/HashObject.ts" />
 
-namespace egret.web {
-
+namespace egret.web
+{
     /**
      * @private
      */
-    export class WebTouchHandler extends HashObject {
-
+    export class WebTouchHandler extends HashObject
+    {
         /**
          * @private
          */
@@ -50,6 +50,7 @@ namespace egret.web {
          * @private
          */
         private canvas:HTMLCanvasElement;
+
         /**
          * @private
          */
@@ -57,7 +58,7 @@ namespace egret.web {
 
         /**
          * @private
-         * 添加事件监听
+         * Add event listener.
          */
         private addListeners():void {
             if (window.navigator.msPointerEnabled) {
@@ -87,7 +88,6 @@ namespace egret.web {
 
         /**
          * @private
-         * 
          */
         private addMouseListener():void {
             this.canvas.addEventListener("mousedown", this.onTouchBegin);
@@ -97,7 +97,6 @@ namespace egret.web {
 
         /**
          * @private
-         * 
          */
         private addTouchListener():void {
             this.canvas.addEventListener("touchstart", (event:any)=> {
@@ -149,7 +148,7 @@ namespace egret.web {
         }
 
         private onMouseMove = (event:MouseEvent) => {
-            if (event.buttons == 0) {//在外面松开按键
+            if (event.buttons == 0) { // Release the button outside
                 this.onTouchEnd(event);
             } else {
                 this.onTouchMove(event);
@@ -201,10 +200,12 @@ namespace egret.web {
          * @private
          */
         private scaleX:number = 1;
+
         /**
          * @private
          */
         private scaleY:number = 1;
+
         /**
          * @private
          */
@@ -212,9 +213,9 @@ namespace egret.web {
 
         /**
          * @private
-         * 更新屏幕当前的缩放比例，用于计算准确的点击位置。
-         * @param scaleX 水平方向的缩放比例。
-         * @param scaleY 垂直方向的缩放比例。
+         * Update the current zoom ratio of the screen to calculate the accurate click position.
+         * @param scaleX The horizontal scale.
+         * @param scaleY The vertical scale.
          */
         public updateScaleMode(scaleX:number, scaleY:number, rotation:number):void {
             this.scaleX = scaleX;
@@ -224,7 +225,7 @@ namespace egret.web {
 
         /**
          * @private
-         * 更新同时触摸点的数量
+         * Update the number of simultaneous touch points.
          */
         public $updateMaxTouches():void {
             this.touch.$initMaxTouches();

@@ -27,24 +27,28 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="StageScaleMode.ts" />
 /// <reference path="../utils/HashObject.ts" />
+/// <reference path="../system/Capabilities.ts" />
 
-namespace egret.sys {
-
+namespace egret.sys
+{
     /**
      * @private
-     * 屏幕适配器接口，当播放器视口尺寸改变时，屏幕适配器将被用于计算当前对应的舞台显示尺寸。
+     * Screen adapter interface.
+     * When the player's viewport size changes, the screen adapter will be used to calculate the
+     * current corresponding stage display size.
      */
-    export interface IScreenAdapter {
-
+    export interface IScreenAdapter
+    {
         /**
          * @private
-         * 计算舞台显示尺寸
-         * @param scaleMode 当前的缩放模式
-         * @param screenWidth 播放器视口宽度
-         * @param screenHeight 播放器视口高度
-         * @param contentWidth 初始化内容宽度
-         * @param contentHeight 初始化内容高度
+         * Calculate the stage display size.
+         * @param scaleMode The current zoom mode.
+         * @param screenWidth player viewport width.
+         * @param screenHeight player viewport height.
+         * @param contentWidth Initialize the content width.
+         * @param contentHeight Initialize content height.
          */
         calculateStageSize(scaleMode: string, screenWidth: number, screenHeight: number,
             contentWidth: number, contentHeight: number): StageDisplaySize;
@@ -52,44 +56,49 @@ namespace egret.sys {
 
     /**
      * @private
-     * 舞台显示尺寸数据
+     * Stage display size data.
      */
-    export interface StageDisplaySize {
+    export interface StageDisplaySize
+    {
+        /**
+         * @private
+         * Stage width.
+         */
+        stageWidth: number;
 
         /**
          * @private
-         * 舞台宽度
-         */
-        stageWidth: number;
-        /**
-         * @private
-         * 舞台高度
+         * Stage height.
          */
         stageHeight: number;
+
         /**
          * @private
-         * 显示宽度，若跟舞台宽度不同，将会产生缩放。
+         * If the display width is different from the stage width, scaling will occur.
          */
         displayWidth: number;
+
         /**
          * @private
-         * 显示高度，若跟舞台高度不同，将会产生缩放。
+         * If the display height is different from the height of the stage, zooming will occur.
          */
         displayHeight: number;
     }
 
     /**
      * @private
-     * 屏幕适配器实例，开发者可以通过给这个变量赋值实现了IScreenAdapter接口的实例，从而注入自定义的屏幕适配器。
+     * Screen adapter instance, the developer can implement an instance of the IScreenAdapter
+     * interface by assigning a value to this variable, thereby injecting a custom screen adapter.
      */
     export let screenAdapter: IScreenAdapter;
 
     /**
      * @private
-     * 屏幕适配器默认实现，开发者可以实现自定义规则的屏幕适配器。并在初始化加载时将适配器的实例赋值给egret.sys.screenAdapter上，从而替换掉默认适配器。
+     * The screen adapter is implemented by default, and developers can implement screen adapters with custom rules.
+     * And assign the instance of the adapter to egret.sys.screenAdapter during initial loading, thus replacing the default adapter.
      */
-    export class DefaultScreenAdapter extends HashObject implements IScreenAdapter {
-
+    export class DefaultScreenAdapter extends HashObject implements IScreenAdapter
+    {
         /**
          * @private
          */
@@ -99,12 +108,12 @@ namespace egret.sys {
 
         /**
          * @private
-         * 计算舞台显示尺寸
-         * @param scaleMode 当前的缩放模式
-         * @param screenWidth 播放器视口宽度
-         * @param screenHeight 播放器视口高度
-         * @param contentWidth 初始化内容宽度
-         * @param contentHeight 初始化内容高度
+         * Calculate the stage display size.
+         * @param scaleMode The current zoom mode.
+         * @param screenWidth Player viewport width.
+         * @param screenHeight Player viewport height.
+         * @param contentWidth Initialize the content width.
+         * @param contentHeight Initialize content height.
          */
         public calculateStageSize(scaleMode: string, screenWidth: number, screenHeight: number,
             contentWidth: number, contentHeight: number): StageDisplaySize {
@@ -161,7 +170,7 @@ namespace egret.sys {
                     break;
             }
             if (egret.Capabilities.runtimeType != egret.RuntimeType.WXGAME) {
-                //宽高不是2的整数倍会导致图片绘制出现问题
+                // The width and height are not an integer multiple of 2 will cause problems with picture drawing
                 if (stageWidth % 2 != 0) {
                     stageWidth += 1;
                 }

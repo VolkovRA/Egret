@@ -1,15 +1,15 @@
+/// <reference path="../Motion.ts" />
 /// <reference path="../../events/EventDispatcher.ts" />
 
-namespace egret.web {
-
+namespace egret.web
+{
     /**
      * @private
      */
-    export class WebMotion extends EventDispatcher implements Motion {
-
+    export class WebMotion extends EventDispatcher implements Motion
+    {
         /**
          * @private
-         * 
          */
         start() {
             window.addEventListener("devicemotion", this.onChange);

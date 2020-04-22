@@ -27,38 +27,46 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.sys {
+namespace egret.sys
+{
     /**
      * @private
-     * 文本格式
+     * Text format.
      */
-    export interface TextFormat {
+    export interface TextFormat
+    {
         /**
-         * 颜色值
+         * Color value.
          */
         textColor?:number;
+
         /**
-         * 描边颜色值
+         * Stroke color value.
          */
         strokeColor?:number;
+
         /**
-         * 字号
+         * Font size.
          */
         size?:number;
+
         /**
-         * 描边大小
+         * Stroke size.
          */
         stroke?:number;
+
         /**
-         * 是否加粗
+         * Whether to bold.
          */
         bold?:boolean;
+
         /**
-         * 是否倾斜
+         * Whether to tilt.
          */
         italic?:boolean;
+
         /**
-         * 字体名称
+         * Font name.
          */
         fontFamily?:string;
     }

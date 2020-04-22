@@ -29,13 +29,14 @@
 
 /// <reference path="Path2D.ts" />
 
-namespace egret.sys {
+namespace egret.sys
+{
     /**
      * @private
-     * 渐变填充路径
+     * Gradient fill path.
      */
-    export class GradientFillPath extends Path2D {
-
+    export class GradientFillPath extends Path2D
+    {
         public constructor(){
             super();
             this.type = PathType.GradientFill;

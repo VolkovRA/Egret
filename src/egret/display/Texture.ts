@@ -29,113 +29,85 @@
 
 /// <reference path="../utils/HashObject.ts" />
 
-namespace egret {
+namespace egret
+{
     export let $TextureScaleFactor: number = 1;
+
     /**
      * The Texture class encapsulates different image resources on different platforms.
-     * In HTML5, resource is an HTMLElement object
-     * In OpenGL / WebGL, resource is a texture ID obtained after the GPU is submitted
-     * The Texture class encapsulates the details implemented on the underlayer. Developers just need to focus on interfaces
-     * @see http://edn.egret.com/cn/docs/page/135 The use of texture packs
-     * @see http://edn.egret.com/cn/docs/page/123 Several ways of access to resources
+     * In HTML5, resource is an HTMLElement object.
+     * In OpenGL / WebGL, resource is a texture ID obtained after the GPU is submitted.
+     * The Texture class encapsulates the details implemented on the underlayer. Developers just need to focus on interfaces.
+     * @see http://edn.egret.com/cn/docs/page/135 The use of texture packs.
+     * @see http://edn.egret.com/cn/docs/page/123 Several ways of access to resources.
      * @version Egret 2.4
      * @platform Web,Native
      * @includeExample egret/display/Texture.ts
-     * @language en_US
      */
-    /**
-     * 纹理类是对不同平台不同的图片资源的封装
-     * 在HTML5中，资源是一个HTMLElement对象
-     * 在OpenGL / WebGL中，资源是一个提交GPU后获取的纹理id
-     * Texture类封装了这些底层实现的细节，开发者只需要关心接口即可
-     * @see http://edn.egret.com/cn/docs/page/135 纹理集的使用
-     * @see http://edn.egret.com/cn/docs/page/123 获取资源的几种方式
-     * @version Egret 2.4
-     * @platform Web,Native
-     * @includeExample egret/display/Texture.ts
-     * @language zh_CN
-     */
-    export class Texture extends HashObject {
-
+    export class Texture extends HashObject
+    {
         /**
-         * Create an egret.Texture object
+         * Create an egret.Texture object.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 创建一个 egret.Texture 对象
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
         }
 
         /**
-         * Whether to destroy the corresponding BitmapData when the texture is destroyed
+         * Whether to destroy the corresponding BitmapData when the texture is destroyed.
          * @version Egret 5.0.8
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 销毁纹理时是否销毁对应BitmapData
-         * @version Egret 5.0.8
-         * @platform Web,Native
-         * @language zh_CN
          */
         public disposeBitmapData: boolean = true;
 
         /**
          * @private
-         * 表示这个纹理在 bitmapData 上的 x 起始位置
+         * Indicates the starting position of x of this texture on bitmapData.
          */
         public $bitmapX: number = 0;
+
         /**
          * @private
-         * 表示这个纹理在 bitmapData 上的 y 起始位置
+         * Indicates the y starting position of this texture on bitmapData.
          */
         public $bitmapY: number = 0;
+
         /**
          * @private
-         * 表示这个纹理在 bitmapData 上的宽度
+         * Represents the width of this texture on bitmapData.
          */
         public $bitmapWidth: number = 0;
+
         /**
          * @private
-         * 表示这个纹理在 bitmapData 上的高度
+         * Indicates the height of this texture on bitmapData.
          */
         public $bitmapHeight: number = 0;
 
         /**
          * @private
-         * 表示这个纹理显示了之后在 x 方向的渲染偏移量
+         * Indicates that this texture shows the rendering offset in the x direction afterwards.
          */
         public $offsetX = 0;
+
         /**
          * @private
-         * 表示这个纹理显示了之后在 y 方向的渲染偏移量
+         * Indicates that this texture shows the rendering offset in the y direction afterwards.
          */
         public $offsetY = 0;
 
         /**
          * @private
-         * 纹理宽度
+         * Texture width.
          */
         private $textureWidth: number = 0;
 
         /**
-         * Texture width, read only
+         * Texture width, read only.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 纹理宽度，只读属性，不可以设置
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get textureWidth(): number {
             return this.$getTextureWidth();
@@ -147,21 +119,14 @@ namespace egret {
 
         /**
          * @private
-         * 纹理高度
+         * Texture height.
          */
         private $textureHeight: number = 0;
 
         /**
-         * Texture height, read only
+         * Texture height, read only.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 纹理高度，只读属性，不可以设置
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get textureHeight(): number {
             return this.$getTextureHeight();
@@ -181,12 +146,13 @@ namespace egret {
 
         /**
          * @private
-         * 表示bitmapData.width
+         * Means bitmapData.width.
          */
         public $sourceWidth: number = 0;
+
         /**
          * @private
-         * 表示bitmapData.height
+         * Means bitmapData.height.
          */
         public $sourceHeight: number = 0;
 
@@ -209,13 +175,6 @@ namespace egret {
          * The BitmapData object being referenced.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 被引用的 BitmapData 对象。
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get bitmapData(): BitmapData {
             return this.$bitmapData;
@@ -225,18 +184,12 @@ namespace egret {
             this.$ktxData = null;
             this._setBitmapData(value);
         }
+        
         /**
         * Set the BitmapData object.
         * @version Egret 3.2.1
         * @platform Web,Native
-        * @language en_US
         */
-        /**
-         * 设置 BitmapData 对象。
-         * @version Egret 3.2.1
-         * @platform Web,Native
-         * @language zh_CN
-         */
         public _setBitmapData(value: BitmapData) {
             this.$bitmapData = value;
             let scale = $TextureScaleFactor;
@@ -244,17 +197,11 @@ namespace egret {
             let h = value.height * scale;
             this.$initData(0, 0, w, h, 0, 0, w, h, value.width, value.height);
         }
+
         /**
          * The KTX object being referenced.
-        * @version Egret 5.2.21
-        * @platform Web,Native
-        * @language en_US
-        */
-        /**
-         * 被引用的 KTXData 对象。
          * @version Egret 5.2.21
          * @platform Web,Native
-         * @language zh_CN
          */
         public get ktxData(): ArrayBuffer {
             return this.$ktxData;
@@ -264,18 +211,11 @@ namespace egret {
             this._setKtxData(data);
         }
         
-        /**
+       /**
         * Set the KTXData object.
         * @version Egret 3.2.1
         * @platform Web,Native
-        * @language en_US
         */
-        /**
-         * 设置 KTXData 对象。
-         * @version Egret 3.2.1
-         * @platform Web,Native
-         * @language zh_CN
-         */
         public _setKtxData(value: ArrayBuffer) {
             if (!value) {
                 egret.error('ktx data is null');
@@ -298,7 +238,7 @@ namespace egret {
 
         /**
          * @private
-         * 设置Texture数据
+         * Set Texture data.
          * @param bitmapX
          * @param bitmapY
          * @param bitmapWidth
@@ -340,48 +280,26 @@ namespace egret {
         }
 
         /**
-         * Obtain the color value for the specified pixel region
-         * @param x  The x coordinate of the pixel region
-         * @param y  The y coordinate of the pixel region
-         * @param width  The width of the pixel region
-         * @param height  The height of the pixel region
-         * @returns  Specifies the color value for the pixel region
+         * Obtain the color value for the specified pixel region.
+         * @param x  The x coordinate of the pixel region.
+         * @param y  The y coordinate of the pixel region.
+         * @param width  The width of the pixel region.
+         * @param height  The height of the pixel region.
+         * @returns  Specifies the color value for the pixel region.
          * @version Egret 3.2.1
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 获取指定像素区域的颜色值
-         * @param x  像素区域的X轴坐标
-         * @param y  像素区域的Y轴坐标
-         * @param width  像素区域的宽度
-         * @param height  像素区域的高度
-         * @returns  指定像素区域的颜色值
-         * @version Egret 3.2.1
-         * @platform Web
-         * @language zh_CN
          */
         public getPixels(x: number, y: number, width: number = 1, height: number = 1): number[] {
             throw new Error();
         }
 
         /**
-         * Convert base64 string, if the picture (or pictures included) cross-border or null
-         * @param type Type conversions, such as "image / png"
-         * @param rect The need to convert the area
-         * @param smoothing Whether to convert data to the smoothing process
-         * @returns {any} base64 string
+         * Convert base64 string, if the picture (or pictures included) cross-border or null.
+         * @param type Type conversions, such as "image / png".
+         * @param rect The need to convert the area.
+         * @param smoothing Whether to convert data to the smoothing process.
+         * @returns {any} base64 string.
          * @version Egret 2.4
-         * @language en_US
-         */
-        /**
-         * 转换成base64字符串，如果图片（或者包含的图片）跨域，则返回null
-         * @param type 转换的类型，如  "image/png"
-         * @param rect 需要转换的区域
-         * @param {any} encoderOptions 编码用的参数
-         * @returns {any} base64字符串
-         * @version Egret 2.4
-         * @language zh_CN
          */
         public toDataURL(type: string, rect?: egret.Rectangle, encoderOptions?): string {
             throw new Error();
@@ -392,46 +310,27 @@ namespace egret {
          * native support only "image / png" and "image / jpeg"; Web browser because of the various implementations are not the same, it is recommended to use only these two kinds.
          * @param type Type conversions, such as "image / png"
          * @param filePath The path name of the image (the home directory for the game's private space, the path can not have "../",Web supports only pass names.)
-         * @param rect The need to convert the area
+         * @param rect The need to convert the area.
          * @version Egret 2.4
          * @platform Native
-         * @language en_US
-         */
-        /**
-         * 裁剪指定区域并保存成图片。
-         * native只支持 "image/png" 和 "image/jpeg"；Web中由于各个浏览器的实现不一样，因此建议也只用这2种。
-         * @param type 转换的类型，如  "image/png"
-         * @param filePath 图片的名称的路径（主目录为游戏的私有空间，路径中不能有 "../"，Web只支持传名称。）
-         * @param rect 需要转换的区域
-         * @version Egret 2.4
-         * @platform Native
-         * @language zh_CN
          */
         public saveToFile(type: string, filePath: string, rect?: egret.Rectangle): void {
             throw new Error();
         }
 
         /**
-         * dispose texture
+         * Dispose texture.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 释放纹理
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public dispose(): void {
             if (this.$bitmapData) {
                 if (this.disposeBitmapData) {
                     this.$bitmapData.$dispose();
                 }
+                
                 this.$bitmapData = null;
             }
         }
     }
-
 }
-

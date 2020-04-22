@@ -27,29 +27,34 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret {
+namespace egret
+{
     /**
      * @private
      */
-    export interface FPSDisplay {
+    export interface FPSDisplay
+    {
         /**
-         * 更新FPS信息
+         * Update FPS information.
          */
         update(datas:FPSData):void;
 
         /**
-         * 插入一条log信息
+         * Insert a log message.
          */
         updateInfo(info: string): void;
+
         /**
-         * 插入一条warn信息
+         * Insert a warn message.
          */
         updateWarn(info: string): void;
+
         /**
-         * 插入一条error信息
+         * Insert an error message.
          */
         updateError(info: string): void;
     }
+
     /**
      * @private
      */
@@ -57,6 +62,7 @@ namespace egret {
         new (stage:Stage, showFPS:boolean, showLog:boolean, logFilter:string,styles:Object): FPSDisplay
     };
 }
+
 /**
  * @private
  */

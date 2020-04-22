@@ -27,6 +27,22 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../RenderBuffer.ts" />
+/// <reference path="../DisplayList.ts" />
+/// <reference path="../nodes/RenderNode.ts" />
+/// <reference path="../nodes/MeshNode.ts" />
+/// <reference path="../nodes/GroupNode.ts" />
+/// <reference path="../nodes/NormalBitmapNode.ts" />
+/// <reference path="../nodes/GraphicsNode.ts" />
+/// <reference path="../nodes/TextNode.ts" />
+/// <reference path="../nodes/BitmapNode.ts" />
+/// <reference path="../paths/Path2D.ts" />
+/// <reference path="../../geom/Matrix.ts" />
+/// <reference path="../../display/DisplayObject.ts" />
+/// <reference path="../../display/GradientType.ts" />
+/// <reference path="../../filters/GlowFilter.ts" />
+/// <reference path="../../filters/DropShadowFilter.ts" />
+
 /**
  * @private
  */
@@ -37,23 +53,24 @@ interface CanvasRenderingContext2D {
     $offsetY: number;
 }
 
-namespace egret {
-
+namespace egret
+{
     let blendModes = ["source-over", "lighter", "destination-out"];
     let defaultCompositeOp = "source-over";
     let BLACK_COLOR = "#000000";
     let CAPS_STYLES = { none: 'butt', square: 'square', round: 'round' };
-    let renderBufferPool: sys.RenderBuffer[] = [];//渲染缓冲区对象池
-    let renderBufferPool_Filters: sys.RenderBuffer[] = [];//滤镜缓冲区对象池
-    export class CanvasRenderer {
+    let renderBufferPool: sys.RenderBuffer[] = []; // Render buffer object pool.
+    let renderBufferPool_Filters: sys.RenderBuffer[] = []; // Filter buffer object pool.
 
-        private nestLevel: number = 0;//渲染的嵌套层次，0表示在调用堆栈的最外层。
+    export class CanvasRenderer
+    {
+        private nestLevel: number = 0; // The nesting level of rendering, 0 means at the outermost level of the call stack.
 
         public render(displayObject: DisplayObject, buffer: sys.RenderBuffer, matrix: Matrix, forRenderTexture?: boolean): number {
             this.nestLevel++;
             let context: CanvasRenderingContext2D = buffer.context;
             let root: DisplayObject = forRenderTexture ? displayObject : null;
-            //绘制显示对象
+            // Draw display objects
             context.transform(matrix.a, matrix.b, matrix.c, matrix.d, 0, 0);
             let drawCall = this.drawDisplayObject(displayObject, context, matrix.tx, matrix.ty, true);
             let invert = Matrix.create();
@@ -62,7 +79,7 @@ namespace egret {
             Matrix.release(invert);
             this.nestLevel--;
             if (this.nestLevel === 0) {
-                //最大缓存6个渲染缓冲
+                // 6 cache buffers
                 if (renderBufferPool.length > 6) {
                     renderBufferPool.length = 6;
                 }
@@ -76,7 +93,7 @@ namespace egret {
 
         /**
          * @private
-         * 绘制一个显示对象
+         * Draw a display object.
          */
         private drawDisplayObject(displayObject: DisplayObject, context: CanvasRenderingContext2D, offsetX: number, offsetY: number, isStage?: boolean): number {
             let drawCalls = 0;
@@ -204,7 +221,7 @@ namespace egret {
             if (displayBoundsWidth <= 0 || displayBoundsHeight <= 0) {
                 return drawCalls;
             }
-            // 为显示对象创建一个新的buffer
+            // Create a new buffer for the display object
             let displayBuffer = this.createRenderBuffer(displayBoundsWidth - displayBoundsX, displayBoundsHeight - displayBoundsY, true);
             let displayContext = displayBuffer.context;
             if (displayObject.$mask) {
@@ -217,13 +234,13 @@ namespace egret {
                 drawCalls += this.drawDisplayObject(displayObject, displayContext, -displayBoundsX, -displayBoundsY);
             }
 
-            //绘制结果到屏幕
+            // Draw the result to the screen
             if (drawCalls > 0) {
                 if (hasBlendMode) {
                     context.globalCompositeOperation = compositeOp;
                 }
                 drawCalls++;
-                // 应用滤镜
+                // Apply filter
                 let imageData = displayContext.getImageData(0, 0, displayBuffer.surface.width, displayBuffer.surface.height);
                 for (let i = 0; i < filtersLen; i++) {
                     let filter = filters[i];
@@ -241,15 +258,15 @@ namespace egret {
                             dropShadowFilter2(imageData.data, displayBuffer.surface.width, displayBuffer.surface.height, [r / 255, g / 255, b / 255, a], (<GlowFilter>filter).$blurX, (<GlowFilter>filter).$blurY,
                                 (<DropShadowFilter>filter).$angle ? ((<DropShadowFilter>filter).$angle / 180 * Math.PI) : 0, (<DropShadowFilter>filter).$distance || 0, (<GlowFilter>filter).$strength, (<GlowFilter>filter).$inner ? 1 : 0, (<GlowFilter>filter).$knockout ? 0 : 1, (<DropShadowFilter>filter).$hideObject ? 1 : 0);
                         } else {
-                            // 如果没有高级效果，使用性能比较高的方式
+                            // If there is no advanced effect, use the method with higher performance
                             dropShadowFilter(imageData.data, displayBuffer.surface.width, displayBuffer.surface.height, [r / 255, g / 255, b / 255, a], (<GlowFilter>filter).$blurX, (<GlowFilter>filter).$blurY, (<DropShadowFilter>filter).$angle ? ((<DropShadowFilter>filter).$angle / 180 * Math.PI) : 0, (<DropShadowFilter>filter).$distance || 0, (<GlowFilter>filter).$strength);
                         }
                     } else if (filter.type == "custom") {
-                        // 目前canvas渲染不支持自定义滤镜
+                        // Currently canvas rendering does not support custom filters
                     }
                 }
                 displayContext.putImageData(imageData, 0, 0);
-                // 绘制结果的时候，应用滤镜
+                // When drawing results, apply filters
                 context.drawImage(displayBuffer.surface, offsetX + displayBoundsX, offsetY + displayBoundsY);
                 if (hasBlendMode) {
                     context.globalCompositeOperation = defaultCompositeOp;
@@ -275,13 +292,13 @@ namespace egret {
             let mask = displayObject.$mask;
             if (mask) {
                 let maskRenderMatrix = mask.$getMatrix();
-                //遮罩scaleX或scaleY为0，放弃绘制
+                // Mask scaleX or scaleY is 0, give up drawing
                 if ((maskRenderMatrix.a == 0 && maskRenderMatrix.b == 0) || (maskRenderMatrix.c == 0 && maskRenderMatrix.d == 0)) {
                     return drawCalls;
                 }
             }
 
-            //没有遮罩,同时显示对象没有子项
+            // No mask, and the display object has no children
             if (!mask && (!displayObject.$children || displayObject.$children.length == 0)) {
                 if (scrollRect) {
                     context.save();
@@ -302,7 +319,7 @@ namespace egret {
                 }
                 return drawCalls;
             }
-            //遮罩是单纯的填充图形,且alpha为1,性能优化
+            // The mask is simply filled graphics, and the alpha is 1, the performance is optimized
             if (mask) {
                 let maskRenderNode = mask.$getRenderNode();
                 if ((!mask.$children || mask.$children.length == 0) &&
@@ -333,9 +350,9 @@ namespace egret {
                 }
             }
 
-            //todo 若显示对象是容器，同时子项有混合模式，则需要先绘制背景到displayBuffer并清除背景区域
+            // todo If the display object is a container, and the sub item has a mixed mode, you need to first draw the background to the displayBuffer and clear the background area
 
-            //绘制显示对象自身，若有scrollRect，应用clip
+            // Draw the display object itself, if there is scrollRect, apply clip
             let displayBounds = displayObject.$getOriginalBounds();
             const displayBoundsX = displayBounds.x;
             const displayBoundsY = displayBounds.y;
@@ -346,20 +363,20 @@ namespace egret {
             }
             let displayBuffer = this.createRenderBuffer(displayBoundsWidth, displayBoundsHeight);
             let displayContext: CanvasRenderingContext2D = displayBuffer.context;
-            if (!displayContext) {//RenderContext创建失败，放弃绘制遮罩。
+            if (!displayContext) { // RenderContext creation failed, giving up drawing mask.
                 drawCalls += this.drawDisplayObject(displayObject, context, offsetX, offsetY);
                 return drawCalls;
             }
 
             drawCalls += this.drawDisplayObject(displayObject, displayContext, -displayBoundsX, -displayBoundsY);
-            //绘制遮罩
+            // Paint mask
             if (mask) {
                 let maskRenderNode = mask.$getRenderNode();
                 let maskMatrix = Matrix.create();
                 maskMatrix.copyFrom(mask.$getConcatenatedMatrix());
                 mask.$getConcatenatedMatrixAt(displayObject, maskMatrix);
                 maskMatrix.translate(-displayBoundsX, -displayBoundsY);
-                //如果只有一次绘制或是已经被cache直接绘制到displayContext
+                // If it is only drawn once or has been drawn directly to the displayContext by the cache
                 if (maskRenderNode && maskRenderNode.$getRenderCount() == 1 || mask.$displayList) {
                     displayContext.globalCompositeOperation = "destination-in";
                     displayContext.save();
@@ -379,7 +396,7 @@ namespace egret {
                 Matrix.release(maskMatrix);
             }
 
-            //绘制结果到屏幕
+            // Draw the result to the screen
             if (drawCalls > 0) {
                 drawCalls++;
                 if (hasBlendMode) {
@@ -413,7 +430,7 @@ namespace egret {
                 offsetX -= scrollRect.x;
                 offsetY -= scrollRect.y;
             }
-            //绘制显示对象自身
+            // Draw the display object itself
             context.save();
             context.beginPath();
             context.rect(scrollRect.x + offsetX, scrollRect.y + offsetY, scrollRect.width, scrollRect.height);
@@ -430,10 +447,10 @@ namespace egret {
         }
 
         /**
-         * 将一个DisplayObject绘制到渲染缓冲，用于RenderTexture绘制
-         * @param displayObject 要绘制的显示对象
-         * @param buffer 渲染缓冲
-         * @param matrix 要叠加的矩阵
+         * Draw a DisplayObject to the rendering buffer for RenderTexture drawing.
+         * @param displayObject The display object to be drawn.
+         * @param buffer Rendering buffer.
+         * @param matrix The matrix to be superimposed.
          */
         public drawDisplayToBuffer(displayObject: DisplayObject, buffer: sys.RenderBuffer, matrix: Matrix): number {
             let context: CanvasRenderingContext2D = buffer.context;
@@ -584,7 +601,7 @@ namespace egret {
                 }
                 context.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
             }
-            //这里不考虑嵌套
+            // Nesting is not considered here
             if (blendMode) {
                 context.globalCompositeOperation = blendModes[blendMode];
             }
@@ -595,7 +612,7 @@ namespace egret {
             }
             let drawCalls: number = 0;
             let filter = node.filter;
-            //todo 暂时只考虑绘制一次的情况
+            // todo Only consider drawing once for the time being
             if (filter && length == 8) {
                 let sourceX = data[0];
                 let sourceY = data[1];
@@ -618,13 +635,13 @@ namespace egret {
                     context.transform(0, -1, 1, 0, 0, destWidth);
                 }
                 displayContext.drawImage(image.source, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, destWidth, destHeight);
-                //绘制结果到屏幕
+                // Draw the result to the screen
                 drawCalls++;
-                // 应用滤镜
+                // Apply filter
                 let imageData = displayContext.getImageData(0, 0, destWidth, destHeight);
                 colorFilter(imageData.data, destWidth, destHeight, (<ColorMatrixFilter>filter).$matrix);
                 displayContext.putImageData(imageData, 0, 0);
-                // 绘制结果的时候，应用滤镜
+                // When drawing results, apply filters
                 context.drawImage(displayBuffer.surface, 0, 0, destWidth, destHeight,
                     offsetX + context.$offsetX, offsetY + context.$offsetY, destWidth, destHeight);
                 renderBufferPool.push(displayBuffer);
@@ -705,19 +722,19 @@ namespace egret {
                 context.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
             }
 
-            //这里不考虑嵌套
+            // Nesting is not considered here
             if (blendMode) {
                 context.globalCompositeOperation = blendModes[blendMode];
             }
 
 
-            // 设置alpha
+            // Set alpha
             let originAlpha: number;
             if (alpha == alpha) {
                 originAlpha = context.globalAlpha;
                 context.globalAlpha *= alpha;
             }
-            //暂不考虑滤镜
+            // Don't consider filters for now
             // if (node.filter) {
             //     buffer.context.$filter = node.filter;
             //     while (pos < length) {
@@ -825,7 +842,7 @@ namespace egret {
         public renderText(node: sys.TextNode, context: CanvasRenderingContext2D): void {
             context.textAlign = "left";
             context.textBaseline = "middle";
-            context.lineJoin = "round";//确保描边样式是圆角
+            context.lineJoin = "round"; // Make sure the stroke style is rounded
             let drawData = node.drawData;
             let length = drawData.length;
             let pos = 0;
@@ -892,7 +909,7 @@ namespace egret {
                         if (context.setLineDash) {
                             context.setLineDash(strokeFill.lineDash);
                         }
-                        //对1像素和3像素特殊处理，向右下角偏移0.5像素，以显示清晰锐利的线条。
+                        // Special treatment for 1 pixel and 3 pixels, offset by 0.5 pixels to the lower right corner to show clear and sharp lines.
                         let isSpecialCaseWidth = lineWidth === 1 || lineWidth === 3;
                         if (isSpecialCaseWidth) {
                             context.translate(0.5, 0.5);
@@ -984,7 +1001,7 @@ namespace egret {
 
     /**
      * @private
-     * 获取字体字符串
+     * Get font string
      */
     export function getFontString(node: sys.TextNode, format: sys.TextFormat): string {
         let italic: boolean = format.italic == null ? node.italic : format.italic;
@@ -999,7 +1016,7 @@ namespace egret {
 
     /**
      * @private
-     * 获取RGBA字符串
+     * Get RGBA string
      */
     export function getRGBAString(color: number, alpha: number): string {
         let red = color >> 16;
@@ -1010,7 +1027,7 @@ namespace egret {
 
     /**
      * @private
-     * 获取渐变填充样式对象
+     * Get gradient fill style object
      */
     function getGradient(context: CanvasRenderingContext2D, type: string, colors: number[],
         alphas: number[], ratios: number[], matrix: Matrix): CanvasGradient {
@@ -1021,7 +1038,7 @@ namespace egret {
         else {
             gradient = context.createRadialGradient(0, 0, 0, 0, 0, 1);
         }
-        //todo colors alphas ratios数量不一致情况处理
+        //todo colors alphas ratios handling inconsistent quantities
         let l = colors.length;
         for (let i = 0; i < l; i++) {
             gradient.addColorStop(ratios[i] / 255, getRGBAString(colors[i], alphas[i]));
@@ -1029,7 +1046,7 @@ namespace egret {
         return gradient;
     }
 
-    // 判断浏览器是否支持 Uint8ClampedArray
+    // Determine whether the browser supports Uint8ClampedArray
     let use8Clamp = false;
     try {
         use8Clamp = (typeof Uint8ClampedArray !== undefined);
@@ -1352,7 +1369,7 @@ namespace egret {
     }
 
     // dropShadowFilter2
-    // 模拟shader中的算法，可以实现内发光，挖空等高级效果
+    // Simulate the algorithm in shader, which can achieve advanced effects such as inner glow and hollowing out
     function dropShadowFilter2(buffer, w, h, color, blurX, blurY, angle, distance, strength, inner, knockout, hideObject) {
         let plane;
         if (use8Clamp) {
@@ -1377,19 +1394,19 @@ namespace egret {
         let stepX = blurX / linearSamplingTimes;
         let stepY = blurY / linearSamplingTimes;
 
-        // 遍历像素
+        // Traverse pixels
         for (let u = 0; u < w; u++) {
             for (let v = 0; v < h; v++) {
 
-                // 此处为了避免毛刺可以添加一个随机值
+                // To avoid glitches, you can add a random value here
                 let offset = 0;
 
-                // 处理单个像素
+                // Handle a single pixel
                 let key = v * w * 4 + u * 4;
                 let totalAlpha = 0;
                 let maxTotalAlpha = 0;
 
-                // 采样出来的色值
+                // Sampled color value
                 let _r = buffer[key + 0] / 255;
                 let _g = buffer[key + 1] / 255;
                 let _b = buffer[key + 2] / 255;
@@ -1436,7 +1453,7 @@ namespace egret {
 
                 let resultAlpha = Math.min(_a + outerGlowAlpha + innerGlowAlpha, 1);
 
-                // 赋值颜色
+                // Assign color
                 plane[key + 0] = r2 * 255;
                 plane[key + 1] = g2 * 255;
                 plane[key + 2] = b2 * 255;

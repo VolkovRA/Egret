@@ -27,29 +27,33 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.sys {
-
+namespace egret.sys
+{
     /**
      * @private
-     * 路径类型
+     * Path type.
      */
-    export const enum PathType {
+    export const enum PathType
+    {
         /**
-         * 纯色填充路径
+         * Solid color fill path.
          */
         Fill = 1,
+
         /**
-         * 渐变填充路径
+         * Gradient fill path.
          */
         GradientFill,
+
         /**
-         * 线条路径
+         * Line path.
          */
         Stroke
     }
+
     /**
      * @private
-     * 2D路径命令
+     * 2D path command.
      */
     export const enum PathCommand {
         MoveTo = 1,
@@ -60,12 +64,12 @@ namespace egret.sys {
 
     /**
      * @private
-     * 2D路径
+     * 2D path.
      */
-    export class Path2D {
-
+    export class Path2D
+    {
         /**
-         * 路径类型
+         * Path type.
          */
         public type: number = 0;
 
@@ -76,20 +80,22 @@ namespace egret.sys {
         protected dataPosition: number = 0;
 
         /**
-         * 当前移动到的坐标X
-         * 注意：目前只有drawArc之前会被赋值
+         * The current coordinate X.
+         * Note: Currently only drawArc will be assigned before.
          */
         public $lastX:number = 0;
+
         /**
-         * 当前移动到的坐标Y
-         * 注意：目前只有drawArc之前会被赋值
+         * The current coordinate Y.
+         * Note: Currently only drawArc will be assigned before.
          */
         public $lastY:number = 0;
 
         /**
-         * 将当前绘图位置移动到 (x, y)。如果缺少任何一个参数，则此方法将失败，并且当前绘图位置不改变。
-         * @param x 一个表示相对于父显示对象注册点的水平位置的数字（以像素为单位）。
-         * @param y 一个表示相对于父显示对象注册点的垂直位置的数字（以像素为单位）。
+         * Move the current drawing position to (x, y).
+         * If any of the parameters are missing, this method will fail and the current drawing position will not change.
+         * @param x A number indicating the horizontal position (in pixels) relative to the registration point of the parent display object.
+         * @param y A number indicating the vertical position (in pixels) relative to the registration point of the parent display object.
          */
         public moveTo(x: number, y: number) {
             this.$commands[this.commandPosition++] = PathCommand.MoveTo;
@@ -100,9 +106,10 @@ namespace egret.sys {
         }
 
         /**
-         * 使用当前线条样式绘制一条从当前绘图位置开始到 (x, y) 结束的直线；当前绘图位置随后会设置为 (x, y)。
-         * @param x 一个表示相对于父显示对象注册点的水平位置的数字（以像素为单位）。
-         * @param y 一个表示相对于父显示对象注册点的垂直位置的数字（以像素为单位）。
+         * Use the current line style to draw a line from the current drawing position to (x, y).
+         * The current drawing position will then be set to (x, y).
+         * @param x A number indicating the horizontal position (in pixels) relative to the registration point of the parent display object.
+         * @param y A number indicating the vertical position (in pixels) relative to the registration point of the parent display object.
          */
         public lineTo(x: number, y: number) {
             this.$commands[this.commandPosition++] = PathCommand.LineTo;
@@ -113,13 +120,17 @@ namespace egret.sys {
         }
 
         /**
-         * 使用当前线条样式和由 (controlX, controlY) 指定的控制点绘制一条从当前绘图位置开始到 (anchorX, anchorY) 结束的二次贝塞尔曲线。当前绘图位置随后设置为 (anchorX, anchorY)。
-         * 如果在调用 moveTo() 方法之前调用了 curveTo() 方法，则当前绘图位置的默认值为 (0, 0)。如果缺少任何一个参数，则此方法将失败，并且当前绘图位置不改变。
-         * 绘制的曲线是二次贝塞尔曲线。二次贝塞尔曲线包含两个锚点和一个控制点。该曲线内插这两个锚点，并向控制点弯曲。
-         * @param controlX 一个数字，指定控制点相对于父显示对象注册点的水平位置。
-         * @param controlY 一个数字，指定控制点相对于父显示对象注册点的垂直位置。
-         * @param anchorX 一个数字，指定下一个锚点相对于父显示对象注册点的水平位置。
-         * @param anchorY 一个数字，指定下一个锚点相对于父显示对象注册点的垂直位置。
+         * Use the current line style and the control points specified by (controlX, controlY) to draw a quadratic Bezier
+         * curve from the current drawing position to the end of (anchorX, anchorY).
+         * The current drawing position is then set to (anchorX, anchorY).
+         * If the curveTo () method is called before the moveTo () method is called, the default value of the current drawing position is (0, 0).
+         * If any of the parameters are missing, this method will fail and the current drawing position will not change.
+         * The curve drawn is a quadratic Bezier curve. The quadratic Bezier curve contains two anchor points and one control point.
+         * The curve interpolates the two anchor points and bends toward the control point.
+         * @param controlX A number that specifies the horizontal position of the control point relative to the registration point of the parent display object.
+         * @param controlY A number that specifies the vertical position of the control point relative to the registration point of the parent display object.
+         * @param anchorX A number that specifies the horizontal position of the next anchor point relative to the registration point of the parent display object.
+         * @param anchorY A number that specifies the vertical position of the next anchor point relative to the registration point of the parent display object.
          */
         public curveTo(controlX: number, controlY: number, anchorX: number, anchorY: number) {
             this.$commands[this.commandPosition++] = PathCommand.CurveTo;
@@ -132,13 +143,15 @@ namespace egret.sys {
         }
 
         /**
-         * 从当前绘图位置到指定的锚点绘制一条三次贝塞尔曲线。三次贝塞尔曲线由两个锚点和两个控制点组成。该曲线内插这两个锚点，并向两个控制点弯曲。
-         * @param controlX1 指定首个控制点相对于父显示对象的注册点的水平位置。
-         * @param controlY1 指定首个控制点相对于父显示对象的注册点的垂直位置。
-         * @param controlX2 指定第二个控制点相对于父显示对象的注册点的水平位置。
-         * @param controlY2 指定第二个控制点相对于父显示对象的注册点的垂直位置。
-         * @param anchorX 指定锚点相对于父显示对象的注册点的水平位置。
-         * @param anchorY 指定锚点相对于父显示对象的注册点的垂直位置。
+         * Draw a cubic Bezier curve from the current drawing position to the specified anchor point.
+         * The cubic Bezier curve is composed of two anchor points and two control points.
+         * The curve interpolates the two anchor points and bends toward the two control points.
+         * @param controlX1 Specifies the horizontal position of the first control point relative to the registration point of the parent display object.
+         * @param controlY1 Specifies the vertical position of the first control point relative to the registration point of the parent display object.
+         * @param controlX2 Specifies the horizontal position of the second control point relative to the registration point of the parent display object.
+         * @param controlY2 Specifies the vertical position of the second control point relative to the registration point of the parent display object.
+         * @param anchorX Specifies the horizontal position of the anchor point relative to the registration point of the parent display object.
+         * @param anchorY Specifies the vertical position of the anchor point relative to the registration point of the parent display object.
          */
         public cubicCurveTo(controlX1: number, controlY1: number, controlX2: number,
             controlY2: number, anchorX: number, anchorY: number) {
@@ -154,11 +167,11 @@ namespace egret.sys {
         }
 
         /**
-         * 绘制一个矩形
-         * @param x 圆心相对于父显示对象注册点的 x 位置（以像素为单位）。
-         * @param y 相对于父显示对象注册点的圆心的 y 位置（以像素为单位）。
-         * @param width 矩形的宽度（以像素为单位）。
-         * @param height 矩形的高度（以像素为单位）。
+         * Draw a rectangle.
+         * @param x The x position of the circle center relative to the registration point of the parent display object (in pixels).
+         * @param y The y position (in pixels) relative to the center of the registration point of the parent display object.
+         * @param width The width of the rectangle (in pixels).
+         * @param height The height of the rectangle (in pixels).
          */
         public drawRect(x: number, y: number, width: number, height: number) {
             let x2 = x + width;
@@ -171,13 +184,14 @@ namespace egret.sys {
         }
 
         /**
-         * 绘制一个圆角矩形。
-         * @param x 圆心相对于父显示对象注册点的 x 位置（以像素为单位）。
-         * @param y 相对于父显示对象注册点的圆心的 y 位置（以像素为单位）。
-         * @param width 矩形的宽度（以像素为单位）。
-         * @param height 矩形的高度（以像素为单位）。
-         * @param ellipseWidth 用于绘制圆角的椭圆的宽度（以像素为单位）。
-         * @param ellipseHeight 用于绘制圆角的椭圆的高度（以像素为单位）。 （可选）如果未指定值，则默认值与为 ellipseWidth 参数提供的值相匹配。
+         * Draw a rounded rectangle.
+         * @param x The x position of the circle center relative to the registration point of the parent display object (in pixels).
+         * @param y The y position (in pixels) relative to the center of the registration point of the parent display object.
+         * @param width The width of the rectangle (in pixels).
+         * @param height The height of the rectangle (in pixels).
+         * @param ellipseWidth The width of the ellipse used to draw rounded corners (in pixels).
+         * @param ellipseHeight Is used to draw the height of ellipse with rounded corners (in pixels). (Optional)
+         * If no value is specified, the default value matches the value provided for the ellipseWidth parameter.
          */
         public drawRoundRect(x: number, y: number, width: number, height: number, ellipseWidth: number, ellipseHeight?: number): void {
             let radiusX = (ellipseWidth * 0.5) | 0;
@@ -209,7 +223,7 @@ namespace egret.sys {
             //  H         C
             //  G         D
             //    F-----E
-            // 从D点开始，结束在D点
+            // Start at point D and end at point D
             let right = x + width;
             let bottom = y + height;
             let xlw = x + radiusX;
@@ -228,41 +242,40 @@ namespace egret.sys {
         }
 
         /**
-         * 绘制一个圆。
-         * @param x 圆心相对于父显示对象注册点的 x 位置（以像素为单位）。
-         * @param y 相对于父显示对象注册点的圆心的 y 位置（以像素为单位）。
-         * @param radius 圆的半径（以像素为单位）。
+         * Draw a circle.
+         * @param x The x position of the circle center relative to the registration point of the parent display object (in pixels).
+         * @param y The y position (in pixels) relative to the center of the registration point of the parent display object.
+         * @param radius The radius of the circle (in pixels).
          */
         public drawCircle(x: number, y: number, radius: number): void {
             this.arcToBezier(x, y, radius, radius, 0, Math.PI * 2);
         }
 
         /**
-         * 绘制一个椭圆。
-         * @param x 一个表示相对于父显示对象注册点的水平位置的数字（以像素为单位）。
-         * @param y 一个表示相对于父显示对象注册点的垂直位置的数字（以像素为单位）。
-         * @param width 矩形的宽度（以像素为单位）。
-         * @param height 矩形的高度（以像素为单位）。
+         * Draw an ellipse.
+         * @param x A number indicating the horizontal position (in pixels) relative to the registration point of the parent display object.
+         * @param y A number indicating the vertical position (in pixels) relative to the registration point of the parent display object.
+         * @param width The width of the rectangle (in pixels).
+         * @param height The height of the rectangle (in pixels).
          */
         public drawEllipse(x: number, y: number, width: number, height: number): void {
             let radiusX = width * 0.5;
             let radiusY = height * 0.5;
-            // 移动x和y到椭圆的中心.
+            // Move x and y to the center of the ellipse.
             x += radiusX;
             y += radiusY;
             this.arcToBezier(x, y, radiusX, radiusY, 0, Math.PI * 2);
         }
 
         /**
-         * 绘制一段圆弧路径。圆弧路径的圆心在 (x, y) 位置，半径为 r ，根据anticlockwise （默认为顺时针）指定的方向从 startAngle 开始绘制，到 endAngle 结束。
-         * @param x 圆弧中心（圆心）的 x 轴坐标。
-         * @param y 圆弧中心（圆心）的 y 轴坐标。
-         * @param radius 圆弧的半径。
-         * @param startAngle 圆弧的起始点， x轴方向开始计算，单位以弧度表示。
-         * 注意，必须在0~2π之间。
-         * @param endAngle 圆弧的终点， 单位以弧度表示。
-         * 注意，必须在0~2π之间。
-         * @param anticlockwise 如果为 true，逆时针绘制圆弧，反之，顺时针绘制。
+         * Draw a circular path. The center of the arc path is at position (x, y), the radius is r, and it is drawn from startAngle
+         * to the endAngle according to the direction specified by anticlockwise (default is clockwise).
+         * @param x The x coordinate of the arc center (circle center).
+         * @param y The y coordinate of the arc center (center).
+         * @param radius The radius of the arc.
+         * @param startAngle The starting point of the arc, calculated from the x-axis direction, expressed in radians. Note that it must be between 0 ~ 2π.
+         * @param endAngle The end point of the arc, expressed in radians. Note that it must be between 0 ~ 2π.
+         * @param anticlockwise If true, draw the arc counterclockwise, otherwise, draw clockwise.
          */
         public drawArc(x: number, y: number, radius: number, startAngle: number, endAngle: number, anticlockwise: boolean) {
             if (anticlockwise) {
@@ -279,17 +292,14 @@ namespace egret.sys {
         }
 
         /**
-         * 绘制一段圆弧路径
-         * @param x 圆弧中心（圆心）的 x 轴坐标。
-         * @param y 圆弧中心（圆心）的 y 轴坐标。
-         * @param radiusX 圆弧的半径 x。
-         * @param radiusY 圆弧的半径 y。
-         * @param startAngle 圆弧的起始点， x轴方向开始计算，单位以弧度表示。
-         * 注意：必须为正数。
-         * @param endAngle 圆弧的终点， 单位以弧度表示。
-         * 注意：与startAngle差值必须在0~2π之间。
-         * @param anticlockwise 如果为 true，逆时针绘制圆弧，反之，顺时针绘制。
-         * 注意：如果为true，endAngle必须小于startAngle，反之必须大于。
+         * Draw a circular path.
+         * @param x The x coordinate of the arc center (circle center).
+         * @param y The y coordinate of the arc center (center).
+         * @param radiusX The radius x of the arc.
+         * @param radiusY The radius y of the arc.
+         * @param startAngle The starting point of the arc, calculated from the x-axis direction, expressed in radians. Note: Must be a positive number.
+         * @param endAngle The end point of the arc, expressed in radians. Note: The difference from startAngle must be between 0 ~ 2π.
+         * @param anticlockwise If true, draw the arc counterclockwise, otherwise, draw clockwise. Note: If true, endAngle must be less than startAngle, otherwise it must be greater.
          */
         private arcToBezier(x: number, y: number, radiusX: number, radiusY: number, startAngle: number, endAngle: number, anticlockwise?: boolean): void {
             let halfPI = Math.PI * 0.5;

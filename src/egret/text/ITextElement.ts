@@ -27,19 +27,21 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret {
-
+namespace egret
+{
     /**
      * @private
      * @version Egret 2.4
      * @platform Web,Native
      */
-    export interface IHitTextElement {
+    export interface IHitTextElement
+    {
         /**
          * @version Egret 2.4
          * @platform Web,Native
          */
         lineIndex:number;
+
         /**
          * @version Egret 2.4
          * @platform Web,Native
@@ -47,193 +49,105 @@ namespace egret {
         textElementIndex:number;
     }
 
-
     /**
-     * Text Style
+     * Text Style.
      * @version Egret 2.4
      * @platform Web,Native
-     * @language en_US
      */
-    /**
-     * 文本样式
-     * @version Egret 2.4
-     * @platform Web,Native
-     * @language zh_CN
-     */
-    export interface ITextStyle {
+    export interface ITextStyle
+    {
         /**
-         * text color
+         * Text color.
          * @version Egret 2.4
          * @platform Web,Native
-         * @see http://edn.egret.com/cn/docs/page/146 多种样式混合文本的基本结构
-         * @language en_US
-         */
-        /**
-         * 颜色值
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @see http://edn.egret.com/cn/docs/page/146 多种样式混合文本的基本结构
-         * @language zh_CN
+         * @see http://edn.egret.com/cn/docs/page/146 Basic structure of mixed text in multiple styles.
          */
         textColor?:number;
+
         /**
-         * stroke color
+         * Stroke color.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 描边颜色值
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         strokeColor?:number;
+
         /**
-         * size
+         * Size.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 字号
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         size?:number;
+
         /**
-         * stroke width
+         * Stroke width.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 描边大小
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         stroke?:number;
+
         /**
-         * whether bold
+         * Whether bold.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 是否加粗
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         bold?:boolean;
+
         /**
-         * whether italic
+         * Whether italic.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 是否倾斜
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         italic?:boolean;
+
         /**
-         * fontFamily
+         * Font family.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 字体名称
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         fontFamily?:string;
+
         /**
-         * Link events or address
+         * Link events or address.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 链接事件或者地址
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         href?:string;
+
         /**
+         * Target.
          * @private
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * @private
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         target?:string;
+
         /**
-         * Is underlined
+         * Is underlined.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 是否加下划线
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         underline?:boolean;
     }
 
     /**
-     * Used to build the basic structure of text with a variety of mixed styles, mainly for setting textFlow property
-     * @see http://edn.egret.com/cn/docs/page/146 Text mixed in a variety of style
+     * Used to build the basic structure of text with a variety of mixed styles, mainly for setting textFlow property.
+     * @see http://edn.egret.com/cn/docs/page/146 Text mixed in a variety of style.
      * @version Egret 2.4
      * @platform Web,Native
-     * @language en_US
      */
-    /**
-     * 用于建立多种样式混合文本的基本结构，主要用于设置 textFlow 属性
-     * @see http://edn.egret.com/cn/docs/page/146 多种样式文本混合
-     * @version Egret 2.4
-     * @platform Web,Native
-     * @language zh_CN
-     */
-    export interface ITextElement {
+    export interface ITextElement
+    {
         /**
-         * String Content
+         * String content.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 字符串内容
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         text:string;
+
         /**
-         * Text Style
+         * Text style.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 文本样式
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         style?:ITextStyle;
     }
@@ -243,7 +157,8 @@ namespace egret {
      * @version Egret 2.4
      * @platform Web,Native
      */
-    export interface IWTextElement extends ITextElement {
+    export interface IWTextElement extends ITextElement
+    {
         /**
          * @version Egret 2.4
          * @platform Web,Native
@@ -252,38 +167,43 @@ namespace egret {
     }
 
     /**
-     * 文本最终解析的一行数据格式
+     * One-line data format for final text parsing.
      * @private
      * @version Egret 2.4
      * @platform Web,Native
      */
-    export interface ILineElement {
+    export interface ILineElement
+    {
         /**
-         * 文本占用宽度
+         * Text width.
          * @version Egret 2.4
          * @platform Web,Native
          */
         width:number;
+
         /**
-         * 文本占用高度
+         * Text occupancy height.
          * @version Egret 2.4
          * @platform Web,Native
          */
         height:number;
+
         /**
-         * 当前文本字符总数量（包括换行符）
+         * Current total number of text characters. (Including line breaks)
          * @version Egret 2.4
          * @platform Web,Native
          */
         charNum:number;
+
         /**
-         * 是否含有换行符
+         * Does it contain line breaks.
          * @version Egret 2.4
          * @platform Web,Native
          */
         hasNextLine:boolean;
+
         /**
-         * 本行文本内容
+         * Text content of this line.
          * @version Egret 2.4
          * @platform Web,Native
          */

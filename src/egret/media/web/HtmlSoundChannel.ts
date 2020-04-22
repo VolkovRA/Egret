@@ -27,33 +27,38 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+/// <reference path="../../events/EventDispatcher.ts" />
+/// <reference path="../SoundChannel.ts" />
 
+namespace egret.web
+{
     /**
      * @private
      * @inheritDoc
      */
-    export class HtmlSoundChannel extends egret.EventDispatcher implements egret.SoundChannel {
-
-
+    export class HtmlSoundChannel extends egret.EventDispatcher implements egret.SoundChannel
+    {
         /**
          * @private
          */
         $url:string;
+
         /**
          * @private
          */
         $loops:number;
+
         /**
          * @private
          */
         $startTime:number = 0;
+
         /**
          * @private
          */
         private audio:HTMLAudioElement = null;
 
-        //声音是否已经播放完成
+        // Whether the sound has been played.
         private isStopped:boolean = false;
 
         /**
@@ -85,7 +90,7 @@ namespace egret.web {
             }
 
             try {
-                //this.audio.pause();
+                // This.audio.pause();
                 this.audio.volume = this._volume;
                 this.audio.currentTime = this.$startTime;
             }
@@ -112,7 +117,7 @@ namespace egret.web {
             }
 
             /////////////
-            //this.audio.load();
+            // this.audio.load();
             this.$play();
         };
 
@@ -138,7 +143,7 @@ namespace egret.web {
 
             let url = this.$url;
 
-            //延迟一定时间再停止，规避chrome报错
+            // Stop after a certain period of time to avoid chrome error
             window.setTimeout(function () {
                 audio.pause();
                 HtmlSound.$recycle(url, audio);

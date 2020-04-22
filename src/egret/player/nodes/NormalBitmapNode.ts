@@ -28,39 +28,43 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 /// <reference path="RenderNode.ts" />
+/// <reference path="../../display/BitmapData.ts" />
 
-namespace egret.sys {
-
-
-
+namespace egret.sys
+{
     /**
      * @private
-     * 位图渲染节点
+     * Bitmap rendering node.
      */
-    export class NormalBitmapNode extends RenderNode {
-
+    export class NormalBitmapNode extends RenderNode
+    {
         public constructor() {
             super();
             this.type = RenderNodeType.NormalBitmapNode;
         }
+
         /**
-         * 要绘制的位图
+         * Bitmap to draw.
          */
         public image: BitmapData = null;
+
         /**
-         * 控制在缩放时是否对位图进行平滑处理。
+         * Controls whether to smooth the bitmap when zooming.
          */
         public smoothing: boolean = true;
+
         /**
-         * 图片宽度。WebGL渲染使用
+         * Picture width. WebGL rendering use.
          */
         public imageWidth: number;
+
         /**
-         * 图片高度。WebGL渲染使用
+         * Picture height. WebGL rendering use.
          */
         public imageHeight: number;
+
         /**
-         * 翻转
+         * Flip.
          */
         public rotated: boolean = false;
 
@@ -74,7 +78,7 @@ namespace egret.sys {
         public drawH: number;
 
         /**
-         * 绘制一次位图
+         * Draw a bitmap.
          */
         public drawImage(sourceX: number, sourceY: number, sourceW: number, sourceH: number,
             drawX: number, drawY: number, drawW: number, drawH: number): void {
@@ -91,7 +95,7 @@ namespace egret.sys {
         }
 
         /**
-         * 在显示对象的$updateRenderNode()方法被调用前，自动清空自身的drawData数据。
+         * Before the $ updateRenderNode () method of the display object is called, it automatically clears its own drawData data.
          */
         public cleanBeforeRender(): void {
             super.cleanBeforeRender();

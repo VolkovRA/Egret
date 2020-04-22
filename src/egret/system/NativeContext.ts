@@ -26,11 +26,20 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
+
+/// <reference path="../display/Stage.ts" />
+/// <reference path="../geom/Matrix.ts" />
+/// <reference path="../text/TextField.ts" />
+/// <reference path="../filters/Filter.ts" />
+/// <reference path="../player/RenderBuffer.ts" />
+/// <reference path="../display/Texture.ts" />
+
 /**
  * @private
  */
-namespace egret {
-    //todo remove
+namespace egret
+{
+    // todo remove
     /**
      * @private
      */
@@ -91,7 +100,9 @@ declare namespace egret_native {
     let nrABIVersion: number;
     let nrMinEgretVersion: string;
 }
-declare namespace egret_native {
+
+declare namespace egret_native
+{
     /**
      * @private
      */
@@ -101,6 +112,7 @@ declare namespace egret_native {
         constructor(currRenderBuffer: any, w?: number, h?: number, root?: boolean);
         resize(w: number, h: number): void;
     }
+
     /**
      * @private
      */
@@ -108,6 +120,7 @@ declare namespace egret_native {
         public $init();
         public $id;
     }
+
     /**
      * @private
      */
@@ -193,56 +206,70 @@ declare namespace egret_native {
         public setGraphicsClear(): void;
     }
 }
+
 /**
  * @private
  */
-declare namespace egret_native {
+declare namespace egret_native
+{
+
     /**
      * @private
      */
-    const enum NativeObjectType {
+    const enum NativeObjectType
+    {
         /**
-         * 容器
+         * Container.
          */
         CONTAINER = 0,
+
         /**
-         * 位图
+         * Bitmap.
          */
         BITMAP = 1,
+
         /**
-         * 位图数据
+         * Bitmap data.
          */
         BITMAP_DATA = 2,
+
         /**
-         * 滤镜
+         * Filter.
          */
         FILTER = 6,
+
         /**
-         * 文本
+         * Text.
          */
         TEXT = 7,
+
         /**
-         * 矢量绘图
+         * Vector drawing.
          */
         GRAPHICS = 8,
+
         /**
-         * 含一个适量绘图的容器
+         * A container with an appropriate amount of drawings.
          */
         SPRITE = 9,
+
         /**
-         * 粒子系统
+         * Particle System.
          */
         PARTICLE_SYSTEM = 10,
+
         /**
-         * 位图文本
+         * Bitmap text.
          */
         BITMAP_TEXT = 11,
+
         /**
-         * 网格
+         * Grid.
          */
         MESH = 12,
+
         /**
-         * 舞台（根容器）
+         * Stage. (Root container)
          */
         STAGE = 13,
     }

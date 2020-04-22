@@ -30,53 +30,65 @@
 /**
  * @private
  */
-interface PlayerOption {
+interface PlayerOption
+{
     /**
-     * 入口类完整类名
+     * Entry class full class name.
      */
     entryClassName?:string;
+
     /**
-     * 默认帧率
+     * Default frame rate.
      */
     frameRate?:number;
+
     /**
-     * 屏幕适配模式
+     * Screen adaptation mode.
      */
     scaleMode?:string;
+
     /**
-     * 初始内容宽度
+     * Initial content width.
      */
     contentWidth?:number;
+
     /**
-     * 初始内容高度
+     * Initial content height.
      */
     contentHeight?:number;
+
     /**
-     * 屏幕方向
+     * Screen orientation.
      */
     orientation?:string;
+
     /**
-     * 显示FPS
+     * Show FPS.
      */
     showFPS?:boolean;
+
     /**
-     *
+     * Styles of FPS.
      */
     fpsStyles?:Object;
+
     /**
-     * 显示日志
+     * Show logs.
      */
     showLog?:boolean;
+
     /**
-     * 过滤日志的正则表达式
+     * Regular expression for filtering logs.
      */
     logFilter?:string;
+
     /**
-     *
+     * Max touches.
      */
     maxTouches?:number;
+
     /**
-     *
+     * Texture scale factor.
      */
     textureScaleFactor?:number;
 }

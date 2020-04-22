@@ -27,23 +27,26 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="RenderBuffer.ts" />
+/// <reference path="nodes/RenderNode.ts" />
+/// <reference path="../display/BitmapData.ts" />
 /// <reference path="../utils/HashObject.ts" />
 
-namespace egret.sys {
-
+namespace egret.sys
+{
     let displayListPool: DisplayList[] = [];
     let blendModes = ["source-over", "lighter", "destination-out"];
     let defaultCompositeOp = "source-over";
 
     /**
      * @private
-     * 显示列表
+     * Show list.
      */
-    export class DisplayList extends HashObject {
-
-
+    export class DisplayList extends HashObject
+    {
         /**
-         * 创建一个DisplayList对象，若内存不足或无法创建RenderBuffer，将会返回null。
+         * Create a DisplayList object.
+         * If there is insufficient memory or the RenderBuffer cannot be created, null will be returned.
          */
         public static create(target: DisplayObject): DisplayList {
             let displayList = new egret.sys.DisplayList(target);
@@ -58,10 +61,9 @@ namespace egret.sys {
             return displayList;
         }
 
-
         /**
          * @private
-         * 创建一个DisplayList对象
+         * Create a DisplayList object.
          */
         public constructor(root: DisplayObject) {
             super();
@@ -70,14 +72,15 @@ namespace egret.sys {
         }
 
         private isStage: boolean = false;
+
         /**
-         * 位图渲染节点
+         * Bitmap rendering node.
          */
         $renderNode: RenderNode = new BitmapNode();
 
         /**
          * @private
-         * 获取渲染节点
+         * Get render node.
          */
         $getRenderNode(): sys.RenderNode {
             return this.$renderNode;
@@ -87,27 +90,32 @@ namespace egret.sys {
          * @private
          */
         public renderBuffer: RenderBuffer = null;
+
         /**
          * @private
          */
         public offsetX: number = 0;
+
         /**
          * @private
          */
         public offsetY: number = 0;
+
         /**
          * @private
          */
         private offsetMatrix: Matrix = new Matrix();
+
         /**
          * @private
-         * 显示列表根节点
+         * Show list root node
          */
         public root: DisplayObject;
 
         /**
          * @private
-         * 设置剪裁边界，不再绘制完整目标对象，画布尺寸由外部决定，超过边界的节点将跳过绘制。
+         * Set the clipping boundary, no longer draw the complete target object, the canvas size is determined by the outside,
+         * and the nodes beyond the boundary will skip drawing.
          */
         public setClipRect(width: number, height: number): void {
             width *= DisplayList.$canvasScaleX;
@@ -116,24 +124,25 @@ namespace egret.sys {
         }
 
         public $canvasScaleX: number = 1;
+
         public $canvasScaleY: number = 1;
 
         /**
          * @private
-         * 绘制根节点显示对象到目标画布，返回draw的次数。
+         * Draw the root node display object to the target canvas and return the number of draws.
          */
         public drawToSurface(): number {
             let drawCalls = 0;
             this.$canvasScaleX = this.offsetMatrix.a = DisplayList.$canvasScaleX;
             this.$canvasScaleY = this.offsetMatrix.d = DisplayList.$canvasScaleY;
-            if (!this.isStage) {//对非舞台画布要根据目标显示对象尺寸改变而改变。
+            if (!this.isStage) { // The non-stage canvas should be changed according to the size of the target display object.
                 this.changeSurfaceSize();
             }
             let buffer = this.renderBuffer;
             buffer.clear();
             drawCalls = systemRenderer.render(this.root, buffer, this.offsetMatrix);
 
-            if (!this.isStage) {//对非舞台画布要保存渲染节点。
+            if (!this.isStage) { // Render nodes should be saved for non-stage canvases.
                 let surface = buffer.surface;
                 let renderNode = <BitmapNode>this.$renderNode;
                 renderNode.drawData.length = 0;
@@ -160,7 +169,8 @@ namespace egret.sys {
 
         /**
          * @private
-         * 改变画布的尺寸，由于画布尺寸修改会清空原始画布。所以这里将原始画布绘制到一个新画布上，再与原始画布交换。
+         * Change the size of the canvas, because the canvas size modification will clear the original canvas.
+         * So here we draw the original canvas to a new canvas and then exchange it with the original canvas.
          */
         public changeSurfaceSize(): void {
             let root = this.root;
@@ -173,7 +183,7 @@ namespace egret.sys {
             this.offsetY = -bounds.y;
             this.offsetMatrix.setTo(this.offsetMatrix.a, 0, 0, this.offsetMatrix.d, this.offsetX, this.offsetY);
             let buffer = this.renderBuffer;
-            //在chrome里，小等于256*256的canvas会不启用GPU加速。
+            // In chrome, a canvas equal to 256 * 256 will not enable GPU acceleration.
             let width = Math.max(257, bounds.width * scaleX);
             let height = Math.max(257, bounds.height * scaleY);
             if (this.offsetX == oldOffsetX &&
@@ -191,6 +201,7 @@ namespace egret.sys {
          * @private
          */
         public static $canvasScaleX: number = 1;
+
         public static $canvasScaleY: number = 1;
 
         /**
@@ -207,7 +218,7 @@ namespace egret.sys {
         //for 3D&2D
         /**
          * @private
-         * stage渲染
+         * Stage rendering.
          */
         public $stageRenderToSurface = function () {
             sys.systemRenderer.render(this.root, this.renderBuffer, this.offsetMatrix);

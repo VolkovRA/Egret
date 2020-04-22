@@ -27,21 +27,27 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="SystemRenderer.ts" />
+/// <reference path="FPSDisplay.ts" />
+/// <reference path="DisplayList.ts" />
+/// <reference path="RenderBuffer.ts" />
 /// <reference path="../utils/HashObject.ts" />
+/// <reference path="../display/Stage.ts" />
+/// <reference path="../web/rendering/webgl/WebGLRenderContext.ts" />
 
-namespace egret.sys {
-
+namespace egret.sys
+{
     export let $TempStage: egret.Stage;
 
     /**
      * @private
-     * Egret播放器
+     * Egret player.
      */
-    export class Player extends HashObject {
-
+    export class Player extends HashObject
+    {
         /**
          * @private
-         * 实例化一个播放器对象。
+         * Instantiate a player object.
          */
         public constructor(buffer: RenderBuffer, stage: Stage, entryClassName: string) {
             super();
@@ -70,24 +76,26 @@ namespace egret.sys {
             return displayList;
         }
 
-
         /**
          * @private
          */
         private screenDisplayList: DisplayList;
+
         /**
          * @private
-         * 入口类的完整类名
+         * The full class name of the entry class.
          */
         private entryClassName: string;
+
         /**
          * @private
-         * 舞台引用
+         * Stage reference.
          */
         public stage: Stage;
+
         /**
          * @private
-         * 入口类实例
+         * Entry class instance.
          */
         private root: DisplayObject;
 
@@ -98,7 +106,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 启动播放器
+         * Start the player.
          */
         public start(): void {
             if (this.isPlaying || !this.stage) {
@@ -133,7 +141,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 停止播放器，停止后将不能重新启动。
+         * Stop the player, it will not restart after stopping.
          */
         public stop(): void {
             this.pause();
@@ -142,7 +150,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 暂停播放器，后续可以通过调用start()重新启动播放器。
+         * Pause the player, and then restart the player by calling start ().
          */
         public pause(): void {
             if (!this.isPlaying) {
@@ -154,7 +162,7 @@ namespace egret.sys {
 
         /**
          * @private
-         * 渲染屏幕
+         * Render screen.
          */
         $render(triggerByFrame: boolean, costTicker: number): void {
             if (egret.nativeRender) {
@@ -174,9 +182,9 @@ namespace egret.sys {
 
         /**
          * @private
-         * 更新舞台尺寸
-         * @param stageWidth 舞台宽度（以像素为单位）
-         * @param stageHeight 舞台高度（以像素为单位）
+         * Update stage size.
+         * @param stageWidth Stage width. (in pixels)
+         * @param stageHeight Stage height. (in pixels)
          */
         public updateStageSize(stageWidth: number, stageHeight: number): void {
             let stage = this.stage;
@@ -193,10 +201,9 @@ namespace egret.sys {
             stage.dispatchEventWith(Event.RESIZE);
         }
 
-
         /**
          * @private
-         * 显示FPS。
+         * FPS is displayed.
          */
         public displayFPS(showFPS: boolean, showLog: boolean, logFilter: string, styles: Object) {
             showLog = !!showLog;
@@ -253,42 +260,46 @@ namespace egret.sys {
                 errorLines = null;
             }
         }
+
         /**
          * @private
          */
         private showFPS: boolean;
+
         /**
          * @private
          */
         private showLog: boolean;
+
         /**
          * @private
          */
         private stageDisplayList: DisplayList;
     }
 
-
     /**
      * @private
-     * FPS显示对象
+     * FPS display objects.
      */
-    interface FPS {
-
+    interface FPS
+    {
         /**
-         * 更新FPS信息
+         * Update FPS information.
          */
         update(drawCalls: number, costRender: number, costTicker: number): void;
 
         /**
-         * 插入一条log信息
+         * Insert a log message.
          */
         updateInfo(info: string): void;
+
         /**
-         * 插入一条warn信息
+         * Insert a warn message.
          */
         updateWarn(info: string): void;
+
         /**
-         * 插入一条error信息
+         * Insert an error message.
          */
         updateError(info: string): void;
     }
@@ -299,15 +310,16 @@ namespace egret.sys {
      * @private
      */
     export let $logToFPS: (info: string) => void;
+
     /**
      * @private
      */
     export let $warnToFPS: (info: string) => void;
+
     /**
      * @private
      */
     export let $errorToFPS: (info: string) => void;
-
 
     let logLines: string[] = [];
     let warnLines: string[] = [];
@@ -338,9 +350,8 @@ namespace egret.sys {
         fpsDisplay.updateError(info);
     };
 
-
-    class FPSImpl {
-
+    class FPSImpl
+    {
         private infoLines = [];
         private totalTime = 0;
         private totalTick = 0;
@@ -385,7 +396,7 @@ namespace egret.sys {
             let current = egret.getTimer();
             this.totalTime += current - this.lastTime;
             this.lastTime = current;
-            //todo 多Player
+            // todo many Player
             this.totalTick++;
             this.drawCalls += drawCalls;
             this.costRender += costRender;
@@ -490,30 +501,30 @@ namespace egret.sys {
     export let WebGLRenderContext: { new(width?: number, height?: number, context?: WebGLRenderingContext): RenderContext };
 }
 
-
 /**
  * @private
  */
-module egret {
+module egret
+{
     /**
      * @private
      */
     export var nativeRender: boolean = __global.nativeRender;
 
-    //检测版本是否匹配，不匹配改用非原生加速渲染方式
+    // Check if the version matches, if not match, use non-native accelerated rendering
     if (nativeRender) {
         const nrABIVersion = egret_native.nrABIVersion;
         const nrMinEgretVersion = egret_native.nrMinEgretVersion;
         const requiredNrABIVersion = 5;
         if (nrABIVersion < requiredNrABIVersion) {
             nativeRender = false;
-            const msg = "需要升级微端版本到 0.1.14 才可以开启原生渲染加速";
+            const msg = "You need to upgrade the micro-end version to 0.1.14 to enable native rendering acceleration";
             sys.$warnToFPS(msg);
             egret.warn(msg);
         }
         else if (nrABIVersion > requiredNrABIVersion) {
             nativeRender = false;
-            const msg = `需要升级引擎版本到 ${nrMinEgretVersion} 才可以开启原生渲染加速`;
+            const msg = `You need to upgrade the engine version to ${nrMinEgretVersion} for enable native rendering acceleration`;
             sys.$warnToFPS(msg);
             egret.warn(msg);
         }

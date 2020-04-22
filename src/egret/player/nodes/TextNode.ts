@@ -27,50 +27,59 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="TextFormat.ts" />
+/// <reference path="RenderNode.ts" />
+
 namespace egret.sys {
 
     /**
      * @private
-     * 文本渲染节点
+     * Text rendering node.
      */
-    export class TextNode extends RenderNode {
-
+    export class TextNode extends RenderNode
+    {
         public constructor() {
             super();
             this.type = RenderNodeType.TextNode;
         }
 
         /**
-         * 颜色值
+         * Color value.
          */
         public textColor:number = 0xFFFFFF;
+
         /**
-         * 描边颜色值
+         * Stroke color value.
          */
         public strokeColor:number = 0x000000;
+
         /**
-         * 字号
+         * Font size.
          */
         public size:number = 30;
+
         /**
-         * 描边大小
+         * Stroke size.
          */
         public stroke:number = 0;
+
         /**
-         * 是否加粗
+         * Whether to bold.
          */
         public bold:boolean = false;
+
         /**
-         * 是否倾斜
+         * Whether to tilt.
          */
         public italic:boolean = false;
+
         /**
-         * 字体名称
+         * Font name.
          */
         public fontFamily:string = "Arial";
 
         /**
-         * 绘制一行文本
+         * Draw a line of text.
          */
         public drawText(x:number, y:number, text:string, format:TextFormat):void {
             this.drawData.push(x, y, text, format);
@@ -78,25 +87,29 @@ namespace egret.sys {
             this.dirtyRender = true;
         }
 
-        //forWebGL
+        // forWebGL
         /**
-         * 绘制x偏移
+         * Draw x offset.
          */
         public x:number;
+
         /**
-         * 绘制y偏移
+         * Plot y offset.
          */
         public y:number;
+
         /**
-         * 绘制宽度
+         * Draw width.
          */
         public width:number;
+
         /**
-         * 绘制高度
+         * Drawing height.
          */
         public height:number;
+
         /**
-         * 脏渲染标记
+         * Dirty render tag.
          */
         public dirtyRender:boolean = true;
         public $texture:WebGLTexture;
@@ -106,7 +119,7 @@ namespace egret.sys {
         public $canvasScaleY:number;
 
         /**
-         * 清除非绘制的缓存数据
+         * Clear non-drawn cached data.
          */
         public clean():void {
             if(this.$texture) {
@@ -117,12 +130,11 @@ namespace egret.sys {
         }
 
         /**
-         * 在显示对象的$updateRenderNode()方法被调用前，自动清空自身的drawData数据。
+         * Before the $ updateRenderNode () method of the display object is called, it automatically clears its own drawData data.
          */
         public cleanBeforeRender():void{
             super.cleanBeforeRender();
             this.dirtyRender = true;
         }
-
     }
 }

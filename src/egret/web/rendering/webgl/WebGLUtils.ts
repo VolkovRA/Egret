@@ -26,7 +26,9 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-namespace egret {
+
+namespace egret
+{
     /**
      * @private
      */
@@ -43,6 +45,7 @@ namespace egret {
             if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
                 warn(1020);
             }
+
             return shaderProgram;
         }
 
@@ -63,6 +66,7 @@ namespace egret {
                 //egret.info(gl.getShaderInfoLog(shader));
                 return null;
             }
+            
             return shader;
         }
 
@@ -109,7 +113,7 @@ namespace egret {
         }
 
         /**
-         * inspired by pixi.js
+         * Inspired by pixi.js
          */
         public static premultiplyTint(tint: number, alpha: number): number {
             if (alpha === 1.0) {

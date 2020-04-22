@@ -29,25 +29,26 @@
 
 /// <reference path="Path2D.ts" />
 
-namespace egret.sys {
-
+namespace egret.sys
+{
     /**
      * @private
-     * 填充路径
+     * Fill path.
      */
-    export class FillPath extends Path2D {
-
+    export class FillPath extends Path2D
+    {
         public constructor(){
             super();
             this.type = PathType.Fill;
         }
 
         /**
-         * 填充颜色
+         * Fill color.
          */
         public fillColor:number;
+        
         /**
-         * 填充透明度
+         * Fill transparency.
          */
         public fillAlpha:number;
     }

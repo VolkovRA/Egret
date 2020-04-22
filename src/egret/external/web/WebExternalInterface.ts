@@ -27,11 +27,15 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+/// <reference path="../ExternalInterface.ts" />
+
+namespace egret.web
+{
     /**
      * @private
      */
-    export class WebExternalInterface implements ExternalInterface {
+    export class WebExternalInterface implements ExternalInterface
+    {
         /**
          * @private
          * @param functionName
@@ -56,14 +60,15 @@ namespace egret.web {
     }
 }
 
-namespace egret.web {
+namespace egret.web
+{
     let callBackDic = {};
 
     /**
      * @private
      */
-    export class NativeExternalInterface implements ExternalInterface {
-
+    export class NativeExternalInterface implements ExternalInterface
+    {
         static call(functionName:string, value:string):void {
             let data:any = {};
             data.functionName = functionName;
@@ -101,14 +106,15 @@ namespace egret.web {
     }
 }
 
-namespace egret.web {
+namespace egret.web
+{
     let callBackDic = {};
 
     /**
      * @private
      */
-    export class WebViewExternalInterface implements ExternalInterface {
-
+    export class WebViewExternalInterface implements ExternalInterface
+    {
         static call(functionName:string, value:string):void {
             __global.ExternalInterface.call(functionName, value);
         }

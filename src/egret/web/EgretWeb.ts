@@ -27,16 +27,20 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+namespace egret.web
+{
     /**
      * @private
-     * 刷新所有Egret播放器的显示区域尺寸。仅当使用外部JavaScript代码动态修改了Egret容器大小时，需要手动调用此方法刷新显示区域。
-     * 当网页尺寸发生改变时此方法会自动被调用。
+     * Refresh the display area size of all Egret players.
+     * Only when the size of the Egret container is dynamically modified using external JavaScript code,
+     * you need to manually call this method to refresh the display area.
+     * This method will be called automatically when the web page size changes.
      */
     function updateAllScreens(): void {
         if (!isRunning) {
             return;
         }
+        
         let containerList = document.querySelectorAll(".egret-player");
         let length = containerList.length;
         for (let i = 0; i < length; i++) {
@@ -50,28 +54,31 @@ namespace egret.web {
 
     /**
      * @private
-     * 网页加载完成，实例化页面中定义的Egret标签
+     * The web page is loaded and the Egret tag defined in the page is instantiated.
      */
     function runEgret(options?: runEgretOptions): void {
         if (isRunning) {
             return;
         }
+
         isRunning = true;
+
         if (!options) {
             options = {};
         }
+
         let ua: string = navigator.userAgent.toLowerCase();
         if (ua.indexOf("egretnative") >= 0 && ua.indexOf("egretwebview") == -1) {
             Capabilities["runtimeType" + ""] = egret.RuntimeType.RUNTIME2;
         }
 
-        if (ua.indexOf("egretnative") >= 0 && egret.nativeRender) {// Egret Native
+        if (ua.indexOf("egretnative") >= 0 && egret.nativeRender) { // Egret Native
             egret_native.addModuleCallback(function () {
                 Html5Capatibility.$init();
 
-                // WebGL上下文参数自定义
+                // WebGL context parameter customization
                 if (options.renderMode == "webgl") {
-                    // WebGL抗锯齿默认关闭，提升PC及某些平台性能
+                    // WebGL anti-aliasing is off by default, improving the performance of PC and some platforms
                     let antialias = options.antialias;
                     WebGLRenderContext.antialias = !!antialias;
                 }
@@ -121,9 +128,9 @@ namespace egret.web {
             Html5Capatibility._audioType = options.audioType;
             Html5Capatibility.$init();
             let renderMode = options.renderMode;
-            // WebGL上下文参数自定义
+            // WebGL context parameter customization
             if (renderMode == "webgl") {
-                // WebGL抗锯齿默认关闭，提升PC及某些平台性能
+                // WebGL anti-aliasing is off by default, improving the performance of PC and some platforms
                 let antialias = options.antialias;
                 WebGLRenderContext.antialias = !!antialias;
                 // WebGLRenderContext.antialias = (typeof antialias == undefined) ? true : antialias;
@@ -134,6 +141,7 @@ namespace egret.web {
                 egret.warn(1051);
                 renderMode = "webgl";
             }
+
             setRenderMode(renderMode);
 
             let canvasScaleFactor;
@@ -144,7 +152,7 @@ namespace egret.web {
                 canvasScaleFactor = options.calculateCanvasScaleFactor(sys.canvasHitTestBuffer.context);
             }
             else {
-                //based on : https://github.com/jondavidjohn/hidpi-canvas-polyfill
+                // Based on : https://github.com/jondavidjohn/hidpi-canvas-polyfill
                 let context = sys.canvasHitTestBuffer.context;
                 let backingStore = context.backingStorePixelRatio ||
                     context.webkitBackingStorePixelRatio ||
@@ -182,7 +190,7 @@ namespace egret.web {
     }
 
     /**
-     * 设置渲染模式。"auto","webgl","canvas"
+     * Set the rendering mode: "auto", "webgl", "canvas".
      * @param renderMode
      */
     function setRenderMode(renderMode: string): void {
@@ -204,12 +212,11 @@ namespace egret.web {
         }
     }
 
-
     egret.sys.setRenderMode = setRenderMode;
 
     /**
      * @private
-     * 启动心跳计时器。
+     * Start the heartbeat timer.
      */
     function startTicker(ticker: egret.sys.SystemTicker): void {
         let requestAnimationFrame =
@@ -232,7 +239,7 @@ namespace egret.web {
         }
     }
 
-    //覆盖原生的isNaN()方法实现，在不同浏览器上有2~10倍性能提升。
+    // Overriding the native isNaN () method implementation, there are 2 ~ 10 times performance improvement on different browsers.
     window["isNaN"] = function (value: number): boolean {
         value = +value;
         return value !== value;

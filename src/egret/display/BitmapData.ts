@@ -30,9 +30,9 @@
 /// <reference path="../utils/HashObject.ts" />
 /// <reference path="../utils/DataStructure.ts" />
 
-namespace egret {
-
-    //refactor
+namespace egret
+{
+    // Refactor
     export class CompressedTextureData {
         public glInternalFormat: number;
         public width: number;
@@ -48,59 +48,33 @@ namespace egret {
     export const glContext = 'glContext';
     export const UNPACK_PREMULTIPLY_ALPHA_WEBGL = 'UNPACK_PREMULTIPLY_ALPHA_WEBGL';
 
-    
-
     /**
      * A BitmapData object contains an array of pixel data. This data can represent either a fully opaque bitmap or a
      * transparent bitmap that contains alpha channel data. Either type of BitmapData object is stored as a buffer of 32-bit
-     * integers. Each 32-bit integer determines the properties of a single pixel in the bitmap.<br/>
+     * integers. Each 32-bit integer determines the properties of a single pixel in the bitmap.
+     * 
      * Each 32-bit integer is a combination of four 8-bit channel values (from 0 to 255) that describe the alpha transparency
      * and the red, green, and blue (ARGB) values of the pixel. (For ARGB values, the most significant byte represents the
      * alpha channel value, followed by red, green, and blue.)
      * @see egret.Bitmap
      * @version Egret 2.4
      * @platform Web,Native
-     * @language en_US
      */
-    /**
-     * BitmapData 对象是一个包含像素数据的数组。此数据可以表示完全不透明的位图，或表示包含 Alpha 通道数据的透明位图。
-     * 以上任一类型的 BitmapData 对象都作为 32 位整数的缓冲区进行存储。每个 32 位整数确定位图中单个像素的属性。<br/>
-     * 每个 32 位整数都是四个 8 位通道值（从 0 到 255）的组合，这些值描述像素的 Alpha 透明度以及红色、绿色、蓝色 (ARGB) 值。
-     * （对于 ARGB 值，最高有效字节代表 Alpha 通道值，其后的有效字节分别代表红色、绿色和蓝色通道值。）
-     * @see egret.Bitmap
-     * @version Egret 2.4
-     * @platform Web,Native
-     * @language zh_CN
-     */
-    export class BitmapData extends HashObject {
+    export class BitmapData extends HashObject
+    {
         /**
          * The width of the bitmap image in pixels.
          * @readOnly
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 位图图像的宽度，以像素为单位。
-         * @readOnly
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         width: number;
+
         /**
          * The height of the bitmap image in pixels.
          * @readOnly
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 位图图像的高度，以像素为单位。
-         * @readOnly
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         height: number;
 
@@ -110,15 +84,6 @@ namespace egret {
          * @version Egret 2.4
          * @platform Web,Native
          * @private
-         * @language en_US
-         */
-        /**
-         * 原始位图图像。
-         * HTMLImageElement|HTMLCanvasElement|HTMLVideoElement
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @private
-         * @language zh_CN
          */
         $source: any;
 
@@ -127,14 +92,6 @@ namespace egret {
          * @version Egret 2.4
          * @platform Web,Native
          * @private
-         * @language en_US
-         */
-        /**
-         * WebGL纹理。
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @private
-         * @language zh_CN
          */
         webGLTexture: any;
 
@@ -142,19 +99,12 @@ namespace egret {
          * Texture format.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 纹理格式。
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         format: string = "image";
 
         /**
          * @private
-         * webgl纹理生成后，是否删掉原始图像数据
+         * webgl after the texture is generated, whether to delete the original image data.
          */
         $deleteSource: boolean = true;
 
@@ -166,7 +116,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          */
         public readonly compressedTextureData: Array<Array<CompressedTextureData>> = [];
         public debugCompressedTextureURL: string = '';
@@ -177,26 +126,21 @@ namespace egret {
          * @param source The source object being referenced.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 创建一个引用指定 source 实例的 BitmapData 对象
-         * @param source 被引用的 source 实例
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         constructor(source: any) {
             super();
+
             if (egret.nativeRender) {
                 let nativeBitmapData = new egret_native.NativeBitmapData();
                 nativeBitmapData.$init();
                 this.$nativeBitmapData = nativeBitmapData;
             }
+
             this.source = source;
             // this.width = source.width;
             // this.height = source.height;
             this.source = source;
+            
             if (this.source) {
                 this.width = +source.width;
                 this.height = +source.height;
@@ -227,12 +171,14 @@ namespace egret {
             else {
                 base64 = data as string;
             }
-            let imageType = "image/png";//default value
+            let imageType = "image/png"; // default value
             if (base64.charAt(0) === '/') {
                 imageType = "image/jpeg";
-            } else if (base64.charAt(0) === 'R') {
+            }
+            else if (base64.charAt(0) === 'R') {
                 imageType = "image/gif";
-            } else if (base64.charAt(0) === 'i') {
+            }
+            else if (base64.charAt(0) === 'i') {
                 imageType = "image/png";
             }
             let img: HTMLImageElement = new Image();
@@ -278,8 +224,6 @@ namespace egret {
             }
             BitmapData.$dispose(this);
         }
-
-
 
         private static _displayList = egret.createMap<DisplayObject[]>();
         static $addDisplayObject(displayObject: DisplayObject, bitmapData: BitmapData): void {

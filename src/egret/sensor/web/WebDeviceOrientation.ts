@@ -1,12 +1,14 @@
 /// <reference path="../../events/EventDispatcher.ts" />
+/// <reference path="../../events/OrientationEvent.ts" />
+/// <reference path="../DeviceOrientation.ts" />
 
-namespace egret.web {
-
+namespace egret.web
+{
     /**
      * @private
      */
-    export class WebDeviceOrientation extends EventDispatcher implements DeviceOrientation {
-
+    export class WebDeviceOrientation extends EventDispatcher implements DeviceOrientation
+    {
         /**
          * @private
          * 

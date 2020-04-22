@@ -27,18 +27,25 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+/// <reference path="../../display/DisplayObject.ts" />
+/// <reference path="../../display/BitmapData.ts" />
+/// <reference path="../../player/nodes/BitmapNode.ts" />
+/// <reference path="../../system/Capabilities.ts" />
+/// <reference path="../Video.ts" />
 
+namespace egret.web
+{
     /**
      * @private
      * @inheritDoc
      */
-    export class WebVideo extends egret.DisplayObject implements egret.Video {
-
+    export class WebVideo extends egret.DisplayObject implements egret.Video
+    {
         /**
          * @inheritDoc
          */
         public src: string;
+
         /**
          * @inheritDoc
          */
@@ -48,39 +55,47 @@ namespace egret.web {
          * @private
          */
         private posterData: BitmapData;
+
         /**
          * @private
          */
         private video: HTMLVideoElement;
+
         /**
          * @private
          */
         private loaded: boolean = false;
+
         /**
          * @private
          */
         private closed: boolean = false;
+
         /**
          * @private
          */
         private heightSet: number = NaN;
+
         /**
          * @private
          */
         private widthSet: number = NaN;
+
         /**
          * @private
-         * pc上视频卡住的时候不能暂停
+         * Can't pause when video is stuck on PC.
          */
         private waiting: boolean = false;
+
         /**
          * @private
-         * 用户是否设置了 pause
+         * Whether the user has set a pause.
          */
         private userPause: boolean = false;
+
         /**
          * @private
-         * 用户是否设置了 play
+         * Whether the user has set play.
          */
         private userPlay: boolean = false;
 
@@ -173,7 +188,7 @@ namespace egret.web {
             }
             video.loop = !!loop;
             if (egret.Capabilities.isMobile) {
-                video.style.zIndex = "-88888"; //移动端，就算设置成最小，只要全屏，都会在最上层，而且在自动退出去后，不担心挡住canvas
+                video.style.zIndex = "-88888"; // Even if the mobile terminal is set to the minimum, as long as it is full screen, it will be on the top layer, and after automatically exiting, do not worry about blocking the canvas.
             }
             else {
                 video.style.zIndex = "9999";
@@ -184,7 +199,7 @@ namespace egret.web {
             video.height = video.videoHeight;
             video.width = video.videoWidth;
             if (egret.Capabilities.os != "Windows PC" && egret.Capabilities.os != "Mac OS") {
-                window.setTimeout(function () {//为了解决视频返回挤压页面内容
+                window.setTimeout(function () {// In order to solve the video returns to squeeze the page content.
                     video.width = 0;
                 }, 1000);
             }
@@ -287,7 +302,7 @@ namespace egret.web {
         };
 
         private exitFullscreen(): void {
-            //退出全屏
+            // Exit Full Screen
             if (document['exitFullscreen']) {
                 document['exitFullscreen']();
             } else if (document['msExitFullscreen']) {
@@ -304,7 +319,6 @@ namespace egret.web {
 
         /**
          * @private
-         *
          */
         private onVideoEnded() {
             this.pause();
@@ -315,7 +329,6 @@ namespace egret.web {
 
         /**
          * @private
-         *
          */
         private onVideoError() {
             this.dispatchEventWith(egret.IOErrorEvent.IO_ERROR);
@@ -340,7 +353,6 @@ namespace egret.web {
             this.loaded = false;
         }
 
-
         /**
          * @inheritDoc
          */
@@ -354,7 +366,6 @@ namespace egret.web {
             this.video.pause();
             egret.stopTick(this.markDirty, this);
         }
-
 
         /**
          * @inheritDoc
@@ -393,6 +404,7 @@ namespace egret.web {
         }
 
         private _fullscreen = true;
+
         /**
          * @inheritDoc
          */
@@ -454,13 +466,12 @@ namespace egret.web {
 
         /**
          * @private
-         *
          */
         private onVideoLoaded = () => {
             this.video.removeEventListener("canplay", this.onVideoLoaded);
             let video = this.video;
             this.loaded = true;
-            //video.pause();
+            // video.pause();
             if (this.posterData) {
                 this.posterData.width = this.getPlayWidth();
                 this.posterData.height = this.getPlayHeight();
@@ -553,11 +564,11 @@ namespace egret.web {
 
         /**
          * @private
-         * 设置显示高度
+         * Set display height.
          */
         $setHeight(value: number): void {
             this.heightSet = value;
-            if (this.paused) { // 在暂停和播放结束后，修改视频大小时，没有重绘导致的bug
+            if (this.paused) { // After the pause and playback ends, when changing the video size, there is no bug caused by redrawing.
                 const self = this;
                 this.$renderDirty = true;
                 window.setTimeout(function() {
@@ -569,11 +580,11 @@ namespace egret.web {
 
         /**
          * @private
-         * 设置显示宽度
+         * Set display width.
          */
         $setWidth(value: number): void {
             this.widthSet = value;
-            if (this.paused) { // 在暂停和播放结束后，修改视频大小时，没有重绘导致的bug
+            if (this.paused) { // After the pause and playback ends, when changing the video size, there is no bug caused by redrawing.
                 const self = this;
                 this.$renderDirty = true;
                 window.setTimeout(function() {
@@ -589,6 +600,7 @@ namespace egret.web {
             }
             return true;
         }
+
         /**
          * @inheritDoc
          */

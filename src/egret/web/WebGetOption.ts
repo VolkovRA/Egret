@@ -27,7 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+namespace egret.web
+{
     /**
      * @private
      */
@@ -37,6 +38,7 @@ namespace egret.web {
             if (search == "") {
                 return "";
             }
+
             search = search.slice(1);
             let searchArr = search.split("&");
             let length = searchArr.length;
@@ -48,6 +50,7 @@ namespace egret.web {
                 }
             }
         }
+        
         return "";
     }
 

@@ -27,63 +27,93 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="TextAtlasStrategy.ts" />
 /// <reference path="../../../utils/HashObject.ts" />
+/// <reference path="../../../utils/NumberUtils.ts" />
+/// <reference path="../../../player/nodes/TextNode.ts" />
+/// <reference path="../../../player/nodes/TextFormat.ts" />
+/// <reference path="../../../player/nodes/TextFormat.ts" />
 
-namespace egret.web {
-
-    //测试开关,打开会截住老的字体渲染
+namespace egret.web
+{
+    /**
+     * Test the switch, turning on will intercept the old font rendering.
+     */
     export const textAtlasRenderEnable: boolean = false;
-
-    //测试对象, 先不用singleton的，后续整理代码，就new一个，放在全局的context上做成员变量
+    
+    /**
+     * Test object, no need for singleton first, follow up the code, just a new one,
+     * put it in the global context as a member variable.
+     */
     export let __textAtlasRender__: TextAtlasRender = null;
-
-    //不想改TextNode的代码了，先用这种方式实现，以后稳了再改
+    
+    /**
+     * I do n’t want to change the TextNode code.
+     * I ’ll implement it in this way first, and then change it later.
+     */
     export const property_drawLabel: string = 'DrawLabel';
 
-    //开启这个，用textAtlas渲染出来的，都是红字，而且加黑框
+    /**
+     * Turn on this, rendered with textAtlas, all are red letters, and add a black box.
+     */
     const textAtlasDebug: boolean = false;
 
-    //画一行
-    export class DrawLabel extends HashObject {
-        //池子，防止反复创建
+    /**
+     * Draw a line.
+     */
+    export class DrawLabel extends HashObject
+    {
+        // Pool to prevent repeated creation.
         private static pool: DrawLabel[] = [];
-        //记录初始位置
+
+        // Record initial position.
         public anchorX: number = 0;
+
         public anchorY: number = 0;
-        //要画的字块
+
+        // Block to draw.
         public textBlocks: TextBlock[] = [];
-        //清除数据，回池
+
+        // Clear the data and return to the pool.
         private clear(): void {
             this.anchorX = 0;
             this.anchorY = 0;
-            this.textBlocks.length = 0; //这个没事,实体在book里面存着
+            this.textBlocks.length = 0; // This is fine, the entity is stored in the book.
         }
-        //池子创建
+
+        // Pool creation.
         public static create(): DrawLabel {
             const pool = DrawLabel.pool;
             if (pool.length === 0) {
                 pool.push(new DrawLabel);
             }
+
             return pool.pop();
         }
-        //回池
+
+        // Back to pool.
         public static back(drawLabel: DrawLabel, checkRepeat: boolean): void {
             if (!drawLabel) {
                 return;
             }
+
             const pool = DrawLabel.pool;
             if (checkRepeat && pool.indexOf(drawLabel) >= 0) {
                 console.error('DrawLabel.back repeat');
                 return;
             }
+
             drawLabel.clear();
             pool.push(drawLabel);
         }
     }
 
-    //记录样式的
-    class StyleInfo extends HashObject {
-        //各种记录信息
+    /**
+     * Record style.
+     */
+    class StyleInfo extends HashObject
+    {
+        // Various record information.
         public readonly textColor: number;
         public readonly strokeColor: number;
         public readonly size: number;
@@ -94,16 +124,18 @@ namespace egret.web {
         public readonly font: string;
         public readonly format: sys.TextFormat = null;
         public readonly description: string;
+
         //
         constructor(textNode: sys.TextNode, format: sys.TextFormat) {
             super();
-            //debug强制红色
+
+            // Debug force red
             let saveTextColorForDebug = 0;
             if (textAtlasDebug) {
                 saveTextColorForDebug = textNode.textColor;
                 textNode.textColor = 0xff0000;
             }
-            //存上
+            // Save
             this.textColor = textNode.textColor;
             this.strokeColor = textNode.strokeColor;
             this.size = textNode.size;
@@ -113,7 +145,7 @@ namespace egret.web {
             this.fontFamily = textNode.fontFamily;
             this.format = format;
             this.font = getFontString(textNode, this.format);
-            //描述用于生成hashcode
+            // Description used to generate hashcode
             const textColor = (!format.textColor ? textNode.textColor : format.textColor);
             const strokeColor = (!format.strokeColor ? textNode.strokeColor : format.strokeColor);
             const stroke = (!format.stroke ? textNode.stroke : format.stroke);
@@ -125,32 +157,35 @@ namespace egret.web {
             if (stroke) {
                 this.description += '-' + stroke * 2;
             }
-            //还原
+            // reduction
             if (textAtlasDebug) {
                 textNode.textColor = saveTextColorForDebug;
             }
         }
     }
 
-    //测量字体和绘制的
-    class CharImageRender extends HashObject {
-        //要渲染的字符串
+    /**
+     * Measuring fonts and drawing.
+     */
+    class CharImageRender extends HashObject
+    {
+        /// The string to be rendered.
         public char: string = '';
-        //StyleInfo
+        /// StyleInfo.
         public styleInfo: StyleInfo = null;
-        //生成hashcode的字符串
+        /// Generate hashcode string.
         public hashCodeString: string = '';
-        //字母：style设置行程唯一值
+        /// Letters: style sets the unique value of the itinerary.
         public charWithStyleHashCode: number = 0;
-        //测量实际的size
+        /// Measure the actual size.
         public measureWidth: number = 0;
         public measureHeight: number = 0;
-        //边缘放大之后的偏移
+        /// Offset after edge enlargement.
         public canvasWidthOffset: number = 0;
         public canvasHeightOffset: number = 0;
-        //描边的记录
+        /// Stroke record.
         public stroke2: number = 0;
-        //针对中文的加速查找
+        /// Accelerated search for Chinese.
         private static readonly chineseCharactersRegExp: RegExp = new RegExp("^[\u4E00-\u9FA5]$");
         private static readonly chineseCharacterMeasureFastMap: { [index: string]: number } = {};
 
@@ -170,17 +205,17 @@ namespace egret.web {
             if (!canvas) {
                 return;
             }
-            //读取设置
+            // Read settings
             const text = this.char;
             const format: sys.TextFormat = this.styleInfo.format;
             const textColor = (!format.textColor ? this.styleInfo.textColor : format.textColor);
             const strokeColor = (!format.strokeColor ? this.styleInfo.strokeColor : format.strokeColor);
             const stroke = (!format.stroke ? this.styleInfo.stroke : format.stroke);
             const size = (!format.size ? this.styleInfo.size : format.size);
-            //开始测量---------------------------------------
+            // Start measurement---------------------------------------
             this.measureWidth = this.measure(text, this.styleInfo, size);
             this.measureHeight = size;//this.styleInfo.size;
-            //调整 参考TextField: $getRenderBounds(): Rectangle {
+            // Adjust Reference TextField: $getRenderBounds(): Rectangle {
             let canvasWidth = this.measureWidth;
             let canvasHeight = this.measureHeight;
             const _strokeDouble = stroke * 2;
@@ -189,17 +224,17 @@ namespace egret.web {
                 canvasHeight += _strokeDouble * 2;
             }
             this.stroke2 = _strokeDouble;
-            //赋值
+            // Assignment
             canvas.width = canvasWidth = Math.ceil(canvasWidth) + 2 * 2;
             canvas.height = canvasHeight = Math.ceil(canvasHeight) + 2 * 2;
             this.canvasWidthOffset = (canvas.width - this.measureWidth) / 2;
             this.canvasHeightOffset = (canvas.height - this.measureHeight) / 2;
-            //全部保留numberOfPrecision位小数
+            // Keep all numberOfPrecision decimal places
             const numberOfPrecision = 3;
             const precision = Math.pow(10, numberOfPrecision);
             this.canvasWidthOffset = Math.floor(this.canvasWidthOffset * precision) / precision;
             this.canvasHeightOffset = Math.floor(this.canvasHeightOffset * precision) / precision;
-            //再开始绘制---------------------------------------
+            // Start drawing again---------------------------------------
             const context = egret.sys.getContext2d(canvas);
             context.save();
             context.textAlign = 'center';
@@ -232,7 +267,7 @@ namespace egret.web {
         }
     }
 
-    //对外的类
+    // External class
     export class TextAtlasRender extends HashObject {
 
         private readonly book: Book = null;
@@ -249,26 +284,26 @@ namespace egret.web {
             this.book = new Book(maxSize, border);
         }
 
-        //分析textNode，把数据提取出来，然后给textNode挂上渲染的信息
+        // Analyze the textNode, extract the data, and hang the rendered information to the textNode
         public static analysisTextNodeAndFlushDrawLabel(textNode: sys.TextNode): void {
             if (!textNode) {
                 return;
             }
             if (!__textAtlasRender__) {
-                //创建，后续会转移给WebGLRenderContext
+                // Create, will be transferred to WebGLRenderContext
                 const webglcontext = egret.web.WebGLRenderContext.getInstance(0, 0);
-                //初期先512，因为不会大规模batch, 老项目最好不要直接使用这个，少数几个总变内容的TextField可以用，所以先不用$maxTextureSize
+                // Initially 512, because there is no large-scale batching, it is best not to use this directly for old projects. A few TextFields with variable content can be used, so first do not need $maxTextureSize
                 __textAtlasRender__ = new TextAtlasRender(webglcontext, textAtlasDebug ? 512 : 512/*webglcontext.$maxTextureSize*/, textAtlasDebug ? 12 : 1);
             }
-            //清除命令
+            // Clear command
             textNode[property_drawLabel] = textNode[property_drawLabel] || [];
             let drawLabels = textNode[property_drawLabel] as DrawLabel[];
             for (const drawLabel of drawLabels) {
-                //还回去
+                // Go back
                 DrawLabel.back(drawLabel, false);
             }
             drawLabels.length = 0;
-            //重新装填
+            // Refill
             const offset = 4;
             const drawData = textNode.drawData;
             let anchorX = 0;
@@ -282,9 +317,9 @@ namespace egret.web {
                 labelString = drawData[i + 2] as string;
                 labelFormat = drawData[i + 3] as sys.TextFormat || {};
                 resultAsRenderTextBlocks.length = 0;
-                //提取数据
+                // Extract data
                 __textAtlasRender__.convertLabelStringToTextAtlas(labelString, new StyleInfo(textNode, labelFormat), resultAsRenderTextBlocks);
-                //pool创建 + 添加命令
+                // Pool creation + add command
                 const drawLabel = DrawLabel.create();
                 drawLabel.anchorX = anchorX;
                 drawLabel.anchorY = anchorY;
@@ -293,22 +328,22 @@ namespace egret.web {
             }
         }
 
-        //字符串转化成为TextBlock
+        // Convert string to TextBlock
         private convertLabelStringToTextAtlas(labelstring: string, styleKey: StyleInfo, resultAsRenderTextBlocks: TextBlock[]): void {
             const canvas = this.canvas;
             const charImageRender = this.charImageRender;
             const textBlockMap = this.textBlockMap;
             for (const char of labelstring) {
-                //不反复创建
+                // Do not create repeatedly
                 charImageRender.reset(char, styleKey);
                 if (textBlockMap[charImageRender.charWithStyleHashCode]) {
-                    //检查重复
+                    // Check duplicates
                     resultAsRenderTextBlocks.push(textBlockMap[charImageRender.charWithStyleHashCode]);
                     continue;
                 }
-                //画到到canvas
+                // Draw to canvas
                 charImageRender.measureAndDraw(canvas);
-                //创建新的文字块
+                // Create a new text block
                 const txtBlock = this.book.createTextBlock(char,
                     canvas.width, canvas.height,
                     charImageRender.measureWidth, charImageRender.measureHeight,
@@ -318,11 +353,11 @@ namespace egret.web {
                 if (!txtBlock) {
                     continue;
                 }
-                //需要绘制
+                // Need to draw
                 resultAsRenderTextBlocks.push(txtBlock);
-                //记录快速查找
+                // Quick record search
                 textBlockMap[charImageRender.charWithStyleHashCode] = txtBlock;
-                //生成纹理
+                // Generate texture
                 const page = txtBlock.page;
                 if (!page.webGLTexture) {
                     page.webGLTexture = this.createTextTextureAtlas(page.pageWidth, page.pageHeight, textAtlasDebug);
@@ -338,11 +373,11 @@ namespace egret.web {
             }
         }
 
-        //给一个page创建一个纹理
+        // Create a texture for a page
         private createTextTextureAtlas(width: number, height: number, debug: boolean): WebGLTexture {
             let texture: WebGLTexture = null;
             if (debug) {
-                //做一个黑底子的，方便调试代码
+                // Make a black background, easy to debug code
                 const canvas = egret.sys.createCanvas(width, width);
                 const context = egret.sys.getContext2d(canvas);
                 context.fillStyle = 'black';
@@ -350,20 +385,20 @@ namespace egret.web {
                 texture = egret.sys.createTexture(this.webglRenderContext, canvas);
             }
             else {
-                //真的
+                // Really
                 texture = egret.sys._createTexture(this.webglRenderContext, width, height, null);
             }
             if (texture) {
-                //存起来，未来可以删除，或者查看
+                // Save it, you can delete it in the future, or view it
                 this.textAtlasTextureCache.push(texture);
             }
             return texture;
         }
 
-        //给CharImageRender用的canvas
+        // Canvas for CharImageRender
         private get canvas(): HTMLCanvasElement {
             if (!this._canvas) {
-                //就用默认体积24
+                // Use the default volume of 24
                 this._canvas = egret.sys.createCanvas(24, 24);
             }
             return this._canvas;

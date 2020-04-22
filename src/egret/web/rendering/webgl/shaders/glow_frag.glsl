@@ -24,7 +24,7 @@ float random(vec2 scale)
 
 void main(void) {
     vec2 px = vec2(1.0 / uTextureSize.x, 1.0 / uTextureSize.y);
-    // TODO 自动调节采样次数？
+    // TODO automatically adjusts the number of samples?
     const float linearSamplingTimes = 7.0;
     const float circleSamplingTimes = 12.0;
     vec4 ownColor = texture2D(uSampler, vTextureCoord);

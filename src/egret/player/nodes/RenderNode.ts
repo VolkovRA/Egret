@@ -27,58 +27,68 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.sys {
+namespace egret.sys
+{
     /**
      * @private
-     * 渲染节点类型
+     * Render node type.
      */
-    export const enum RenderNodeType {
+    export const enum RenderNodeType
+    {
         /**
-         * 位图渲染节点
+         * Bitmap rendering node.
          */
         BitmapNode = 1,
+
         /**
-         * 文本渲染节点
+         * Text rendering node.
          */
         TextNode,
+
         /**
-         * 矢量渲染节点
+         * Vector render node.
          */
         GraphicsNode,
+
         /**
-         * 组渲染节点
+         * Group Render Node.
          */
         GroupNode,
+        
         /**
-         * Mesh 节点
+         * Mesh node.
          */
         MeshNode,
+
         /**
-         * 普通位图渲染节点
+         * Ordinary bitmap rendering node.
          */
         NormalBitmapNode
     }
 
     /**
      * @private
-     * 渲染节点基类
+     * Render node base class.
      */
-    export class RenderNode {
-
+    export class RenderNode
+    {
         /**
-         * 节点类型..
+         * Node type:..
          */
         public type:number = 0;
+        
         /**
-         * 绘制数据
+         * Plot data.
          */
         public drawData:any[] = [];
+
         /**
-         * 绘制次数
+         * Drawing times.
          */
         protected renderCount:number = 0;
+        
         /**
-         * 在显示对象的$updateRenderNode()方法被调用前，自动清空自身的drawData数据。
+         * Before the $ updateRenderNode () method of the display object is called, it automatically clears its own drawData data.
          */
         public cleanBeforeRender():void{
             this.drawData.length = 0;

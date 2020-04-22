@@ -27,15 +27,16 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
-
+namespace egret.web
+{
     /**
      * @private
      */
-    export class WebCapability {
+    export class WebCapability
+    {
         /**
          * @private
-         * 检测系统属性
+         * Check system properties.
          */
         public static detect(): void {
             let capabilities = egret.Capabilities;
@@ -54,7 +55,7 @@ namespace egret.web {
             else {
                 if (ua.indexOf("windows nt") != -1) {
                     capabilities["os" + ""] = "Windows PC";
-                }else if(navigator.platform == "MacIntel" && navigator.maxTouchPoints > 1){//ios 13 Request Desktop Website
+                }else if(navigator.platform == "MacIntel" && navigator.maxTouchPoints > 1){ // ios 13 Request Desktop Website
                     capabilities["os" + ""] = "iOS";
                     capabilities["isMobile" + ""] = true;
                 }else if (ua.indexOf("mac os") != -1) {

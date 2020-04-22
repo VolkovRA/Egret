@@ -26,10 +26,11 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-namespace egret.localStorage.web {
+
+namespace egret.localStorage.web
+{
     /**
      * @private
-     * 
      * @param key 
      * @returns 
      */
@@ -39,7 +40,6 @@ namespace egret.localStorage.web {
 
     /**
      * @private
-     * 
      * @param key 
      * @param value 
      * @returns 
@@ -57,7 +57,6 @@ namespace egret.localStorage.web {
 
     /**
      * @private
-     * 
      * @param key 
      */
     function removeItem(key:string):void {
@@ -66,7 +65,6 @@ namespace egret.localStorage.web {
 
     /**
      * @private
-     * 
      */
     function clear():void {
         window.localStorage.clear();

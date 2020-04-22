@@ -27,12 +27,15 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret {
+/// <reference path="../display/Bitmap.ts" />
+
+namespace egret
+{
     /**
      * @private
      */
-    export class Mesh extends Bitmap {
-
+    export class Mesh extends Bitmap
+    {
         public constructor(value?: Texture) {
             super(value);
             this.$renderNode = new sys.MeshNode();
@@ -84,7 +87,9 @@ namespace egret {
          * @private
          */
         private _verticesDirty: boolean = true;
+
         private _bounds: Rectangle = new Rectangle();
+        
         /**
          * @private
          */
@@ -130,7 +135,8 @@ namespace egret {
                     }
                     this._bounds.width -= this._bounds.x;
                     this._bounds.height -= this._bounds.y;
-                } else {
+                }
+                else {
                     this._bounds.setTo(0, 0, 0, 0);
                 }
                 node.bounds.copyFrom(this._bounds);

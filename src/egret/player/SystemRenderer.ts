@@ -27,49 +27,61 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.sys {
+/// <reference path="RenderBuffer.ts" />
+/// <reference path="nodes/RenderNode.ts" />
+/// <reference path="rendering/CanvasRenderer.ts" />
+/// <reference path="../display/DisplayObject.ts" />
+/// <reference path="../geom/Matrix.ts" />
 
+namespace egret.sys
+{
     /**
      * @private
      */
     export let systemRenderer: SystemRenderer;
+
     /**
      * @private
-     * 用于碰撞检测绘制
+     * Used for collision detection drawing.
      */
     export let canvasRenderer: SystemRenderer;
+
     /**
      * @private
-     * 显示渲染器接口
+     * Display renderer interface.
      */
-    export interface SystemRenderer {
-
+    export interface SystemRenderer
+    {
         /**
-         * 渲染一个显示对象
-         * @param displayObject 要渲染的显示对象
-         * @param buffer 渲染缓冲
-         * @param matrix 要叠加的矩阵
-         * @param forRenderTexture 绘制目标是RenderTexture的标志
-         * @returns drawCall触发绘制的次数
+         * Render a display object.
+         * @param displayObject The display object to be rendered.
+         * @param buffer Rendering buffer.
+         * @param matrix The matrix to be superimposed.
+         * @param forRenderTexture The drawing target is the RenderTexture logo.
+         * @returns DrawCall the number of times to trigger drawing.
          */
         render(displayObject: DisplayObject, buffer: RenderBuffer, matrix: Matrix, forRenderTexture?: boolean): number;
+        
         /**
-         * 将一个RenderNode对象绘制到渲染缓冲
-         * @param node 要绘制的节点
-         * @param buffer 渲染缓冲
-         * @param matrix 要叠加的矩阵
-         * @param forHitTest 绘制结果是用于碰撞检测。若为true，当渲染GraphicsNode时，会忽略透明度样式设置，全都绘制为不透明的。
+         * Draw a RenderNode object to the rendering buffer.
+         * @param node The node to be drawn.
+         * @param buffer Rendering buffer.
+         * @param matrix The matrix to be superimposed.
+         * @param forHitTest Drawing result is used for collision detection. If true, when rendering GraphicsNode,
+         * the transparency style setting will be ignored and all will be drawn as opaque.
          */
         drawNodeToBuffer(node: sys.RenderNode, buffer: RenderBuffer, matrix: Matrix, forHitTest?: boolean): void;
     }
+
     /**
      * 
      */
     export interface RenderContext {
 
     }
+
     /**
-     * 创建一个canvas。
+     * Create a canvas.
      */
     export function mainCanvas(width?: number, height?: number): HTMLCanvasElement {
         console.error(`empty sys.mainCanvas = ${width}, ${height}`);
@@ -80,15 +92,17 @@ namespace egret.sys {
         console.error(`empty sys.createCanvas = ${width}, ${height}`);
         return null;
     }
+
     /**
-    * 重新设置主canvas的大小
-    */
+     * Reset the size of the main canvas.
+     */
     export function resizeContext(renderContext: RenderContext, width: number, height: number, useMaxSize?: boolean): void {
         console.error(`empty sys.resizeContext = ${renderContext}, ${width}, ${height}, ${useMaxSize}`);
     }
+
     /**
-    * 获得系统的渲染运行时
-    */
+     * Get the system's rendering runtime.
+     */
     export function getContextWebGL(surface: HTMLCanvasElement): WebGLRenderingContext {
         console.error(`empty sys.getContextWebGL = ${surface}`);
         return null;
@@ -100,31 +114,31 @@ namespace egret.sys {
     }
 
     /**
-    * 仅通过bitmapData创建纹理
-    */
+     * Create textures only with bitmapData.
+     */
     export function createTexture(renderContext: RenderContext, bitmapData: BitmapData | HTMLCanvasElement): WebGLTexture {
         console.error(`empty sys.createTexture = ${bitmapData}`);
         return null;
     }
 
     /**
-    * 通过 width, height, data创建纹理
-    */
+     * Create texture by width, height, data.
+     */
     export function _createTexture(renderContext: RenderContext, width: number, height: number, data: any): WebGLTexture {
         console.error(`empty sys._createTexture = ${width}, ${height}, ${data}`);
         return null;
     }
 
     /**
-     * 画texture
-     **/
+     * Painting texture.
+     */
     export function drawTextureElements(renderContext: RenderContext, data: any, offset: number): number {
         console.error(`empty sys.drawTextureElements = ${renderContext}, ${data}, ${offset}`);
         return 0;
     }
 
     /**
-     * 测量文本的宽度
+     * Measure the width of text.
      * @param context 
      * @param text 
      */
@@ -134,7 +148,7 @@ namespace egret.sys {
     }
 
     /**
-     * 为CanvasRenderBuffer创建一个canvas
+     * Create a canvas for CanvasRenderBuffer.
      * @param defaultFunc 
      * @param width 
      * @param height 
@@ -146,7 +160,7 @@ namespace egret.sys {
     }
 
     /**
-     * 改变渲染缓冲的大小并清空缓冲区
+     * Change the size of the rendering buffer and clear the buffer.
      * @param renderContext 
      * @param width 
      * @param height 

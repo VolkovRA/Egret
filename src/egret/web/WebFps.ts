@@ -26,11 +26,14 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-namespace egret.web {
+
+namespace egret.web
+{
     /**
      * @private
      */
-    export class WebFps implements egret.FPSDisplay {
+    export class WebFps implements egret.FPSDisplay
+    {
         private panelX: number;
         private panelY: number;
         private fontColor: string;
@@ -45,9 +48,11 @@ namespace egret.web {
             if (showFPS || showLog) {
                 if (egret.Capabilities.renderMode == 'canvas') {
                     this.renderMode = "Canvas";
-                } else {
+                }
+                else {
                     this.renderMode = "WebGL";
                 }
+
                 this.panelX = styles["x"] === undefined ? 0 : parseInt(styles['x']);
                 this.panelY = styles["y"] === undefined ? 0 : parseInt(styles['y']);
                 this.fontColor = styles["textColor"] === undefined ? '#ffffff' : styles['textColor'].replace("0x", "#");
@@ -55,6 +60,7 @@ namespace egret.web {
                 if (egret.Capabilities.isMobile) {
                     this.fontSize -= 2;
                 }
+
                 let all = document.createElement('div');
                 all.style.position = 'absolute';
                 all.style.background = `rgba(0,0,0,${styles['bgAlpha']})`;
@@ -173,7 +179,8 @@ namespace egret.web {
                 this.lastNumDraw = datas.draw;
                 this.arrFps.push(numFps);
                 this.arrCost.push([numCostTicker, numCostRender]);
-            } else {
+            }
+            else {
                 numFps = this.arrFps[this.arrFps.length - 1];
                 numCostTicker = this.arrCost[this.arrCost.length - 1][0];
                 numCostRender = this.arrCost[this.arrCost.length - 1][1];
@@ -213,7 +220,7 @@ namespace egret.web {
             let c1Height = Math.floor(numCostTicker / 2);
             if (c1Height < 1) c1Height = 1;
             else if (c1Height > 20) c1Height = 20;
-            //todo lcj
+            // todo lcj
             let c2Height = Math.floor(numCostRender / 2);
             if (c2Height < 1) c2Height = 1;
             else if (c2Height > 20) c2Height = 20;

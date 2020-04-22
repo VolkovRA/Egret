@@ -28,27 +28,30 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 /// <reference path="RenderNode.ts" />
+/// <reference path="../paths/StrokePath.ts" />
+/// <reference path="../../web/rendering/webgl/WebGLUtils.ts" />
 
-namespace egret.sys {
-
+namespace egret.sys
+{
     let CAPS_STYLES = ["none", "round", "square"];
     let JOINT_STYLES = ["bevel", "miter", "round"];
+
     /**
      * @private
-     * 矢量渲染节点
+     * Vector render node.
      */
-    export class GraphicsNode extends RenderNode {
-
+    export class GraphicsNode extends RenderNode
+    {
         public constructor() {
             super();
             this.type = RenderNodeType.GraphicsNode;
         }
 
         /**
-         * 指定一种简单的单一颜色填充，在绘制时该填充将在随后对其他 Graphics 方法（如 lineTo() 或 drawCircle()）的调用中使用。
-         * @param color 填充的颜色
-         * @param alpha 填充的 Alpha 值
-         * @param beforePath 插入在指定的路径命令之前绘制，通常是插入到当前正在绘制的线条路径之前，以确保线条总在填充的上方。
+         * Specify a simple single color fill, which will be used in subsequent calls to other Graphics methods (such as lineTo () or drawCircle ()) when drawing.
+         * @param color Fill color.
+         * @param alpha Filled alpha value.
+         * @param beforePath Insert to draw before the specified path command, usually inserted before the line path currently being drawn to ensure that the line is always above the fill.
          */
         public beginFill(color:number, alpha:number = 1, beforePath?:Path2D):Path2D {
             let path = new sys.FillPath();
@@ -66,14 +69,14 @@ namespace egret.sys {
         }
 
         /**
-         * 指定一种简单的单一颜色填充，在绘制时该填充将在随后对其他 Graphics 方法（如 lineTo() 或 drawCircle()）的调用中使用。
-         * 调用 clear() 方法会清除填充。
-         * @param type 用于指定要使用哪种渐变类型的 GradientType 类的值：GradientType.LINEAR 或 GradientType.RADIAL。
-         * @param colors 渐变中使用的 RGB 十六进制颜色值的数组（例如，红色为 0xFF0000，蓝色为 0x0000FF，等等）。对于每种颜色，请在 alphas 和 ratios 参数中指定对应值。
-         * @param alphas colors 数组中对应颜色的 alpha 值数组。
-         * @param ratios 颜色分布比率的数组。有效值为 0 到 255。
-         * @param matrix 一个由 egret.Matrix 类定义的转换矩阵。egret.Matrix 类包括 createGradientBox() 方法，通过该方法可以方便地设置矩阵，以便与 beginGradientFill() 方法一起使用
-         * @param beforePath 插入在指定的路径命令之前绘制，通常是插入到当前正在绘制的线条路径之前，以确保线条总在填充的上方。
+         * Specify a simple single color fill, which will be used in subsequent calls to other Graphics methods (such as lineTo () or drawCircle ()) when drawing.
+         * Calling the clear () method will clear the fill.
+         * @param type Is used to specify which GradientType class value to use: GradientType.LINEAR or GradientType.RADIAL.
+         * @param colors An array of RGB hexadecimal color values ​​used in the gradient (for example, red is 0xFF0000, blue is 0x0000FF, etc.). For each color, specify the corresponding values ​​in the alphas and ratios parameters.
+         * @param alphas Colors The array of alpha values ​​for the corresponding colors in the array.
+         * @param ratios An array of color distribution ratios. Valid values ​​are 0 to 255.
+         * @param matrix A conversion matrix defined by the egret.Matrix class. The egret.Matrix class includes the createGradientBox () method, through which you can easily set the matrix for use with the beginGradientFill () method.
+         * @param beforePath Insert to draw before the specified path command, usually inserted before the line path currently being drawn to ensure that the line is always above the fill.
          */
         public beginGradientFill(type:string, colors:number[], alphas:number[], ratios:number[],
                                  matrix?:egret.Matrix, beforePath?:Path2D):Path2D {
@@ -87,7 +90,7 @@ namespace egret.sys {
                 m.ty = matrix.ty;
             }
             else {
-                //默认值
+                // Defaults
                 m.a = 100;
                 m.d = 100;
             }
@@ -109,13 +112,13 @@ namespace egret.sys {
         }
 
         /**
-         * 指定一种线条样式以用于随后对 lineTo() 或 drawCircle() 等 Graphics 方法的调用。
-         * @param thickness 一个整数，以点为单位表示线条的粗细，有效值为 0 到 255。如果未指定数字，或者未定义该参数，则不绘制线条。如果传递的值小于 0，则默认值为 0。值 0 表示极细的粗细；最大粗细为 255。如果传递的值大于 255，则默认值为 255。
-         * @param color 线条的十六进制颜色值（例如，红色为 0xFF0000，蓝色为 0x0000FF 等）。如果未指明值，则默认值为 0x000000（黑色）。可选。
-         * @param alpha 表示线条颜色的 Alpha 值的数字；有效值为 0 到 1。如果未指明值，则默认值为 1（纯色）。如果值小于 0，则默认值为 0。如果值大于 1，则默认值为 1。
-         * @param caps 用于指定线条末端处端点类型的 CapsStyle 类的值。默认值：CapsStyle.ROUND
-         * @param joints 指定用于拐角的连接外观的类型。默认值：JointStyle.ROUND
-         * @param miterLimit 用于表示剪切斜接的极限值的数字。
+         * Specify a line style for subsequent calls to Graphics methods such as lineTo () or drawCircle ().
+         * @param thickness An integer indicating the thickness of the line in points, valid values ​​are 0 to 255. If no number is specified, or this parameter is not defined, no line is drawn. If the value passed is less than 0, the default value is 0. A value of 0 indicates extremely thin thickness; the maximum thickness is 255. If the value passed is greater than 255, the default value is 255.
+         * @param color The hexadecimal color value of the line (for example, red is 0xFF0000, blue is 0x0000FF, etc.). If no value is specified, the default value is 0x000000 (black). Optional.
+         * @param alpha Is the number of the alpha value of the line color; valid values ​​are 0 to 1. If no value is specified, the default value is 1 (solid color). If the value is less than 0, the default value is 0. If the value is greater than 1, the default value is 1.
+         * @param caps Is used to specify the value of the CapsStyle class at the end of the line. Default value: CapsStyle.ROUND
+         * @param joints Specifies the type of joint appearance used for corners. Default value: JointStyle.ROUND
+         * @param miterLimit The number used to represent the limit value of shear miter.
          */
         public lineStyle(thickness?:number, color?:number, alpha:number = 1, caps?:string,
                          joints?:CanvasLineJoin, miterLimit:number = 3, lineDash:number[] = []):StrokePath {
@@ -139,7 +142,7 @@ namespace egret.sys {
         }
 
         /**
-         * 清空所有缓存的绘制数据
+         * Clear all cached drawing data.
          */
         public clear():void {
             this.drawData.length = 0;
@@ -148,32 +151,36 @@ namespace egret.sys {
         }
 
         /**
-         * 覆盖父类方法，不自动清空缓存的绘图数据，改为手动调用clear()方法清空。
+         * Override the parent class method, do not automatically clear the cached drawing data, instead manually call the clear () method to clear.
          */
         public cleanBeforeRender():void {
 
         }
 
-        //forWebGL
+        // forWebGL
         /**
-         * 绘制x偏移
+         * Draw x offset.
          */
         public x:number;
+
         /**
-         * 绘制y偏移
+         * Plot y offset.
          */
         public y:number;
+
         /**
-         * 绘制宽度
+         * Draw width.
          */
         public width:number;
+
         /**
-         * 绘制高度
+         * Drawing height.
          */
         public height:number;
+
         /**
-         * 脏渲染标记
-         * 暂时调用lineStyle,beginFill,beginGradientFill标记,实际应该draw时候标记在Path2D
+         * Dirty rendering tags.
+         * Temporarily call the lineStyle, beginFill, beginGradientFill tags, which should actually be marked in Path2D when drawing.
          */
         public dirtyRender:boolean = true;
         public $texture:WebGLTexture;
@@ -183,7 +190,7 @@ namespace egret.sys {
         public $canvasScaleY:number;
 
         /**
-         * 清除非绘制的缓存数据
+         * Clear non-drawn cached data.
          */
         public clean():void {
             if(this.$texture) {

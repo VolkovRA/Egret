@@ -27,10 +27,12 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+/// <reference path="../../player/SystemRenderer.ts" />
 
+namespace egret.web
+{
     /**
-     * 创建一个canvas。
+     * Create a canvas.
      */
     function __createCanvas__(width?: number, height?: number): HTMLCanvasElement {
         let canvas = egret.sys.createCanvas(width, height);
@@ -65,10 +67,10 @@ namespace egret.web {
 
     /**
      * @private
-     * Canvas2D渲染缓冲
+     * Canvas2D render buffer.
      */
-    export class CanvasRenderBuffer implements sys.RenderBuffer {
-
+    export class CanvasRenderBuffer implements sys.RenderBuffer
+    {
         public constructor(width?: number, height?: number, root?: boolean) {
             this.surface = egret.sys.createCanvasRenderBufferSurface(__createCanvas__, width, height, root);
             this.context = this.surface.getContext("2d");
@@ -76,20 +78,22 @@ namespace egret.web {
                 this.context.$offsetX = 0;
                 this.context.$offsetY = 0;
             }
+
             this.resize(width, height)
         }
 
         /**
-         * 渲染上下文
+         * Rendering context.
          */
         public context: CanvasRenderingContext2D;
+
         /**
-         * 呈现最终绘图结果的画布
+         * Canvas that presents the final drawing result.
          */
         public surface: HTMLCanvasElement;
 
         /**
-         * 渲染缓冲的宽度，以像素为单位。
+         * The width of the rendering buffer, in pixels.
          * @readOnly
          */
         public get width(): number {
@@ -97,7 +101,7 @@ namespace egret.web {
         }
 
         /**
-         * 渲染缓冲的高度，以像素为单位。
+         * The height of the rendering buffer, in pixels.
          * @readOnly
          */
         public get height(): number {
@@ -105,32 +109,32 @@ namespace egret.web {
         }
 
         /**
-         * 改变渲染缓冲的大小并清空缓冲区
-         * @param width 改变后的宽
-         * @param height 改变后的高
-         * @param useMaxSize 若传入true，则将改变后的尺寸与已有尺寸对比，保留较大的尺寸。
+         * Change the size of the rendering buffer and clear the buffer.
+         * @param width The changed width.
+         * @param height Changed height.
+         * @param useMaxSize If true is passed, the changed size is compared with the existing size, and the larger size is retained.
          */
         public resize(width: number, height: number, useMaxSize?: boolean): void {
             egret.sys.resizeCanvasRenderBuffer(this, width, height, useMaxSize);
         }
 
         /**
-         * 获取指定区域的像素
+         * Get the pixels of the specified area.
          */
         public getPixels(x: number, y: number, width: number = 1, height: number = 1): number[] {
             return <number[]><any>this.context.getImageData(x, y, width, height).data;
         }
 
         /**
-         * 转换成base64字符串，如果图片（或者包含的图片）跨域，则返回null
-         * @param type 转换的类型，如: "image/png","image/jpeg"
+         * Converted to base64 string, if the picture (or contained picture) cross domain, then return null.
+         * @param type conversion type, such as: "image/png", "image/jpeg".
          */
         public toDataURL(type?: string, encoderOptions?: number): string {
             return this.surface.toDataURL(type, encoderOptions);
         }
 
         /**
-         * 清空缓冲区数据
+         * Clear the buffer data.
          */
         public clear(): void {
             this.context.setTransform(1, 0, 0, 1, 0, 0);
@@ -138,7 +142,7 @@ namespace egret.web {
         }
 
         /**
-         * 销毁绘制对象
+         * Destroy the drawing object.
          */
         public destroy(): void {
             this.surface.width = this.surface.height = 0;

@@ -27,46 +27,30 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="../display/SpriteSheet.ts" />
 
-namespace egret {
+namespace egret
+{
     /**
      * Bitmap font, texture set of a font. It is generally used as the value of the BitmapText.font attribute.
-     * @see http://bbs.egret-labs.org/thread-918-1-1.html TextureMerger
-     * @see http://bbs.egret-labs.org/forum.php?mod=viewthread&tid=251 Text(Containing the specific usage of the bitmap font )
+     * @see http://bbs.egret-labs.org/thread-918-1-1.html TextureMerger.
+     * @see http://bbs.egret-labs.org/forum.php?mod=viewthread&tid=251 Text. (Containing the specific usage of the bitmap font )
      * @version Egret 2.4
      * @platform Web,Native
      * @includeExample egret/text/BitmapFont.ts
-     * @language en_US
      */
-    /**
-     * 位图字体,是一个字体的纹理集，通常作为BitmapText.font属性的值。
-     * @see http://bbs.egret-labs.org/thread-918-1-1.html TextureMerger
-     * @see http://bbs.egret-labs.org/forum.php?mod=viewthread&tid=251 文本(含位图字体具体用法)
-     * @version Egret 2.4
-     * @platform Web,Native
-     * @includeExample egret/text/BitmapFont.ts
-     * @language zh_CN
-     */
-    export class BitmapFont extends SpriteSheet {
-
+    export class BitmapFont extends SpriteSheet
+    {
         /**
-         * Create an egret.BitmapFont object
-         * @param texture {egret.Texture} Texture set that use TextureMerger create
-         * @param config {any} Configure data that use TextureMerger create
+         * Create an egret.BitmapFont object.
+         * @param texture {egret.Texture} Texture set that use TextureMerger create.
+         * @param config {any} Configure data that use TextureMerger create.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 创建一个 egret.BitmapFont 对象
-         * @param texture {egret.Texture} 使用TextureMerger生成的纹理集
-         * @param config {any} 使用TextureMerger生成的配置数据
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor(texture:Texture, config:any) {
             super(texture);
+
             if(typeof(config)=="string"){
                 this.charList = this.parseConfig(config);
             }
@@ -84,20 +68,11 @@ namespace egret {
         private charList:any;
 
         /**
-         * Obtain corresponding texture through the name attribute
-         * @param name {string} name Attribute
+         * Obtain corresponding texture through the name attribute.
+         * @param name {string} Name Attribute.
          * @returns {egret.Texture}
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 通过 name 属性获取对应纹理
-         * @param name {string} name属性
-         * @returns {egret.Texture}
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public getTexture(name:string):Texture {
             let texture:Texture = this._textureMap[name];
@@ -129,7 +104,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          * @returns 
          */
         public _getFirstCharHeight():number{
@@ -162,7 +136,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          * @param fntText 
          * @returns 
          */
@@ -190,7 +163,6 @@ namespace egret {
 
         /**
          * @private
-         * 
          * @param configText 
          * @param key 
          * @returns 
@@ -206,7 +178,5 @@ namespace egret {
             }
             return 0;
         }
-
     }
-
 }

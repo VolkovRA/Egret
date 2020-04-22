@@ -27,36 +27,28 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="HorizontalAlign.ts" />
+/// <reference path="VerticalAlign.ts" />
+/// <reference path="BitmapFont.ts" />
+/// <reference path="../display/Bitmap.ts" />
 /// <reference path="../display/DisplayObject.ts" />
+/// <reference path="../system/NativeContext.ts" />
+/// <reference path="../player/nodes/BitmapNode.ts" />
 
-namespace egret {
+namespace egret
+{
     /**
      * Bitmap font adopts the Bitmap+SpriteSheet mode to render text.
      * @version Egret 2.4
      * @platform Web,Native
      * @includeExample egret/text/BitmapText.ts
-     * @language en_US
      */
-    /**
-     * 位图字体采用了Bitmap+SpriteSheet的方式来渲染文字。
-     * @version Egret 2.4
-     * @platform Web,Native
-     * @includeExample egret/text/BitmapText.ts
-     * @language zh_CN
-     */
-    export class BitmapText extends DisplayObject {
-
+    export class BitmapText extends DisplayObject
+    {
         /**
-         * Create an egret.BitmapText object
+         * Create an egret.BitmapText object.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 创建一个 egret.BitmapText 对象
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
@@ -76,14 +68,6 @@ namespace egret {
          * @default true。
          * @version Egret 3.0
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 控制在缩放时是否进行平滑处理。
-         * @default true。
-         * @version Egret 3.0
-         * @platform Web
-         * @language zh_CN
          */
         public get smoothing(): boolean {
             return this.$smoothing;
@@ -115,13 +99,6 @@ namespace egret {
          * A string to display in the text field.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 要显示的文本内容
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get text(): string {
             return this.$text;
@@ -181,7 +158,7 @@ namespace egret {
         $invalidateContentBounds(): void {
             this.$renderDirty = true;
             this.$textLinesChanged = true;
-            //todo lcj
+            // todo lcj
             this.$updateRenderNode();
         }
 
@@ -217,14 +194,6 @@ namespace egret {
          * @default null
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 要使用的字体的名称或用逗号分隔的字体名称列表，类型必须是 BitmapFont。
-         * @default null
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get font(): Object {
             return this.$font;
@@ -248,19 +217,10 @@ namespace egret {
         private $lineSpacing: number = 0;
 
         /**
-         /**
          * An integer representing the amount of vertical space between lines.
          * @default 0
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 一个整数，表示行与行之间的垂直间距量
-         * @default 0
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get lineSpacing(): number {
             return this.$lineSpacing;
@@ -286,14 +246,6 @@ namespace egret {
          * @default 0
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 一个整数，表示字符之间的距离。
-         * @default 0
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get letterSpacing(): number {
             return this.$letterSpacing;
@@ -320,14 +272,6 @@ namespace egret {
          * @default：egret.HorizontalAlign.LEFT
          * @version Egret 2.5.6
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 文本的水平对齐方式。
-         * @default：egret.HorizontalAlign.LEFT
-         * @version Egret 2.5.6
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get textAlign(): string {
             return this.$textAlign;
@@ -354,14 +298,6 @@ namespace egret {
          * @default：egret.VerticalAlign.TOP
          * @version Egret 2.5.6
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 文字的垂直对齐方式。
-         * @default：egret.VerticalAlign.TOP
-         * @version Egret 2.5.6
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get verticalAlign(): string {
             return this.$verticalAlign;
@@ -382,18 +318,11 @@ namespace egret {
         }
 
         /**
-         * A ratio of the width of the space character. This value is multiplied by the height of the first character is the space character width.
+         * A ratio of the width of the space character.
+         * This value is multiplied by the height of the first character is the space character width.
          * @default 0.33
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 一个空格字符的宽度比例。这个数值乘以第一个字符的高度即为空格字符的宽。
-         * @default 0.33
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public static EMPTY_FACTOR: number = 0.33;
 
@@ -506,16 +435,9 @@ namespace egret {
         private $textWidth: number = NaN;
 
         /**
-         * Get the BitmapText measured width
+         * Get the BitmapText measured width.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 获取位图文本测量宽度
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get textWidth(): number {
             this.$getTextLines();
@@ -525,16 +447,9 @@ namespace egret {
         private $textHeight: number = NaN;
 
         /**
-         * Get Text BitmapText height
+         * Get Text BitmapText height.
          * @version Egret 2.4
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 获取位图文本测量高度
-         * @version Egret 2.4
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get textHeight(): number {
             this.$getTextLines();
@@ -545,14 +460,17 @@ namespace egret {
          * @private
          */
         private $textOffsetX: number = 0;
+
         /**
          * @private
          */
         private $textOffsetY: number = 0;
+
         /**
          * @private
          */
         private $textStartX: number = 0;
+
         /**
          * @private
          */
@@ -562,10 +480,12 @@ namespace egret {
          * @private
          */
         private textLines: string[] = [];
+
         /**
-         * @private 每一行文字的宽度
+         * @private The width of each line of text.
          */
         private $textLinesWidth: number[];
+
         /**
          * @private
          */
@@ -573,7 +493,6 @@ namespace egret {
 
         /**
          * @private
-         *
          * @returns
          */
         $getTextLines(): string[] {
@@ -665,7 +584,7 @@ namespace egret {
                         line = line.substring(j);
                         len = line.length;
                         j = 0;
-                        //最后一个字符要计算纹理宽度，而不是xadvance
+                        // The last character needs to calculate the texture width, not xadvance.
                         if (j == len - 1) {
                             xPos = texureWidth;
                         }
@@ -675,7 +594,7 @@ namespace egret {
                         lineHeight = textureHeight;
                         continue;
                     }
-                    //最后一个字符要计算纹理宽度，而不是xadvance
+                    // The last character needs to calculate the texture width, not xadvance.
                     if (j == len - 1) {
                         xPos += texureWidth;
                     }

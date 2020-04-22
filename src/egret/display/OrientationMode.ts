@@ -27,27 +27,31 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace egret {
+namespace egret
+{
     /**
-     * OrientationMode 类为舞台初始旋转模式提供值。
+     * OrientationMode.
+     * The class provides values for the initial rotation mode of the stage.
      */
-    export const OrientationMode = {
-
+    export const OrientationMode =
+    {
         /**
-         * 适配屏幕
+         * Adapt to the screen.
          */
         AUTO: "auto",
+
         /**
-         * 默认竖屏
+         * Vertical portrait.
          */
         PORTRAIT: "portrait",
+
         /**
-         * 默认横屏，舞台顺时针旋转90度
+         * The default horizontal screen, the stage rotates 90 degrees clockwise.
          */
         LANDSCAPE: "landscape",
+
         /**
-         * 默认横屏，舞台逆时针旋转90度
+         * The default horizontal screen, the stage rotates 90 degrees counterclockwise.
          */
         LANDSCAPE_FLIPPED: "landscapeFlipped"
     }

@@ -27,13 +27,12 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret.web {
+namespace egret.web
+{
     /**
      * @private
      */
     export let WebLifeCycleHandler: egret.lifecycle.LifecyclePlugin = (context) => {
-
-
         let handleVisibilityChange = function () {
             if (!document[hidden]) {
                 context.resume();
@@ -50,19 +49,24 @@ namespace egret.web {
         if (typeof document.hidden !== "undefined") {
             hidden = "hidden";
             visibilityChange = "visibilitychange";
-        } else if (typeof document["mozHidden"] !== "undefined") {
+        }
+        else if (typeof document["mozHidden"] !== "undefined") {
             hidden = "mozHidden";
             visibilityChange = "mozvisibilitychange";
-        } else if (typeof document["msHidden"] !== "undefined") {
+        }
+        else if (typeof document["msHidden"] !== "undefined") {
             hidden = "msHidden";
             visibilityChange = "msvisibilitychange";
-        } else if (typeof document["webkitHidden"] !== "undefined") {
+        }
+        else if (typeof document["webkitHidden"] !== "undefined") {
             hidden = "webkitHidden";
             visibilityChange = "webkitvisibilitychange";
-        } else if (typeof document["oHidden"] !== "undefined") {
+        }
+        else if (typeof document["oHidden"] !== "undefined") {
             hidden = "oHidden";
             visibilityChange = "ovisibilitychange";
         }
+        
         if ("onpageshow" in window && "onpagehide" in window) {
             window.addEventListener("pageshow", context.resume, false);
             window.addEventListener("pagehide", context.pause, false);

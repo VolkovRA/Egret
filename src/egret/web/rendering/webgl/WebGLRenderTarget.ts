@@ -27,38 +27,41 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="WebGLUtils.ts" />
 /// <reference path="../../../utils/HashObject.ts" />
 
-namespace egret.web {
-
+namespace egret.web
+{
     /**
      * @private
-     * WebGLRenderTarget 
-     * A WebGL render target with a frame buffer and texture
+     * WebGLRenderTarget .
+     * A WebGL render target with a frame buffer and texture.
      */
     export class WebGLRenderTarget extends HashObject {
 
         private gl: WebGLRenderingContext;
 
-        // stores the texture of the rendering results
+        // Stores the texture of the rendering results.
         public texture: WebGLTexture;
 
         private frameBuffer: WebGLFramebuffer;
 
         private stencilBuffer: WebGLRenderbuffer;
 
-        // The size of the render target, same as the texture and stencil buffer
+        // The size of the render target, same as the texture and stencil buffer.
         public width: number;
         public height: number;
 
         public clearColor = [0, 0, 0, 0];
+
         /**
-         * If frame buffer is enabled, the default is true
+         * If frame buffer is enabled, the default is true.
          */
         public useFrameBuffer: boolean = true;
 
         public constructor(gl: WebGLRenderingContext, width: number, height: number) {
             super();
+            
             this.gl = gl;
             this._resize(width, height);
         }
@@ -73,6 +76,7 @@ namespace egret.web {
             if (height < 1) {
                 height = 1;
             }
+
             this.width = width;
             this.height = height;
         }
@@ -100,6 +104,7 @@ namespace egret.web {
             if (!this.useFrameBuffer) {
                 return null;
             }
+
             return this.frameBuffer;
         }
 
@@ -114,7 +119,7 @@ namespace egret.web {
         }
 
         private createTexture(): WebGLTexture {
-            //就是创建空的纹理
+            // Is to create an empty texture
             const webglrendercontext = WebGLRenderContext.getInstance(0, 0);
             return sys._createTexture(webglrendercontext, this.width, this.height, null);
             /*
@@ -136,6 +141,7 @@ namespace egret.web {
             if (bind) {
                 this.activate();
             }
+
             gl.colorMask(true, true, true, true);
             gl.clearColor(this.clearColor[0], this.clearColor[1], this.clearColor[2], this.clearColor[3]);
             gl.clear(gl.COLOR_BUFFER_BIT);
@@ -145,6 +151,7 @@ namespace egret.web {
             if (!this.frameBuffer || this.stencilBuffer) {
                 return;
             }
+
             let gl = this.gl;
             gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
             this.stencilBuffer = gl.createRenderbuffer();

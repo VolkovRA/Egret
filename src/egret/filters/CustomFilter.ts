@@ -29,16 +29,16 @@
 
 /// <reference path="../filters/Filter.ts" />
 
-namespace egret {
-
+namespace egret
+{
     const SOURCE_KEY_MAP = {};
 
-    let chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split( '' );
+    let chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
     let uuid = new Array( 36 );
     let rnd = 0, r;
 
     /**
-     * generate uuid
+     * Generate UUID.
      * http://www.broofa.com/Tools/Math.uuid.htm
      */
     let generateUUID = function () {
@@ -70,16 +70,9 @@ namespace egret {
      * custom filter, now support WebGL mode only.
      * @version Egret 4.1.0
      * @platform Web
-     * @language en_US
      */
-    /**
-     * 自定义滤镜，目前仅支持WebGL模式
-     * @version Egret 4.1.0
-     * @platform Web
-     * @language zh_CN
-     */
-    export class CustomFilter extends Filter {
-
+    export class CustomFilter extends Filter
+    {
         /**
          * @private  
          */
@@ -107,14 +100,6 @@ namespace egret {
          * If the desired area of the custom filter is larger than the original area (stroke, etc.), you need to set it manually.
          * @version Egret 4.1.0
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 滤镜的内边距
-         * 如果自定义滤镜所需区域比原区域大（描边等），需要手动设置
-         * @version Egret 4.1.0
-         * @platform Web
-         * @language zh_CN
          */
         public get padding(): number {
             return this.$padding;
@@ -133,13 +118,6 @@ namespace egret {
          * The initial value of the uniform in the shader (key, value one-to-one correspondence), currently only supports numbers and arrays.
          * @version Egret 4.1.0
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 着色器中uniform的初始值（key，value一一对应），目前仅支持数字和数组。
-         * @version Egret 4.1.0
-         * @platform Web
-         * @language zh_CN
          */
         public get uniforms():any {
             return this.$uniforms;
@@ -152,16 +130,6 @@ namespace egret {
          * @param uniforms The initial value of the uniform in the shader (key, value one-to-one correspondence), currently only supports numbers and arrays.
          * @version Egret 4.1.0
          * @platform Web
-         * @language en_US
-         */
-        /**
-         * 初始化 CustomFilter 对象
-         * @param vertexSrc 自定义的顶点着色器程序。
-         * @param fragmentSrc 自定义的片段着色器程序。
-         * @param uniforms 着色器中uniform的初始值（key，value一一对应），目前仅支持数字和数组。
-         * @version Egret 4.1.0
-         * @platform Web
-         * @language zh_CN
          */
         constructor(vertexSrc:string, fragmentSrc:string, uniforms:any = {}) {
             super();
