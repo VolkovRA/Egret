@@ -3,18 +3,18 @@
         "target": "es5",
         //"strict": true,
         "composite": true,
-        "sourceMap": false,
+        "sourceMap": true,
         "declaration": true,
         "removeComments": true,
         "allowUnreachableCode": true,
         "newLine": "LF",
 		"outDir": "bin",
-		"outFile": "bin/egret.js",
+		"outFile": "bin/egret-core.js",
         "lib": [
             "es5",
             "dom",
-            "scripthost",
-			"es2015"
+            "es2015",
+            "scripthost"
         ]
     },
     "exclude": [
