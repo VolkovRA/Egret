@@ -27,55 +27,27 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace eui {
-
+namespace eui
+{
     /**
-     * The UIEvent class represents the event object passed to
-     * the event listener for many UI events.
+     * The UIEvent class represents the event object passed to the event listener for many UI events.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @includeExample  extension/eui/events/UIEventExample.ts
-     * @language en_US
+     * @includeExample extension/eui/events/UIEventExample.ts
      */
-    /**
-     * UI事件
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample  extension/eui/events/UIEventExample.ts
-     * @language zh_CN
-     */
-    export class UIEvent extends egret.Event{
-
+    export class UIEvent extends egret.Event
+    {
         /**
          * Constructor.
-         *
-         * @param type The event type; indicates the action that triggered the event.
-         * @param bubbles Specifies whether the event can bubble
-         * up the display list hierarchy.
-         * @param cancelable Specifies whether the behavior
-         * associated with the event can be prevented.
-         *
+         * @param type The event type. Indicates the action that triggered the event.
+         * @param bubbles Specifies whether the event can bubble up the display list hierarchy.
+         * @param cancelable Specifies whether the behavior associated with the event can be prevented.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
          */
-        /**
-         * 创建一个 UIEvent 实例
-         *
-         * @param type 事件类型；指示触发事件的动作。
-         * @param bubbles 指定该事件是否可以在显示列表层次结构得到冒泡处理。
-         * @param cancelable 指定是否可以防止与事件相关联的行为。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
-         */
-        public constructor(type:string, bubbles?:boolean, cancelable?:boolean){
+        public constructor(type:string, bubbles?:boolean, cancelable?:boolean) {
             super(type, bubbles, cancelable);
         }
 
@@ -84,106 +56,52 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
          */
+        public static CREATION_COMPLETE = "creationComplete";
+        
         /**
-         * 组件创建完成
+         * The ending of change.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language zh_CN
          */
-        public static CREATION_COMPLETE:string = "creationComplete";
-        /**
-         * the ending of change.
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 改变结束
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
-         */
-        public static CHANGE_END:string = "changeEnd";
+        public static CHANGE_END = "changeEnd";
 
         /**
          * The beginning of change.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
          */
-        /**
-         * 改变开始
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
-         */
-        public static CHANGE_START:string = "changeStart";
+        public static CHANGE_START = "changeStart";
 
         /**
          * Before close the panel.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
          */
-        /**
-         * 即将关闭面板事件
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
-         */
-        public static CLOSING:string = "closing";
+        public static CLOSING = "closing";
 
         /**
          * The coordinates of the UI components changed in it's parent.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
          */
-        /**
-         * UI组件在父级容器中的坐标发生改变事件
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
-         */
-        public static MOVE:string = "move";
+        public static MOVE = "move";
 
         /**
          * Dispatch an event with specified EventDispatcher. The dispatched event will be cached in the object pool,
          * for the next cycle of reuse.
-         *
-         * @param target the target of event dispatcher.
+         * @param target The target of event dispatcher.
          * @param eventType The event type; indicates the action that triggered the event.
-         * @param bubbles  Determines whether the Event object participates in the bubbling stage of the event flow. The default value is false.
+         * @param bubbles Determines whether the Event object participates in the bubbling stage of the event flow.
+         * The default value is false.
          * @param cancelable Determines whether the Event object can be canceled. The default values is false.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 使用指定的EventDispatcher对象来抛出事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
-         *
-         * @param target 事件派发目标。
-         * @param eventType 事件类型；指示触发事件的动作。
-         * @param bubbles  确定 Event 对象是否参与事件流的冒泡阶段。默认值为 false。
-         * @param cancelable 确定是否可以取消 Event 对象。默认值为 false。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public static dispatchUIEvent(target:egret.IEventDispatcher, eventType:string, bubbles?:boolean, cancelable?:boolean):boolean {
             if(!target.hasEventListener(eventType)){

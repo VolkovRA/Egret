@@ -27,53 +27,26 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui {
-
+namespace eui
+{
     /**
      * The List control displays a vertical or horizontal list of items.
      * The user can select one or more items from the list, depending
-     * on the value of the <code>allowMultipleSelection</code> property.
-     *
+     * on the value of the *allowMultipleSelection* property.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @includeExample  extension/eui/components/ListExample.ts
-     * @language en_US
+     * @includeExample extension/eui/components/ListExample.ts
      */
-    /**
-     * List 控件可显示垂直或水平的项目列表。用户可以根据 <code>allowMultipleSelection</code> 属性的值从列表中选择一个或多个项目。
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample  extension/eui/components/ListExample.ts
-     * @language zh_CN
-     */
-    export class List extends ListBase {
-
-
+    export class List extends ListBase
+    {
         /**
          * whether are allowed to multiple selection.
-         * If <code>true</code> tap an unselected item will be selected,
-         * and tap the item again will cancel selection.
-         *
+         * If *true* tap an unselected item will be selected, and tap the item again will cancel selection.
          * @default false
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 是否允许同时选中多项,设置为 <code>true</code> 时，触摸按下未选中的项呈示器，将会设置该项选中，再次按下将会取消选中。
-         * 可以设置多项为选中状态。
-         *
-         * @default false
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public allowMultipleSelection:boolean = false;
 
@@ -88,25 +61,11 @@ namespace eui {
         private _proposedSelectedIndices:number[];
 
         /**
-         * An Array of numbers representing the indices of the currently selected
-         * item or items.
-         *
+         * An Array of numbers representing the indices of the currently selected item or items.
          * @default []
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 当前选中的一个或多个项目的索引列表。
-         *
-         * @default []
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get selectedIndices():number[] {
             if (this._proposedSelectedIndices)
@@ -119,8 +78,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -140,19 +97,9 @@ namespace eui {
 
         /**
          * An Array representing the currently selected data items.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 表示当前选定数据项的列表
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get selectedItems():any[] {
             let result:any[] = [];
@@ -187,27 +134,12 @@ namespace eui {
         }
 
         /**
-         * Specify whether the selectedIndices changed programmatically or due to
-         * user interaction.
-         *
-         * @param value An array of numbers representing the indices of the selected
-         * @param dispatchChangeEvent whether dispatched a change event.
-         *
+         * Specify whether the selectedIndices changed programmatically or due to user interaction.
+         * @param value An array of numbers representing the indices of the selected.
+         * @param dispatchChangeEvent Whether dispatched a change event.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 设置多个选中项。
-         *
-         * @param value 选中项索引的数组
-         * @param dispatchChangeEvent 是否派发changed事件
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected setSelectedIndices(value:number[], dispatchChangeEvent?:boolean):void {
             let values = this.$ListBase;
@@ -223,8 +155,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -237,8 +167,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -300,29 +228,18 @@ namespace eui {
 
         /**
          * @private
-         * 是否是有效的索引
+         * Is it a valid index.
          */
         private isValidIndex = (item:number, index:number, v:number[]):boolean => {
             return this.$dataProvider && (item >= 0) && (item < this.$dataProvider.length) && item % 1 == 0;
         }
 
         /**
-         * Given a new selection interval, figure out which
-         * items are newly added/removed from the selection interval and update
-         * selection properties and view accordingly.
-         *
+         * Given a new selection interval, figure out which items are newly added/removed from the
+         * selection interval and update selection properties and view accordingly.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 从给定的选择区间中找出新增或者移除的项，并更新属性。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected commitMultipleSelection():void {
             let removedItems:number[] = [];
@@ -372,7 +289,6 @@ namespace eui {
 
         /**
          * @private
-         * 
          * @param index 
          * @returns 
          */
@@ -383,8 +299,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -398,7 +312,7 @@ namespace eui {
 
         /**
          * @private
-         * 计算当前的选中项列表
+         * Calculate the current list of selected items.
          */
         private calculateSelectedIndices(index:number):number[] {
             let interval:number[] = [];
@@ -435,8 +349,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -455,5 +367,4 @@ namespace eui {
             }
         }
     }
-
 }

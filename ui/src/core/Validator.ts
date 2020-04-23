@@ -27,17 +27,17 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace eui.sys {
-
+namespace eui.sys
+{
     /**
      * @private
-     * 失效验证管理器
+     * Failure Verification Manager.
      */
-    export class Validator extends egret.EventDispatcher {
+    export class Validator extends egret.EventDispatcher
+    {
         /**
          * @private
-         * 创建一个Validator对象
+         * Create a Validator object.
          */
         public constructor() {
             super();
@@ -65,7 +65,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 标记组件属性失效
+         * Mark component component invalid.
          */
         public invalidateProperties(client:UIComponent):void {
             if (!this.invalidatePropertiesFlag) {
@@ -80,7 +80,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 验证失效的属性
+         * Verify invalid attributes.
          */
         private validateProperties():void {
             let queue = this.invalidatePropertiesQueue;
@@ -112,7 +112,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 标记需要重新测量尺寸
+         * The mark needs to be re-measured.
          */
         public invalidateSize(client:UIComponent):void {
             if (!this.invalidateSizeFlag) {
@@ -127,7 +127,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 测量尺寸
+         * Measure size.
          */
         private validateSize():void {
             let queue = this.invalidateSizeQueue;
@@ -142,7 +142,6 @@ namespace eui.sys {
                 this.invalidateSizeFlag = false;
         }
 
-
         /**
          * @private
          */
@@ -155,7 +154,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 标记需要重新布局
+         * Tag needs to be re-layed.
          */
         public invalidateDisplayList(client:UIComponent):void {
             if (!this.invalidateDisplayListFlag) {
@@ -168,7 +167,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 重新布局
+         * Arrange again.
          */
         private validateDisplayList():void {
             let queue = this.invalidateDisplayListQueue;
@@ -187,15 +186,16 @@ namespace eui.sys {
          * @private
          */
         private eventDisplay:egret.Bitmap = new egret.Bitmap();
+
         /**
          * @private
-         * 是否已经添加了事件监听
+         * Whether event monitoring has been added.
          */
         private listenersAttached:boolean = false;
 
         /**
          * @private
-         * 添加事件监听
+         * Add event listener.
          */
         private attachListeners():void {
             this.eventDisplay.addEventListener(egret.Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
@@ -206,7 +206,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 执行属性应用
+         * Perform attribute application.
          */
         private doPhasedInstantiationCallBack(event?:egret.Event):void {
             this.eventDisplay.removeEventListener(egret.Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
@@ -216,7 +216,6 @@ namespace eui.sys {
 
         /**
          * @private
-         * 
          */
         private doPhasedInstantiation():void {
             if (this.invalidatePropertiesFlag) {
@@ -242,8 +241,8 @@ namespace eui.sys {
 
         /**
          * @private
-         * 使大于等于指定组件层级的元素立即应用属性
-         * @param target 要立即应用属性的组件
+         * Make elements greater than or equal to the specified component level apply attributes immediately.
+         * @param target The component to which the attribute is applied immediately.
          */
         public validateClient(target:UIComponent):void {
 
@@ -332,32 +331,31 @@ namespace eui.sys {
                 this.targetLevel = Number.POSITIVE_INFINITY;
             }
         }
-
     }
-
 
     /**
      * @private
-     * 显示列表嵌套深度排序队列
+     * Display list nesting depth sort queue.
      */
-    class DepthQueue {
+    class DepthQueue
+    {
         /**
-         * 深度队列
+         * Deep queue.
          */
         private depthBins:{[key:number]:DepthBin} = {};
 
         /**
-         * 最小深度
+         * Minimum depth.
          */
         private minDepth:number = 0;
 
         /**
-         * 最大深度
+         * Maximum depth.
          */
         private maxDepth:number = -1;
 
         /**
-         * 插入一个元素
+         * Insert an element.
          */
         public insert(client:UIComponent):void {
             let depth = client.$nestLevel;
@@ -380,7 +378,7 @@ namespace eui.sys {
         }
 
         /**
-         * 从队列尾弹出深度最大的一个对象
+         * Pops an object with the greatest depth from the end of the queue.
          */
         public pop():UIComponent {
             let client:UIComponent;
@@ -410,7 +408,7 @@ namespace eui.sys {
         }
 
         /**
-         * 从队列首弹出深度最小的一个对象
+         * Pop an object with the smallest depth from the head of the queue.
          */
         public shift():UIComponent {
             let client:UIComponent;
@@ -422,6 +420,7 @@ namespace eui.sys {
                     this.minDepth++;
                     if (this.minDepth > maxDepth)
                         return null;
+
                     bin = this.depthBins[this.minDepth];
                 }
 
@@ -439,7 +438,7 @@ namespace eui.sys {
         }
 
         /**
-         * 移除大于等于指定组件层级的元素中最大的元素
+         * Remove the largest element from the level greater than or equal to the specified component level.
          */
         public removeLargestChild(client:UIComponent):UIComponent {
             let hashCode = client.$hashCode;
@@ -487,7 +486,7 @@ namespace eui.sys {
         }
 
         /**
-         * 移除大于等于指定组件层级的元素中最小的元素
+         * Remove the smallest element from the elements greater than or equal to the specified component level.
          */
         public removeSmallestChild(client:UIComponent):UIComponent {
             let nestLevel = client.$nestLevel;
@@ -533,15 +532,16 @@ namespace eui.sys {
         }
 
         /**
-         * 队列是否为空
+         * Whether the queue is empty.
          */
         public isEmpty():boolean {
             return this.minDepth > this.maxDepth;
         }
     }
+
     /**
      * @private
-     * 列表项
+     * List item.
      */
     class DepthBin {
         public map:{[key:number]:boolean} = {};
@@ -559,11 +559,11 @@ namespace eui.sys {
         }
 
         public pop():UIComponent {
-            let client = this.items.pop();//使用pop会比shift有更高的性能，避免索引整体重置。
+            let client = this.items.pop(); // Using pop will have higher performance than shift, avoiding the overall reset of the index.
             if (client) {
                 this.length--;
                 if(this.length===0){
-                    this.map = {};//清空所有key防止内存泄露
+                    this.map = {}; // Clear all keys to prevent memory leaks.
                 }
                 else{
                     this.map[client.$hashCode] = false;
@@ -578,7 +578,7 @@ namespace eui.sys {
                 this.items.splice(index, 1);
                 this.length--;
                 if(this.length===0){
-                    this.map = {};//清空所有key防止内存泄露
+                    this.map = {}; // Clear all keys to prevent memory leaks.
                 }
                 else{
                     this.map[client.$hashCode] = false;

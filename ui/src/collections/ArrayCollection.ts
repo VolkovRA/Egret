@@ -30,11 +30,11 @@
 /// <reference path="../utils/registerProperty.ts" />
 /// <reference path="../utils/registerBindable.ts" />
 
-namespace eui {
-
+namespace eui
+{
     /**
-     * The ArrayCollection class is a wrapper class that exposes an <code>any[]</code> as a collection that can be
-     * accessed and manipulated using the methods and properties of the <code>ICollection</code> interfaces.
+     * The ArrayCollection class is a wrapper class that exposes an *any[]* as a collection that can be
+     * accessed and manipulated using the methods and properties of the *ICollection* interfaces.
      * ArrayCollection can notify the view to update item when data source changed.
      *
      * @event eui.CollectionEvent.COLLECTION_CHANGE Dispatched when the ArrayCollection has been updated in some way.
@@ -44,38 +44,16 @@ namespace eui {
      * @version eui 1.0
      * @platform Web,Native
      * @includeExample extension/eui/collections/ArrayCollectionExample.ts
-     * @language en_US
      */
-    /**
-     * ArrayCollection 类是数组的集合类数据结构包装器，可使用<code>ICollection</code>接口的方法和属性对其进行访问和处理。
-     * 使用这种数据结构包装普通数组，能在数据源发生改变的时候主动通知视图刷新变更数据项。
-     *
-     * @event eui.CollectionEvent.COLLECTION_CHANGE 当 ArrayCollection 更新的的时候会派发此事件。
-     *
-     * @defaultProperty source
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample extension/eui/collections/ArrayCollectionExample.ts
-     * @language zh_CN
-     */
-    export class ArrayCollection extends egret.EventDispatcher implements ICollection {
+    export class ArrayCollection extends egret.EventDispatcher implements ICollection
+    {
         /**
-         * Constructor. <p/>
+         * Constructor.
          * Creates a new ArrayCollection using the specified source array.
          * If no array is specified an empty array will be used.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 构造函数。<p/>
-         * 用指定的原始数组创建一个 ArrayCollection 实例。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor(source?:any[]) {
             super();
@@ -91,23 +69,14 @@ namespace eui {
          * @private
          */
         private _source:any[];
+
         /**
          * The source of data in the ArrayCollection.
-         * The ArrayCollection object does not represent any changes that you make
-         * directly to the source array. Always use the ICollection methods to view the collection.
+         * The ArrayCollection object does not represent any changes that you make directly to the source array.
+         * Always use the ICollection methods to view the collection.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 数据源
-         * 通常情况下请不要直接调用Array的方法操作数据源，否则对应的视图无法收到数据改变的通知。通常都是通过ICollection的接口方法来查看数据。
-         * 若对数据源进行了修改，请手动调用refresh()方法刷新数据。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get source():any[] {
             return this._source;
@@ -122,21 +91,11 @@ namespace eui {
 
         /**
          * Applies the sort and filter to the view.
-         * The ArrayCollection does not detect source data changes automatically,
-         * so you must call the <code>refresh()</code>
+         * The ArrayCollection does not detect source data changes automatically, so you must call the *refresh()*
          * method to update the view after changing the source data.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 在对数据源进行排序或过滤操作后可以手动调用此方法刷新所有数据,以更新视图。
-         * ArrayCollection 不会自动检原始数据进行了改变,所以你必须调用<code>refresh()</code>方法去更新显示。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public refresh():void {
             this.dispatchCoEvent(CollectionEventKind.REFRESH);
@@ -144,13 +103,11 @@ namespace eui {
 
         //--------------------------------------------------------------------------
         //
-        // ICollection接口实现方法
+        // ICollection interface implementation method
         //
         //--------------------------------------------------------------------------
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -161,20 +118,11 @@ namespace eui {
 
         /**
          * Adds the specified item to the end of the list.
-         * Equivalent to <code>addItemAt(item, length)</code>.
+         * Equivalent to *addItemAt(item, length)*.
          * @param item The item to add.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 向列表末尾添加指定项目。等效于 <code>addItemAt(item, length)</code>。
-         * @param item 要被添加的项。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public addItem(item:any):void {
             this._source.push(item);
@@ -184,25 +132,12 @@ namespace eui {
         /**
          * Adds the item at the specified index.
          * The index of any item greater than the index of the added item is increased by one.
-         * If the the specified index is less than zero or greater than the length
-         * of the list, a Error which code is 1007 is thrown.
+         * If the the specified index is less than zero or greater than the length of the list, a Error which code is 1007 is thrown.
          * @param item The item to place at the index.
          * @param index The index at which to place the item.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 在指定的索引处添加项目。
-         * 任何大于已添加项目的索引的项目索引都会增加 1。
-         * 如果指定的索引比0小或者比最大长度要大。则会抛出1007异常。
-         * @param item 要添加的项
-         * @param index 要添加的指定索引位置
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public addItemAt(item:any, index:number):void {
             if (index < 0 || index > this._source.length) {
@@ -213,8 +148,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -224,8 +157,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -316,21 +247,10 @@ namespace eui {
          * Replaces the item at the specified index.
          * @param item The new item to be placed at the specified index.
          * @param index The index at which to place the item.
-         * @return The item that was replaced, or <code>null</code> if none.
+         * @return The item that was replaced, or *null* if none.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 替换在指定索引处的项目，并返回该项目。
-         * @param item 要在指定索引放置的新的项。
-         * @param index 要被替换的项的索引位置。
-         * @return 被替换的项目，如果没有该项则返回<code>null</code> 。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public replaceItemAt(item:any, index:number):any {
             if (index < 0 || index >= this._source.length) {
@@ -348,15 +268,6 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 用新数据源替换原始数据源，此方法与直接设置source不同，它不会导致目标视图重置滚动位置。
-         * @param newSource 新数据。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public replaceAll(newSource:any[]):void {
             if (!newSource)
@@ -377,7 +288,7 @@ namespace eui {
 
         /**
          * @private
-         * 抛出事件
+         * Throw event
          */
         private dispatchCoEvent(kind:string, location?:number, oldLocation?:number, items?:any[], oldItems?:any[]):void {
 
@@ -386,5 +297,4 @@ namespace eui {
     }
 
     registerProperty(ArrayCollection,"source","Array",true);
-
 }

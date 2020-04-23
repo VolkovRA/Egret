@@ -27,53 +27,25 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace eui {
-
+namespace eui
+{
     /**
-     * The SetProperty class specifies a property value that is in effect only
-     * during the parent view state.
-     * You use this class in the <code>overrides</code> property of the State class.
-     *
+     * The SetProperty class specifies a property value that is in effect only during the parent view state.
+     * You use this class in the *overrides* property of the State class.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @language en_US
      */
-
-    /**
-     * SetProperty 类指定只在父视图状态期间有效的属性值。可以在 State 类的 overrides 属性中使用该类。
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
-     */
-    export class SetStateProperty implements IOverride {
+    export class SetStateProperty implements IOverride
+    {
         /**
          * Constructor.
-         *
-         * @param target The object whose property is being set.
-         * By default, EUI uses the immediate parent of the State object.
+         * @param target The object whose property is being set. By default, EUI uses the immediate parent of the State object.
          * @param name The property to set.
          * @param value The value of the property in the view state.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 创建一个SetProperty实例。
-         *
-         * @param target 要设置其属性的对象。默认情况下，EUI 使用 State 对象的直接父级。
-         * @param name 要设置的属性。
-         * @param value 视图状态中的属性值。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor(host:any, templates:any[], chainIndex:number[], target:any, prop:string) {
             this.host = host;
@@ -84,40 +56,42 @@ namespace eui {
         }
 
         /**
-         * 皮肤对象
+         * Skin object.
          * @private
          */
         private host:any;
+        
         /**
          * @private
-         * 绑定的模板列表
+         * List of bound templates.
          */
         public templates:any[];
 
         /**
          * @private
-         * chainIndex是一个索引列表，每个索引指向templates中的一个值，该值是代表属性链。
+         * ChainIndex is a list of indexes, and each index points to a value in templates, which represents the attribute chain.
          */
         public chainIndex:number[];
+
         /**
-         * 要绑定的对象
+         * A value in the object s to be bound, which represents the property chain.
          * @private
          */
         private target:any;
+
         /**
-         * 要绑定对象的属性
+         * The property of the object to be bound.
          * @private
          */
         private prop:string;
+
         /**
-         * 上一次的数据
+         * Last data.
          * @private
          */
         private oldValue:any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 3.0
          * @version eui 1.0
          * @platform Web,Native
@@ -137,8 +111,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 3.0
          * @version eui 1.0
          * @platform Web,Native
@@ -158,7 +130,7 @@ namespace eui {
 
         /**
          * @private
-         * 设置属性值
+         * Set property value.
          */
         private setPropertyValue(obj:any, name:string, value:any,
                                  valueForType:any):void {
@@ -174,7 +146,7 @@ namespace eui {
 
         /**
          * @private
-         * 转成Boolean值
+         * Convert to Boolean value.
          */
         private toBoolean(value:any):boolean {
             if (typeof (value) == "string")

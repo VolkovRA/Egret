@@ -27,74 +27,40 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui {
-
+namespace eui
+{
     /**
      * The BasicLayout class arranges the layout elements according to their individual settings,
      * independent of each-other. BasicLayout, also called absolute layout, requires that you
      * explicitly position each container child.
-     * You can use the <code>x</code> and <code>y</code> properties of the child,
+     * You can use the *x* and *y* properties of the child,
      * or constraints to position each child.
-     *
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @includeExample  extension/eui/layout/BasicLayoutExample.ts
-     * @language en_US
+     * @includeExample extension/eui/layout/BasicLayoutExample.ts
      */
-    /**
-     * BasicLayout 类根据其各个设置彼此独立地排列布局元素。
-     * BasicLayout（也称为绝对布局）要求显式定位每个容器子代。
-     * 可以使用子代的 <code>x</code> 和 <code>y</code> 属性，或使用约束来定位每个子代。
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample  extension/eui/layout/BasicLayoutExample.ts
-     * @language zh_CN
-     */
-    export class BasicLayout extends LayoutBase {
-
+    export class BasicLayout extends LayoutBase
+    {
         /**
          * Constructor.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 构造函数。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
         }
 
-
         /**
          * BasicLayout does not support virtual layout, setting this property is invalid.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * BasicLayout不支持虚拟布局，设置这个属性无效。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public useVirtualLayout:boolean;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -104,10 +70,7 @@ namespace eui {
             sys.measure(this.$target);
         }
 
-
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -123,7 +86,7 @@ namespace eui {
     if (DEBUG) {
         Object.defineProperty(BasicLayout.prototype, "useVirtualLayout", {
             /**
-             * 此布局不支持虚拟布局，设置这个属性无效
+             * This layout does not support virtual layout, setting this property has no effect.
              */
             get: function () {
                 return this.$useVirtualLayout;
@@ -137,14 +100,14 @@ namespace eui {
     }
 }
 
-namespace eui.sys {
-
+namespace eui.sys
+{
     let UIComponentClass = "eui.UIComponent";
 
     /**
      * @private
-     * @param value 要格式化的相对值
-     * @param total 在此值方向上的总长度
+     * @param value Relative value to format.
+     * @param total The total length in the direction of this value.
      */
     function formatRelative(value:number|string, total:number):number {
         if (!value || typeof value == "number") {
@@ -161,7 +124,7 @@ namespace eui.sys {
 
     /**
      * @private
-     * 一个工具方法，使用BasicLayout规则测量目标对象。
+     * A tool method to measure the target object using BasicLayout rules.
      */
     export function measure(target:eui.Group|eui.Component):void {
         if (!target) {
@@ -229,7 +192,7 @@ namespace eui.sys {
 
     /**
      * @private
-     * 一个工具方法，使用BasicLayout规则布局目标对象。
+     * A tool method that uses BasicLayout rules to lay out target objects.
      */
     export function updateDisplayList(target:eui.Group|eui.Component,
                                       unscaledWidth:number, unscaledHeight:number):egret.Point {

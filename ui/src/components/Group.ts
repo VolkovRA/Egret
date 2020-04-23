@@ -30,12 +30,14 @@
 /// <reference path="../states/State.ts" />
 /// <reference path="../core/UIComponent.ts" />
 /// <reference path="../utils/registerProperty.ts" />
-namespace eui {
 
+namespace eui
+{
     /**
      * @private
      */
-    const enum Keys{
+    const enum Keys
+    {
         contentWidth,
         contentHeight,
         scrollH,
@@ -47,10 +49,10 @@ namespace eui {
     /**
      * The Group class is defines the base class for layout component.
      * If the contents of the sub items are too large to scroll to show, you can wrap a Scroller component outside the
-     * group (Give the instance of Group to <code>viewport</code> property of Scroller component).
+     * group (Give the instance of Group to *viewport* property of Scroller component).
      * The scroller component can adds a scrolling touch operation for the Group.
      *
-     * @see http://edn.egret.com/cn/article/index/id/608 Simple container
+     * @see http://edn.egret.com/cn/article/index/id/608 Simple container.
      * @defaultProperty elementsContent
      * @includeExample  extension/eui/components/GroupExample.ts
      * @version Egret 2.4
@@ -58,46 +60,24 @@ namespace eui {
      * @platform Web,Native
      * @language en_US
      */
-    /**
-     * Group 是自动布局的容器基类。如果包含的子项内容太大需要滚动显示，可以在在 Group 外部包裹一层 Scroller 组件
-     * (将 Group 实例赋值给 Scroller 组件的 viewport 属性)。Scroller 会为 Group 添加滚动的触摸操作功能，并显示垂直或水平的滚动条。
-     *
-     * @see http://edn.egret.com/cn/article/index/id/608 简单容器
-     * @defaultProperty elementsContent
-     * @includeExample  extension/eui/components/GroupExample.ts
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
-     */
-    export class Group extends egret.DisplayObjectContainer implements IViewport {
-
+    export class Group extends egret.DisplayObjectContainer implements IViewport
+    {
         /**
          * Constructor.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 构造函数。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
             this.initializeUIValues();
             this.$Group = {
-                0: 0,        //contentWidth,
-                1: 0,        //contentHeight,
-                2: 0,        //scrollH,
-                3: 0,        //scrollV,
-                4: false,    //scrollEnabled,
-                5: false,    //touchThrough
+                0: 0,        // contentWidth,
+                1: 0,        // contentHeight,
+                2: 0,        // scrollH,
+                3: 0,        // scrollV,
+                4: false,    // scrollEnabled,
+                5: false,    // touchThrough
             };
             this.$stateValues.parent = this;
         }
@@ -106,18 +86,9 @@ namespace eui {
 
         /**
          * This property is Usually invoked in resolving an EXML for adding multiple children quickly.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 此属性通常在 EXML 的解析器中调用，便于快速添加多个子项。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public set elementsContent(value:egret.DisplayObject[]) {
             if (value) {
@@ -135,25 +106,11 @@ namespace eui {
 
         /**
          * The layout object for this container.
-         * This object is responsible for the measurement and layout of
-         * the UIcomponent in the container.
-         *
+         * This object is responsible for the measurement and layout of the UIcomponent in the container.
          * @default eui.BasicLayout
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 此容器的布局对象。
-         *
-         * s@default eui.BasicLayout
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get layout():LayoutBase {
             return this.$layout;
@@ -165,7 +122,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param value
          */
         $setLayout(value:LayoutBase):boolean {
@@ -207,33 +163,13 @@ namespace eui {
         }
 
         /**
-         *
-         * Sets the <code>contentWidth</code> and <code>contentHeight</code>
-         * properties.
-         *
-         * This method is intended for layout class developers who should
-         * call it from <code>updateDisplayList()</code> methods.
-         *
-         * @param width The new value of <code>contentWidth</code>.
-         * @param height The new value of <code>contentHeight</code>.
-         *
+         * Sets the *contentWidth* and *contentHeight* properties.
+         * This method is intended for layout class developers who should call it from *updateDisplayList()* methods.
+         * @param width The new value of *contentWidth*.
+         * @param height The new value of *contentHeight*.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         *
-         * 设置 <code>contentWidth</code> 和 <code>contentHeight</code> 属性。
-         * 此方法由布局来调用，开发者应该在布局类的 <code>updateDisplayList()</code> 方法中对其进行调用。
-         *
-         * @param width <code>contentWidth</code> 的新值。
-         * @param height <code>contentHeight</code> 的新值。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public setContentSize(width:number, height:number):void {
             width = Math.ceil(+width || 0);
@@ -253,9 +189,9 @@ namespace eui {
                 PropertyEvent.dispatchPropertyEvent(this, PropertyEvent.PROPERTY_CHANGE, "contentHeight");
             }
         }
+
         /**
          * @copy eui.IViewport#scrollEnabled
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -275,7 +211,6 @@ namespace eui {
 
         /**
          * @copy eui.IViewport#scrollH
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -298,7 +233,6 @@ namespace eui {
 
         /**
          * @copy eui.IViewport#scrollV
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -321,7 +255,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @returns
          */
         private updateScrollRect():boolean {
@@ -341,19 +274,9 @@ namespace eui {
 
         /**
          * The number of layout element in this container.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 布局元素子项的数量。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get numElements():number {
             return this.$children.length;
@@ -361,19 +284,9 @@ namespace eui {
 
         /**
          * Returns the layout element at the specified index.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 获取一个布局元素子项。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public getElementAt(index:number):egret.DisplayObject {
             return this.$children[index];
@@ -386,48 +299,21 @@ namespace eui {
          * Set the index range of the sub Visual element in container which support virtual layout.
          * This method is invalid in container which do not support virtual layout.
          * This method is usually invoked before layout. Override this method to release the invisible elements.
-         *
          * @param startIndex the start index of sub visual elements（include）
          * @param endIndex the end index of sub visual elements（include）
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 在支持虚拟布局的容器中，设置容器内可见的子元素索引范围。此方法在不支持虚拟布局的容器中无效。
-         * 通常在即将重新布局子项之前会被调用一次，容器覆盖此方法提前释放已经不可见的子元素。
-         *
-         * @param startIndex 可视元素起始索引（包括）
-         * @param endIndex 可视元素结束索引（包括）
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public setVirtualElementIndicesInView(startIndex:number, endIndex:number):void {
 
         }
 
         /**
-         * When <code>true</code>, this property
-         * ensures that the entire bounds of the Group respond to
-         * touch events such as begin.
-         *
+         * When *true*, this property ensures that the entire bounds of the Group respond to touch events such as begin.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 触摸组件的背景透明区域是否可以穿透。设置为true表示可以穿透，反之透明区域也会响应触摸事件。默认 false。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get touchThrough():boolean{
             return this.$Group[Keys.touchThrough];
@@ -445,8 +331,9 @@ namespace eui {
             if (target || this.$Group[Keys.touchThrough]) {
                 return target;
             }
-            //Bug: 当 group.sacleX or scaleY ==0 的时候，随便点击那里都点击成功
-            //虽然 super.$hitTest里面检测过一次 宽高大小，但是没有直接退出这个函数，所以要再判断一次;（width,height可以不判断）
+            // Bug: When group.sacleX or scaleY == 0, click anywhere and click successfully
+            // Although the width and height are detected once in super. $ HitTest, the function is not directly exited,
+            // so it needs to be judged again; (width, height can not be judged)
             if (!this.$visible || !this.touchEnabled || this.scaleX === 0 || this.scaleY === 0 || this.width === 0 || this.height === 0) {
                 return null;
             }
@@ -464,7 +351,6 @@ namespace eui {
             return null;
         }
 
-
         /**
          * @private
          */
@@ -472,25 +358,14 @@ namespace eui {
 
         /**
          * The list of state for this component.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 为此组件定义的视图状态。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public states:State[];
 
         /**
          * @copy eui.Component#currentState
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -499,26 +374,27 @@ namespace eui {
 
         /**
          * @copy eui.Skin#hasState()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         public hasState:(stateName:string)=>boolean;
+
         /**
          * @private
-         * 初始化所有视图状态
+         * Initialize all view states.
          */
         private initializeStates:(stage:egret.Stage)=>void;
+
         /**
          * @private
-         * 应用当前的视图状态。子类覆盖此方法在视图状态发生改变时执行相应更新操作。
+         * Apply the current view state.
+         * Subclasses override this method to perform corresponding update operations when the view state changes.
          */
         private commitCurrentState:()=>void;
 
         /**
          * @copy eui.Component#invalidateState()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -534,7 +410,6 @@ namespace eui {
 
         /**
          * @copy eui.Component#getCurrentState()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -544,16 +419,15 @@ namespace eui {
         }
 
 
-        //=======================UIComponent接口实现===========================
+        //=======================UIComponent interface implementation===========================
         /**
          * @private
-         * UIComponentImpl 定义的所有变量请不要添加任何初始值，必须统一在此处初始化。
+         * Please do not add any initial value to all variables defined by UIComponentImpl, they must be initialized here.
          */
         private initializeUIValues:()=>void;
 
         /**
          * @copy eui.Component#createChildren()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -567,18 +441,15 @@ namespace eui {
 
         /**
          * @copy eui.Component#childrenCreated()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         protected childrenCreated():void {
-
         }
 
         /**
          * @copy eui.Component#commitProperties()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -597,7 +468,6 @@ namespace eui {
 
         /**
          * @copy eui.Component#measure()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -612,7 +482,6 @@ namespace eui {
 
         /**
          * @copy eui.Component#updateDisplayList()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -624,10 +493,8 @@ namespace eui {
             this.updateScrollRect();
         }
 
-
         /**
          * @copy eui.Component#invalidateParentLayout()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -646,8 +513,6 @@ namespace eui {
         $includeInLayout:boolean;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -655,8 +520,6 @@ namespace eui {
         public includeInLayout:boolean;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -664,8 +527,6 @@ namespace eui {
         public left:any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -673,8 +534,6 @@ namespace eui {
         public right:any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -682,8 +541,6 @@ namespace eui {
         public top:any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -691,8 +548,6 @@ namespace eui {
         public bottom:any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -700,8 +555,6 @@ namespace eui {
         public horizontalCenter:any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -709,8 +562,6 @@ namespace eui {
         public verticalCenter:any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -718,8 +569,6 @@ namespace eui {
         public percentWidth:number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -727,8 +576,6 @@ namespace eui {
         public percentHeight:number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -736,18 +583,13 @@ namespace eui {
         public explicitWidth:number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         public explicitHeight:number;
 
-
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -755,8 +597,6 @@ namespace eui {
         public minWidth:number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -764,8 +604,6 @@ namespace eui {
         public maxWidth:number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -773,8 +611,6 @@ namespace eui {
         public minHeight:number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -782,8 +618,6 @@ namespace eui {
         public maxHeight:number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -792,8 +626,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -802,8 +634,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -812,8 +642,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -822,8 +650,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -832,8 +658,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -842,8 +666,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -852,8 +674,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -862,8 +682,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -872,8 +690,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -882,8 +698,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -892,8 +706,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -906,5 +718,4 @@ namespace eui {
     sys.mixin(Group, sys.StateClient);
     registerProperty(Group, "elementsContent", "Array", true);
     registerProperty(Group, "states", "State[]");
-
 }

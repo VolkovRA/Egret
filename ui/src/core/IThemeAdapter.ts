@@ -27,10 +27,10 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui {
-
-    export interface IThemeAdapter {
-
+namespace eui
+{
+    export interface IThemeAdapter
+    {
         getTheme(url: string, compFunc: Function, errorFunc: Function, thisObject: any): void;
     }
 }

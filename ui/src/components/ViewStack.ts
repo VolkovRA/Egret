@@ -27,54 +27,30 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace eui {
-
+namespace eui
+{
     /**
      * An ViewStack navigator container consists of a collection of child
      * containers stacked on top of each other, where only one child
      * at a time is visible.
+     * 
      * When a different child container is selected, it seems to replace
      * the old one because it appears in the same location.
      * However, the old child container still exists; it is just invisible.
      *
      * @event eui.CollectionEvent.COLLECTION_CHANGE Dispatched when the ICollection has been updated in some way.
-     *
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @includeExample  extension/eui/components/ViewStackExample.ts
-     * @language en_US
+     * @includeExample extension/eui/components/ViewStackExample.ts
      */
-    /**
-     * ViewStack 导航器容器由一组彼此上下堆叠的子容器组成，其中一次只可以显示一个子容器。
-     * 选择另一个子容器后，它将显示在原来子容器的位置处，所以看起来好像此子容器替换了原来的子容器。
-     * 但是，原来的子容器仍然存在，只不过它现在处于不可见状态。
-     *
-     * @event eui.CollectionEvent.COLLECTION_CHANGE 以某种方式更新 ICollection 后分派。
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample  extension/eui/components/ViewStackExample.ts
-     * @language zh_CN
-     */
-    export class ViewStack extends Group implements ICollection {
+    export class ViewStack extends Group implements ICollection
+    {
         /**
          * Constructor.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 构造函数。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
@@ -82,25 +58,11 @@ namespace eui {
 
         /**
          * The layout object for this container.
-         * This object is responsible for the measurement and layout of
-         * the visual elements in the container.
-         *
+         * This object is responsible for the measurement and layout of the visual elements in the container.
          * @default eui.BasicLayout
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 此容器的 layout 对象。此对象负责容器中可视元素的测量和布局。
-         *
-         * @default eui.BasicLayout
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get layout():LayoutBase {
             return this.$layout;
@@ -110,28 +72,20 @@ namespace eui {
          * @private
          */
         private _selectedChild:egret.DisplayObject = null;
+        
         /**
          * A reference to the currently visible child container.
          * The default is a reference to the first child.
-         * If there are no children, this property is <code>null</code>.
-         *
+         * If there are no children, this property is *null*.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 对当前可见子容器的引用。默认设置为对第一个子容器的引用。如果没有子项，则此属性为 <code>null</code>。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get selectedChild():egret.DisplayObject {
             let index = this.selectedIndex;
             if (index >= 0 && index < this.numChildren)
                 return this.getChildAt(index);
+            
             return null;
         }
 
@@ -143,7 +97,7 @@ namespace eui {
 
         /**
          * @private
-         * 在属性提交前缓存选中项索引
+         * Cache selected item index before attribute submission.
          */
         private proposedSelectedIndex:number = ListBase.NO_PROPOSED_SELECTION;
 
@@ -151,26 +105,16 @@ namespace eui {
          * @private
          */
         public _selectedIndex:number = -1;
+
         /**
          * The zero-based index of the currently visible child container.
-         * Child indexes are in the range 0, 1, 2, ..., n - 1,
-         * where <code>n</code> is the number of children.
+         * Child indexes are in the range: 0, 1, 2, ..., n - 1,
+         * where *n* is the number of children.
          * The default value is 0, corresponding to the first child.
-         * If there are no children, the value of this property is <code>-1</code>.
-         *
+         * If there are no children, the value of this property is *-1*.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 当前可见子容器的从零开始的索引。子索引的范围是 0、1、2、...、n - 1，其中 <code>n</code> 是子项的数目。
-         * 默认值是 0，对应于第一个子项。如果不存在子容器，则此属性的值为 -1。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get selectedIndex():number {
             return this.proposedSelectedIndex != ListBase.NO_PROPOSED_SELECTION ? this.proposedSelectedIndex : this._selectedIndex;
@@ -183,7 +127,7 @@ namespace eui {
 
         /**
          * @private
-         * 设置选中项索引
+         * Set selected item index.
          */
         private setSelectedIndex(value:number):void {
             if (value == this.selectedIndex) {
@@ -196,8 +140,11 @@ namespace eui {
 
         /**
          * @private
-         * 一个子项被添加到容器内，此方法不仅在操作addChild()时会被回调，在操作setChildIndex()或swapChildren时也会回调。
-         * 当子项索引发生改变时，会先触发$childRemoved()方法，然后触发$childAdded()方法。
+         * A child is added to the container.
+         * This method will be called not only when the addChild () operation is operated, but also when
+         * setChildIndex() or swapChildren is operated.
+         * When the child index changes, the $ childRemoved () method will be triggered first, and then the
+         * $childAdded() method will be triggered.
          */
         $childAdded(child:egret.DisplayObject, index:number):void {
             super.$childAdded(child, index);
@@ -215,8 +162,11 @@ namespace eui {
 
         /**
          * @private
-         * 一个子项从容器内移除，此方法不仅在操作removeChild()时会被回调，在操作setChildIndex()或swapChildren时也会回调。
-         * 当子项索引发生改变时，会先触发$childRemoved()方法，然后触发$childAdded()方法。
+         * A child is removed from the container.
+         * This method will be called back not only when removeChild () is operated, but also when
+         * setChildIndex () or swapChildren is operated.
+         * When the child index changes, the $ childRemoved () method will be triggered first,
+         * and then the $ childAdded () method will be triggered.
          */
         $childRemoved(child:egret.DisplayObject, index:number):void {
             super.$childRemoved(child, index);
@@ -242,8 +192,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -258,7 +206,6 @@ namespace eui {
 
         /**
          * @private
-         * 
          * @param newIndex 
          */
         private commitSelection(newIndex:number):void {
@@ -280,7 +227,6 @@ namespace eui {
 
         /**
          * @private
-         * 
          * @param child 
          * @param visible 
          */
@@ -292,28 +238,16 @@ namespace eui {
         }
 
         /**
-         * number of children
-         *
+         * Number of children.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 子项数量
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get length():number {
             return this.$children.length;
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -324,8 +258,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         * 
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -343,5 +275,4 @@ namespace eui {
     }
 
     registerBindable(ViewStack.prototype,"selectedIndex");
-
 }

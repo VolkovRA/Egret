@@ -1,8 +1,10 @@
-namespace eui.sys {
+namespace eui.sys
+{
     /**
      * @private
      */
-    export const enum TextInputKeys {
+    export const enum TextInputKeys
+    {
         prompt,
         displayAsPassword,
         textColor,
@@ -14,42 +16,31 @@ namespace eui.sys {
         inputType
     }
 }
-namespace eui {
+
+namespace eui
+{
     import FocusEvent = egret.FocusEvent;
-    /**
-     *
-     */
+
     /**
      * The TextInput is a textfield input component, the user can input and edit the text.
-     *
      * @version Egret 2.5.7
      * @version eui 1.0
      * @platform Web,Native
-     * @includeExample  extension/eui/components/TextInputExample.ts
-     * @language en_US
-     */
-    /**
-     * TextInput 是一个文本输入控件，供用户输入和编辑统一格式文本
-     *
-     * @version Egret 2.5.7
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample  extension/eui/components/TextInputExample.ts
-     * @language zh_CN
+     * @includeExample extension/eui/components/TextInputExample.ts
      */
     export class TextInput extends Component {
         constructor() {
             super();
             this.$TextInput = {
-                0: null,          //prompt,
-                1: null,          //displayAsPassword
-                2: null,          //textColor
-                3: null,          //maxChars
-                4: null,          //maxWidth
-                5: null,          //maxHeight
-                6: "",            //text
-                7: null,          //restrict
-                8:egret.TextFieldInputType.TEXT //inputType
+                0: null,          // prompt,
+                1: null,          // displayAsPassword
+                2: null,          // textColor
+                3: null,          // maxChars
+                4: null,          // maxWidth
+                5: null,          // maxHeight
+                6: "",            // text
+                7: null,          // restrict
+                8:egret.TextFieldInputType.TEXT // inputType
             }
         }
 
@@ -57,44 +48,27 @@ namespace eui {
          * @private
          */
         $TextInput:Object;
+
         /**
-         * [SkinPart] The TextInput display
+         * [SkinPart] The TextInput display.
          * @skinPart
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * [SkinPart] 实体文本输入组件
-         * @skinPart
-         * @version Egret 2.5.7
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public textDisplay:EditableText;
+
         /**
          * [SkinPart] When the property of the text is empty, it will show the defalut string.
          * @skinPart
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language zh_CN
-         */
-        /**
-         * [SkinPart] 当text属性为空字符串时要显示的文本。
-         * @skinPart
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public promptDisplay:Label;
 
         /**
          * @copy eui.EditableText#prompt
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -108,7 +82,6 @@ namespace eui {
 
         /**
          * @copy eui.EditableText#prompt
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -124,7 +97,6 @@ namespace eui {
 
         /**
          * @copy egret.TextField#displayAsPassword
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -139,7 +111,6 @@ namespace eui {
 
         /**
          * @copy egret.TextField#displayAsPassword
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -151,9 +122,9 @@ namespace eui {
             }
             this.invalidateProperties();
         }
+
         /**
          * @copy egret.TextField#inputType
-         *
          * @version Egret 3.1.6
          * @version eui 1.0
          * @platform Web,Native
@@ -165,9 +136,9 @@ namespace eui {
             }
             this.invalidateProperties();
         }
+
         /**
          * @copy egret.TextField#inputType
-         *
          * @version Egret 3.1.6
          * @version eui 1.0
          * @platform Web,Native
@@ -179,10 +150,8 @@ namespace eui {
             return this.$TextInput[sys.TextInputKeys.inputType];
         }
 
-
         /**
          * @copy egret.TextField#textColor
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -196,7 +165,6 @@ namespace eui {
 
         /**
          * @copy egret.TextField#textColor
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -211,7 +179,6 @@ namespace eui {
 
         /**
          * @copy egret.TextField#maxChars
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -226,7 +193,6 @@ namespace eui {
 
         /**
          * @copy egret.TextField#maxChars
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -240,8 +206,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -255,8 +219,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -270,8 +232,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -285,8 +245,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -301,7 +259,6 @@ namespace eui {
 
         /**
          * @copy egret.TextField#text
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -315,7 +272,6 @@ namespace eui {
 
         /**
          * @copy egret.TextField#text
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -331,7 +287,6 @@ namespace eui {
 
         /**
          * @copy egret.TextField#restrict
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -345,7 +300,6 @@ namespace eui {
 
         /**
          * @copy egret.TextField#restrict
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -365,7 +319,7 @@ namespace eui {
 
         /**
          * @private
-         * 焦点移入
+         * Focus in.
          */
         private focusInHandler(event:FocusEvent):void {
             this.isFocus = true;
@@ -374,7 +328,7 @@ namespace eui {
 
         /**
          * @private
-         * 焦点移出
+         * Focus out.
          */
         private focusOutHandler(event:FocusEvent):void {
             this.isFocus = false;
@@ -382,8 +336,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -409,8 +361,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -433,8 +383,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.5.7
          * @version eui 1.0
          * @platform Web,Native
@@ -483,6 +431,7 @@ namespace eui {
                 this.textDisplay.inputType = values[sys.TextInputKeys.inputType];
             }
         }
+
         /**
          * @private
          */

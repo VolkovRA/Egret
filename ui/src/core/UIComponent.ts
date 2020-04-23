@@ -29,10 +29,8 @@
 
 /// <reference path="Validator.ts" />
 
-namespace eui {
-
-
-
+namespace eui
+{
     export function getAssets(source: string, callback: (content: any) => void, thisObject: any) {
         let adapter: IAssetAdapter = egret.getImplementation("eui.IAssetAdapter");
         if (!adapter) {
@@ -52,61 +50,44 @@ namespace eui {
         adapter.getTheme(source, (data) => {
             callback(data)
         }, (e) => { console.log(e) }, this);
-
     }
 
     /**
      * The UIComponent class is the base class for all visual components, both skinnable and nonskinnable.
-     *
      * @event egret.Event.RESIZE Dispatch when the component is resized.
      * @event eui.UIEvent.MOVE Dispatch when the object has moved.
      * @event eui.UIEvent.CREATION_COMPLETE  Dispatch when the component has finished its construction,
      * property processing, measuring, layout, and drawing.
-     *
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @language en_US
      */
-
-    /**
-     * UIComponent 类是所有可视组件（可定制皮肤和不可定制皮肤）的基类。
-     *
-     * @event egret.Event.RESIZE 当UI组件的尺寸发生改变时调度
-     * @event eui.UIEvent.MOVE 当UI组件在父级容器中的位置发生改变时调度
-     * @event eui.UIEvent.CREATION_COMPLETE 当UI组件第一次被添加到舞台并完成初始化后调度
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
-     */
-
-    export interface UIComponent extends egret.DisplayObject {
-
+    export interface UIComponent extends egret.DisplayObject
+    {
         ///**
-        // * 创建子项,子类覆盖此方法以完成组件子项的初始化操作，
-        // * 请务必调用super.createChildren()以完成父类组件的初始化
+        // * Create subitems, subclasses override this method to complete the initialization of component subitems,
+        // * be sure to call super.createChildren() to complete the initialization of the parent component.
         // */
         // protected createChildren():void{}
 
         ///**
-        // * 提交属性，子类在调用完invalidateProperties()方法后，应覆盖此方法以应用属性
+        // * Submit properties.
+        // * Subclasses should override this method to apply properties after calling the invalidateProperties() method.
         // */
         // protected commitProperties():void{}
 
         ///**
-        // * 测量组件尺寸
+        // * Measuring component dimensions.
         // */
         // protected measure():void{}
 
         ///**
-        // * 更新显示列表
+        // * Update display list.
         // */
         // protected updateDisplayList(unscaledWidth:number, unscaledHeight:number):void{}
 
         ///**
-        // * 标记父级容器的尺寸和显示列表为失效
+        // * Mark the size and display list of the parent container as invalid.
         // */
         // protected invalidateParentLayout():void{}
 
@@ -127,426 +108,205 @@ namespace eui {
         $includeInLayout: boolean;
 
         /**
-         * Specifies whether this component is included in the layout of the
-         * parent container.
-         * If <code>false</code>, the object size and position are not affected by its parent container's
-         * layout.
-         * This value is different with <code>visible</code>. the object size and position is still affected by its parent
-         * container's layout when the <code>visible</code> is false.
+         * Specifies whether this component is included in the layout of the parent container.
+         * If *false*, the object size and position are not affected by its parent container's layout.
+         * This value is different with *visible*. the object size and position is still affected by its parent
+         * container's layout when the *visible* is false.
          * @default true
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 指定此组件是否包含在父容器的布局中。若为false，则父级容器在测量和布局阶段都忽略此组件。
-         * 注意，visible属性与此属性不同，设置visible为false，父级容器仍会对其布局。
-         *
-         * @default true
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         includeInLayout: boolean;
+
         /**
-         * The horizontal distance in pixels from the left edge of the component to the
-         * anchor target's left edge.
-         *
+         * The horizontal distance in pixels from the left edge of the component to the anchor target's left edge.
          * @default NaN
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 距父级容器离左边距离。
-         *
-         * @default NaN
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         left: any;
 
         /**
-         * The horizontal distance in pixels from the right edge of the component to the
-         * anchor target's right edge.
-         *
+         * The horizontal distance in pixels from the right edge of the component to the anchor target's right edge.
          * @default NaN
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 距父级容器右边距离。
-         *
-         * @default NaN
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         right: any;
 
         /**
-         * The vertical distance in pixels from the top edge of the component to the
-         * anchor target's top edge.
-         *
+         * The vertical distance in pixels from the top edge of the component to the anchor target's top edge.
          * @default NaN
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 距父级容器顶部距离。
-         *
-         * @default NaN
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         top: any;
 
         /**
-         * The vertical distance in pixels from the bottom edge of the component to the
-         * anchor target's bottom edge.
-         *
+         * The vertical distance in pixels from the bottom edge of the component to the anchor target's bottom edge.
          * @default NaN
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 距父级容器底部距离。
-         *
-         * @default NaN
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         bottom: any;
 
         /**
-         * The horizontal distance in pixels from the center of the component to the
-         * center of the anchor target's content area.
-         *
+         * The horizontal distance in pixels from the center of the component to the center of the anchor target's content area.
          * @default NaN
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 在父级容器中距水平中心位置的距离。
-         *
-         * @default NaN
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         horizontalCenter: any;
 
         /**
-         * The vertical distance in pixels from the center of the component to the
-         *  center of the anchor target's content area.
-         *
+         * The vertical distance in pixels from the center of the component to the center of the anchor target's content area.
          * @default NaN
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 在父级容器中距竖直中心位置的距离。
-         *
-         * @default NaN
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         verticalCenter: any;
 
         /**
-         * Specifies the width of a component as a percentage
-         * of its parent's size. Allowed values are 0-100.
-         * Setting the <code>width</code> or <code>explicitWidth</code> properties
-         * resets this property to NaN.
-         *
+         * Specifies the width of a component as a percentage of its parent's size. Allowed values are 0-100.
+         * Setting the *width* or *explicitWidth* properties resets this property to NaN.
          * @default NaN
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 相对父级容器宽度的百分比。
-         *
-         * @default NaN
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         percentWidth: number;
 
         /**
-         * Specifies the height of a component as a percentage
-         * of its parent's size. Allowed values are 0-100.
-         * Setting the <code>height</code> or <code>explicitHeight</code> properties
-         * resets this property to NaN.
-         *
+         * Specifies the height of a component as a percentage of its parent's size.
+         * Allowed values are 0-100. Setting the *height* or *explicitHeight* properties resets this property to NaN.
          * @default NaN
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 相对父级容器高度的百分比。
-         *
-         * @default NaN
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         percentHeight: number;
 
         /**
-         * Number that specifies the explicit width of the component,
-         * in pixels, in the component's coordinates.
+         * Number that specifies the explicit width of the component, in pixels, in the component's coordinates.
          * @readOnly
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 外部显式指定的宽度。
-         * @readOnly
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         readonly explicitWidth: number;
 
         /**
-         * Number that specifies the explicit height of the component,
-         * in pixels, in the component's coordinates.
+         * Number that specifies the explicit height of the component, in pixels, in the component's coordinates.
          * @readOnly
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 外部显式指定的高度。
-         * @readOnly
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         readonly explicitHeight: number;
 
         /**
-         * The minimum recommended width of the component to be considered
-         * by the parent during layout. This value is in the
-         * component's coordinates, in pixels. The default value depends on
-         * the component's implementation.
+         * The minimum recommended width of the component to be considered by the parent during layout.
+         * This value is in the component's coordinates, in pixels.
+         * The default value depends on the component's implementation.
          * @readOnly
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 组件的最小宽度,此属性设置为大于maxWidth的值时无效。同时影响测量和自动布局的尺寸。
-         * @readOnly
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         minWidth: number;
+
         /**
-         * The maximum recommended width of the component to be considered
-         * by the parent during layout. This value is in the
-         * component's coordinates, in pixels. The default value of this property is
-         * set by the component developer.
+         * The maximum recommended width of the component to be considered by the parent during layout.
+         * This value is in the component's coordinates, in pixels.
+         * The default value of this property is set by the component developer.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 组件的最大高度。同时影响测量和自动布局的尺寸。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         maxWidth: number;
 
         /**
-         * The minimum recommended height of the component to be considered
-         * by the parent during layout. This value is in the
-         * component's coordinates, in pixels. The default value depends on
-         * the component's implementation.
+         * The minimum recommended height of the component to be considered by the parent during layout.
+         * This value is in the component's coordinates, in pixels.
+         * The default value depends on the component's implementation.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 组件的最小高度,此属性设置为大于maxHeight的值时无效。同时影响测量和自动布局的尺寸。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         minHeight: number;
 
         /**
-         * The maximum recommended height of the component to be considered
-         * by the parent during layout. This value is in the
-         * component's coordinates, in pixels. The default value of this property is
-         * set by the component developer.
+         * The maximum recommended height of the component to be considered by the parent during layout.
+         * This value is in the component's coordinates, in pixels.
+         * The default value of this property is set by the component developer.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 组件的最大高度,同时影响测量和自动布局的尺寸。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         maxHeight: number;
 
         /**
          * Set the result of measuring.
-         * @param width measured width
-         * @param height measured height
+         * @param width Measured width.
+         * @param height Measured height.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 设置测量结果。
-         * @param width 测量宽度
-         * @param height 测量高度
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         setMeasuredSize(width: number, height: number): void;
 
         /**
-         * Marks a component so that its <code>commitProperties()</code>
-         * method gets called during a later screen update.<p/>
+         * Marks a component so that its *commitProperties()* method gets
+         * called during a later screen update.
          *
          * Invalidation is a useful mechanism for eliminating duplicate
          * work by delaying processing of changes to a component until a
-         * later screen update.<p/>
+         * later screen update.
          *
          * For example, if you want to change the text color and size,
          * it would be wasteful to update the color immediately after you
          * change it and then update the size when it gets set.
          * It is more efficient to change both properties and then render
-         * the text with its new size and color once.<p/>
+         * the text with its new size and color once.
          *
          * Invalidation methods rarely get called.
          * In general, setting a property on a component automatically
          * calls the appropriate invalidation method.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 标记提交过需要延迟应用的属性，以便在稍后屏幕更新期间调用该组件的 commitProperties() 方法。<p/>
-         *
-         * 这是一个很有用的机制，可将组件更改延迟到稍后屏幕更新时进行处理，从而消除了重复的工作。<p/>
-         *
-         * 例如，要更改文本颜色和大小，如果在更改颜色后立即进行更新，然后在设置大小后再更新大小，就有些浪费。
-         * 同时更改两个属性后再使用新的大小和颜色一次性呈示文本，效率会更高。<p/>
-         *
-         * 很少调用 Invalidation 方法。通常，在组件上设置属性会自动调用合适的 invalidation 方法。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         invalidateProperties(): void;
 
         /**
-         * Used by layout logic to validate the properties of a component
-         * by calling the <code>commitProperties()</code> method.
-         * In general, subclassers should
-         * override the <code>commitProperties()</code> method and not this method.
+         * Used by layout logic to validate the properties of a component by calling the *commitProperties()* method.
+         * In general, subclassers should override the *commitProperties()* method and not this method.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 由布局逻辑用于通过调用 commitProperties() 方法来验证组件的属性。
-         * 通常，子类应覆盖 commitProperties() 方法，而不是覆盖此方法。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         validateProperties(): void;
 
         /**
-         * Marks a component so that its <code>measure()</code>
-         * method gets called during a later screen update.<p/>
+         * Marks a component so that its *measure()*
+         * method gets called during a later screen update.
          *
          * Invalidation is a useful mechanism for eliminating duplicate
          * work by delaying processing of changes to a component until a
-         * later screen update.<p/>
+         * later screen update.
          *
          * For example, if you want to change the text and font size,
          * it would be wasteful to update the text immediately after you
          * change it and then update the size when it gets set.
          * It is more efficient to change both properties and then render
-         * the text with its new size once.<p/>
+         * the text with its new size once.
          *
          * Invalidation methods rarely get called.
          * In general, setting a property on a component automatically
@@ -555,262 +315,137 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 标记提交过需要验证组件尺寸，以便在稍后屏幕更新期间调用该组件的 measure() 方法。<p/>
-         *
-         * Invalidation 是一个很有用的机制，可将组件更改延迟到稍后屏幕更新时进行处理，从而消除了重复的工作。<p/>
-         *
-         * 例如，要更改文本和字体大小，如果在更改文本后立即进行更新，然后在设置大小后再更新大小，就有些浪费。
-         * 更改两个属性后再使用新的大小一次性呈示文本，效率会更高。<p/>
-         *
-         * 很少调用 Invalidation 方法。通常，在组件上设置属性会自动调用合适的 invalidation 方法。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         invalidateSize(): void;
 
         /**
          * Validates the measured size of the component.
-         * @param recursive If <code>true</code>, call this method
-         *  on the objects children.
+         * @param recursive If *true*, call this method on the objects children.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 验证组件的尺寸。
-         * @param recursive 如果为 true，则调用对象子项的此方法。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         validateSize(recursive?: boolean): void;
 
         /**
-         * Marks a component so that its <code>updateDisplayList()</code>
-         * method gets called during a later screen update.<p/>
+         * Marks a component so that its *updateDisplayList()*
+         * method gets called during a later screen update.
          *
          * Invalidation is a useful mechanism for eliminating duplicate
          * work by delaying processing of changes to a component until a
-         * later screen update.<p/>
+         * later screen update.
          *
          * For example, if you want to change the width and height,
          * it would be wasteful to update the component immediately after you
          * change the width and then update again with the new height.
          * It is more efficient to change both properties and then render
-         * the component with its new size once.<p/>
+         * the component with its new size once.
          *
          * Invalidation methods rarely get called.
          * In general, setting a property on a component automatically
          * calls the appropriate invalidation method.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 标记需要验证显示列表，以便在稍后屏幕更新期间调用该组件的 updateDisplayList() 方法。<p/>
-         *
-         * Invalidation 是一个很有用的机制，可将组件更改延迟到稍后屏幕更新时进行处理，从而消除了重复的工作。<p/>
-         *
-         * 例如，要更改宽度和高度，如果在更改宽度后立即更新组件，然后在设置新高度后再次更新组件，就有些浪费。
-         * 更改两个属性后再使用新的大小一次性呈示组件，效率会更高。<p/>
-         *
-         * 很少调用 Invalidation 方法。通常，在组件上设置属性会自动调用合适的 invalidation 方法。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         invalidateDisplayList(): void;
 
         /**
-         * Validates the position and size of children and draws other
-         * visuals.
+         * Validates the position and size of children and draws other visuals.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 验证子项的位置和大小，并绘制其他可视内容。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         validateDisplayList(): void;
 
         /**
          * Validate and update the properties and layout of this object
-         * and redraw it, if necessary.<p/>
+         * and redraw it, if necessary.
          *
          * Processing properties that require substantial computation are normally
-         * not processed until the script finishes executing.<p/>
+         * not processed until the script finishes executing.
          *
-         * For example setting the <code>width</code> property is delayed, because it can
+         * For example setting the *width* property is delayed, because it can
          * require recalculating the widths of the objects children or its parent.
          * Delaying the processing prevents it from being repeated
-         * multiple times if the script sets the <code>width</code> property more than once.
+         * multiple times if the script sets the *width* property more than once.
          * This method lets you manually override this behavior.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 验证并更新此对象的属性和布局，如果需要的话重绘对象。<p/>
-         *
-         * 通常只有当脚本执行完毕后，才会处理要求进行大量计算的处理属性。<p/>
-         *
-         * 例如，对 width 属性的设置可能会延迟，因为此设置需要重新计算这些对象的子项或父项的宽度。
-         * 如果脚本多次设置了 width 属性，则延迟处理可防止进行多次处理。此方法允许您手动覆盖此行为。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         validateNow(): void;
 
         /**
          * Sets the layout size of the element.
-         * This is the size that the element uses to draw on screen.<p/>
+         * This is the size that the element uses to draw on screen.
          *
-         * If the <code>width</code> and/or <code>height</code> parameters are left unspecified (NaN),
-         * EUI sets the element's layout size to its preferred width and/or preferred height.<p/>
+         * If the *width* and/or *height* parameters are left unspecified (NaN),
+         * EUI sets the element's layout size to its preferred width and/or preferred height.
          *
-         * Note that calls to the <code>setLayoutBoundSize()</code> method can affect the layout position, so
-         * call <code>setLayoutBoundPosition()</code> after calling <code>setLayoutBoundSize()</code>.<p/>
+         * Note that calls to the *setLayoutBoundSize()* method can affect the layout position, so
+         * call *setLayoutBoundPosition()* after calling *setLayoutBoundSize()*.
          *
          * @param layoutWidth The element's layout width.
          * @param layoutHeight The element's layout height.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 设置元素的布局大小。这是元素在屏幕上进行绘制时所用的大小。<p/>
-         *
-         * 如果 width 和/或 height 参数尚未指定 (NaN))，则 EUI 会将该元素的布局大小设置为首选宽度和/或首选高度。<p/>
-         *
-         * 请注意，调用 setLayoutBoundSize() 方法会影响布局位置，因此请在调用 setLayoutBoundSize()
-         * 之后再调用 setLayoutBoundPosition()。
-         *
-         * @param layoutWidth 元素的布局宽度。
-         * @param layoutHeight 元素的布局高度。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         setLayoutBoundsSize(layoutWidth: number, layoutHeight: number): void;
 
         /**
-         * Sets the coordinates that the element uses to draw on screen.<p/>
+         * Sets the coordinates that the element uses to draw on screen.
          *
-         * Note that calls to the <code>setLayoutBoundSize()</code> method can affect the layout position, so
-         * call <code>setLayoutBoundPosition()</code> after calling <code>setLayoutBoundSize()</code>.<p/>
+         * Note that calls to the *setLayoutBoundSize()* method can affect the layout position, so
+         * call *setLayoutBoundPosition()* after calling *setLayoutBoundSize()*.
          *
          * @param x The x-coordinate of the top-left corner of the bounding box.
          * @param y The y-coordinate of the top-left corner of the bounding box.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 设置元素在屏幕上进行绘制时所用的布局坐标。<p/>
-         *
-         * 请注意，调用 setLayoutBoundSize() 方法会影响布局位置，因此请在调用 setLayoutBoundSize()
-         * 之后再调用 setLayoutBoundPosition()。
-         *
-         * @param x 边框左上角的 X 坐标。
-         * @param y 边框左上角的 Y 坐标。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         setLayoutBoundsPosition(x: number, y: number): void;
 
         /**
          * Get the layout bounds that the element uses to draw on screen.
-         * Commonly used in the <code>updateDisplayList()</code> method in parent container.<p/>
-         * Priority: layout > explicit > measure.<p/>
-         * The result of this method is contains <code>scale</code> and <code>rotation</code>.
+         * Commonly used in the *updateDisplayList()* method in parent container.
+         * 
+         * Priority: layout > explicit > measure.
+         * The result of this method is contains *scale* and *rotation*.
          *
-         * @param bounds the instance of <code>egret.Rectangle</code> can set result.
-         *
+         * @param bounds the instance of *egret.Rectangle* can set result.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 组件的布局尺寸,常用于父级的<code>updateDisplayList()</code>方法中。<p/>
-         * 按照：布局尺寸>外部显式设置尺寸>测量尺寸 的优先级顺序返回尺寸。<p/>
-         * 注意此方法返回值已经包含scale和rotation。
-         *
-         * @param bounds 可以放置结果的<code>egret.Rectangle</code>实例。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         getLayoutBounds(bounds: egret.Rectangle): void;
 
         /**
-         * Get the element's preferred bounds。
-         * Commonly used in the <code>measure()</code> method in parent container.<p/>
-         * Priority: explicit > measure.<p/>
-         * The result of this method is contains <code>scale</code> and <code>rotation</code>.
+         * Get the element's preferred bounds.
+         * Commonly used in the *measure()* method in parent container.
+         * 
+         * Priority: explicit > measure.
+         * 
+         * The result of this method is contains *scale* and *rotation*.
          *
-         * @param bounds the instance of <code>egret.Rectangle</code> can set result.
-         *
+         * @param bounds the instance of *egret.Rectangle* can set result.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 获取组件的首选尺寸,常用于父级的<code>measure()</code>方法中。<p/>
-         * 按照：外部显式设置尺寸>测量尺寸 的优先级顺序返回尺寸。<p/>
-         * 注意此方法返回值已经包含scale和rotation。
-         *
-         * @param bounds 可以放置结果的<code>egret.Rectangle</code>实例。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         getPreferredBounds(bounds: egret.Rectangle): void;
     }
-
 }
 
-namespace eui.sys {
-
+namespace eui.sys
+{
     /**
      * @private
      */
-    export const enum UIKeys {
+    export const enum UIKeys
+    {
         left,
         right,
         top,
@@ -853,13 +488,16 @@ namespace eui.sys {
 
     /**
      * @private
-     * EUI 显示对象基类模板。仅作为 UIComponent 的默认实现，为egret.sys.implemenetUIComponenet()方法提供代码模板。
-     * 注意：在此类里不允许直接使用super关键字访问父类方法。一律使用this.$super属性访问。
+     * EUI display object base class template.
+     * Just as the default implementation of UIComponent, it provides code templates for egret.sys.implemenetUIComponenet () method.
+     * Note: The super keyword is not allowed to directly access the super class method in this class.
+     * Always use the this. $Super attribute to access.
      */
-    export class UIComponentImpl extends egret.DisplayObject implements eui.UIComponent {
+    export class UIComponentImpl extends egret.DisplayObject implements eui.UIComponent
+    {
         /**
          * @private
-         * 构造函数
+         * Constructor.
          */
         public constructor() {
             super();
@@ -868,40 +506,41 @@ namespace eui.sys {
 
         /**
          * @private
-         * UIComponentImpl 定义的所有变量请不要添加任何初始值，必须统一在此处初始化。
+         * Please do not add any initial value to all variables defined by UIComponentImpl, they must be initialized here.
          */
         private initializeUIValues(): void {
-            this.$UIComponent = {
-                0: NaN,       //left
-                1: NaN,       //right
-                2: NaN,       //top
-                3: NaN,       //bottom
-                4: NaN,       //horizontalCenter
-                5: NaN,       //verticalCenter
-                6: NaN,       //percentWidth
-                7: NaN,       //percentHeight
-                8: NaN,       //explicitWidth
-                9: NaN,       //explicitHeight
-                10: 0,              //width
-                11: 0,              //height
-                12: 0,              //minWidth
-                13: 100000,         //maxWidth
-                14: 0,              //minHeight
-                15: 100000,         //maxHeight
-                16: 0,              //measuredWidth
-                17: 0,              //measuredHeight
-                18: NaN,      //oldPreferWidth
-                19: NaN,      //oldPreferHeight
-                20: 0,              //oldX
-                21: 0,              //oldY
-                22: 0,              //oldWidth
-                23: 0,              //oldHeight
-                24: true,           //invalidatePropertiesFlag
-                25: true,           //invalidateSizeFlag
-                26: true,           //invalidateDisplayListFlag
-                27: false,          //layoutWidthExplicitlySet
-                28: false,          //layoutHeightExplicitlySet
-                29: false,          //initialized
+            this.$UIComponent =
+            {
+                0: NaN,       // left
+                1: NaN,       // right
+                2: NaN,       // top
+                3: NaN,       // bottom
+                4: NaN,       // horizontalCenter
+                5: NaN,       // verticalCenter
+                6: NaN,       // percentWidth
+                7: NaN,       // percentHeight
+                8: NaN,       // explicitWidth
+                9: NaN,       // explicitHeight
+                10: 0,        // width
+                11: 0,        // height
+                12: 0,        // minWidth
+                13: 100000,   // maxWidth
+                14: 0,        // minHeight
+                15: 100000,   // maxHeight
+                16: 0,        // measuredWidth
+                17: 0,        // measuredHeight
+                18: NaN,      // oldPreferWidth
+                19: NaN,      // oldPreferHeight
+                20: 0,        // oldX
+                21: 0,        // oldY
+                22: 0,        // oldWidth
+                23: 0,        // oldHeight
+                24: true,     // invalidatePropertiesFlag
+                25: true,     // invalidateSizeFlag
+                26: true,     // invalidateDisplayListFlag
+                27: false,    // layoutWidthExplicitlySet
+                28: false,    // layoutHeightExplicitlySet
+                29: false,    // initialized
             };
             this.$includeInLayout = true;
             //if egret
@@ -909,27 +548,26 @@ namespace eui.sys {
             //endif*/
         }
 
-
         /**
          * @private
-         * 子类覆盖此方法可以执行一些初始化子项操作。此方法仅在组件第一次添加到舞台时回调一次。
-         * 请务必调用super.createChildren()以完成父类组件的初始化
+         * Subclasses override this method to perform some initialization subitem operations.
+         * This method is called only once when the component is first added to the stage.
+         * Please call super.createChildren() to complete the initialization of the parent component
          */
         protected createChildren(): void {
-
         }
 
         /**
          * @private
-         * 子项创建完成,此方法在createChildren()之后执行。
+         * After the child is created, this method is executed after createChildren().
          */
         protected childrenCreated(): void {
-
         }
 
         /**
          * @private
-         * 提交属性，子类在调用完invalidateProperties()方法后，应覆盖此方法以应用属性
+         * Submit properties.
+         * Subclasses should override this method to apply properties after calling the invalidateProperties() method.
          */
         protected commitProperties(): void {
             let values = this.$UIComponent;
@@ -947,15 +585,14 @@ namespace eui.sys {
 
         /**
          * @private
-         * 测量组件尺寸
+         * Measuring component dimensions.
          */
         protected measure(): void {
-
         }
 
         /**
          * @private
-         * 更新显示列表
+         * Update display list.
          */
         protected updateDisplayList(unscaledWidth: number, unscaledHeight: number): void {
         }
@@ -968,8 +605,11 @@ namespace eui.sys {
 
         /**
          * @private
-         * 指定此组件是否包含在父容器的布局中。若为false，则父级容器在测量和布局阶段都忽略此组件。默认值为true。
-         * 注意，visible属性与此属性不同，设置visible为false，父级容器仍会对其布局。
+         * Specify whether this component is included in the layout of the parent container.
+         * If false, the parent container ignores this component during the measurement and layout stages.
+         * The default value is true.
+         * Note that the visible attribute is different from this attribute.
+         * If visible is set to false, the parent container will still lay it out.
          */
         public get includeInLayout(): boolean {
             return this.$includeInLayout;
@@ -986,7 +626,6 @@ namespace eui.sys {
 
         /**
          * @private
-         *
          * @param stage
          * @param nestLevel
          */
@@ -1004,7 +643,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 检查属性失效标记并应用
+         * Check the attribute invalidation flag and apply.
          */
         private checkInvalidateFlag(event?: Event): void {
             let values = this.$UIComponent;
@@ -1021,7 +660,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 距父级容器离左边距离
+         * Distance from parent container to the left.
          */
         public get left(): any {
             return this.$UIComponent[UIKeys.left];
@@ -1044,7 +683,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 距父级容器右边距离
+         * Distance from the right side of the parent container.
          */
         public get right(): any {
             return this.$UIComponent[UIKeys.right];
@@ -1066,7 +705,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 距父级容器顶部距离
+         * Distance from top of parent container.
          */
         public get top(): any {
             return this.$UIComponent[UIKeys.top];
@@ -1088,7 +727,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 距父级容器底部距离
+         * Distance from the bottom of the parent container.
          */
         public get bottom(): any {
             return this.$UIComponent[UIKeys.bottom];
@@ -1108,10 +747,9 @@ namespace eui.sys {
             this.invalidateParentLayout();
         }
 
-
         /**
          * @private
-         * 在父级容器中距水平中心位置的距离
+         * The distance from the horizontal center position in the parent container.
          */
         public get horizontalCenter(): any {
             return this.$UIComponent[UIKeys.horizontalCenter];
@@ -1133,7 +771,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 在父级容器中距竖直中心位置的距离
+         * The distance from the vertical center position in the parent container.
          */
         public get verticalCenter(): any {
             return this.$UIComponent[UIKeys.verticalCenter];
@@ -1153,10 +791,9 @@ namespace eui.sys {
             this.invalidateParentLayout();
         }
 
-
         /**
          * @private
-         * 相对父级容器宽度的百分比
+         * Percentage relative to the width of the parent container.
          */
         public get percentWidth(): number {
             return this.$UIComponent[UIKeys.percentWidth];
@@ -1173,7 +810,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 相对父级容器高度的百分比
+         * Percentage relative to the height of the parent container.
          */
         public get percentHeight(): number {
             return this.$UIComponent[UIKeys.percentHeight];
@@ -1190,7 +827,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 外部显式指定的宽度
+         * Externally specified width.
          */
         public get explicitWidth(): number {
             return this.$UIComponent[UIKeys.explicitWidth];
@@ -1198,7 +835,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 外部显式指定的高度
+         * Externally specified height.
          */
         public get explicitHeight(): number {
             return this.$UIComponent[UIKeys.explicitHeight];
@@ -1206,7 +843,8 @@ namespace eui.sys {
 
         /**
          * @private
-         * 组件宽度,默认值为egret.NaN,设置为NaN将使用组件的measure()方法自动计算尺寸
+         * The width of the component, the default value is egret.NaN, set to NaN will automatically
+         * calculate the size using the component's measure() method.
          */
         $getWidth(): number {
             this.validateSizeNow();
@@ -1215,7 +853,6 @@ namespace eui.sys {
 
         /**
          * @private
-         *
          * @param value
          */
         $setWidth(value: number): boolean {
@@ -1235,7 +872,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 立即验证自身的尺寸。
+         * Verify your size immediately.
          */
         private validateSizeNow(): void {
             this.validateSize(true);
@@ -1244,7 +881,8 @@ namespace eui.sys {
 
         /**
          * @private
-         * 组件高度,默认值为NaN,设置为NaN将使用组件的measure()方法自动计算尺寸
+         * Component height, the default value is NaN, set to NaN will use the component's measure()
+         * method to automatically calculate the size.
          */
         $getHeight(): number {
             this.validateSizeNow();
@@ -1253,7 +891,6 @@ namespace eui.sys {
 
         /**
          * @private
-         *
          * @param value
          */
         $setHeight(value: number): boolean {
@@ -1273,7 +910,9 @@ namespace eui.sys {
 
         /**
          * @private
-         * 组件的最小宽度,此属性设置为大于maxWidth的值时无效。同时影响测量和自动布局的尺寸。
+         * The minimum width of the component.
+         * This property is invalid when it is set to a value greater than maxWidth.
+         * It also affects the size of measurement and automatic layout.
          */
         public get minWidth(): number {
             return this.$UIComponent[UIKeys.minWidth];
@@ -1292,7 +931,8 @@ namespace eui.sys {
 
         /**
          * @private
-         * 组件的最大高度。同时影响测量和自动布局的尺寸。
+         * The maximum height of the component.
+         * It also affects the size of measurement and automatic layout.
          */
         public get maxWidth(): number {
             return this.$UIComponent[UIKeys.maxWidth];
@@ -1311,7 +951,9 @@ namespace eui.sys {
 
         /**
          * @private
-         * 组件的最小高度,此属性设置为大于maxHeight的值时无效。同时影响测量和自动布局的尺寸。
+         * The minimum height of the component.
+         * This property is invalid when set to a value greater than maxHeight.
+         * It also affects the size of measurement and automatic layout.
          */
         public get minHeight(): number {
             return this.$UIComponent[UIKeys.minHeight];
@@ -1328,10 +970,9 @@ namespace eui.sys {
             this.invalidateParentLayout();
         }
 
-
         /**
          * @private
-         * 组件的最大高度,同时影响测量和自动布局的尺寸。
+         * The maximum height of the component affects both measurement and automatic layout dimensions.
          */
         public get maxHeight(): number {
             return this.$UIComponent[UIKeys.maxHeight];
@@ -1350,9 +991,9 @@ namespace eui.sys {
 
         /**
          * @private
-         * 设置测量结果。
-         * @param width 测量宽度
-         * @param height 测量高度
+         * Set the measurement result.
+         * @param width Measuring width.
+         * @param height Measuring height.
          */
         public setMeasuredSize(width: number, height: number): void {
             let values = this.$UIComponent;
@@ -1360,11 +1001,11 @@ namespace eui.sys {
             values[UIKeys.measuredHeight] = Math.ceil(+height || 0);
         }
 
-
         /**
          * @private
-         * 设置组件的宽高。此方法不同于直接设置width,height属性，
-         * 不会影响显式标记尺寸属性
+         * Set the width and height of the component.
+         * This method is different from directly setting the width and height properties,
+         * will not affect the explicit mark size attribute.
          */
         private setActualSize(w: number, h: number): void {
             let change = false;
@@ -1390,6 +1031,7 @@ namespace eui.sys {
             this.$super.$updateUseTransform.call(this);
             this.invalidateParentLayout();
         }
+
         /**
          * @private
          */
@@ -1398,6 +1040,7 @@ namespace eui.sys {
             this.invalidateParentLayout();
             return true;
         }
+
         /**
          * @private
          */
@@ -1406,6 +1049,7 @@ namespace eui.sys {
             this.invalidateParentLayout();
             return true;
         }
+
         /**
          * @private
          */
@@ -1417,7 +1061,6 @@ namespace eui.sys {
 
         /**
          * @private
-         *
          * @param value
          * @returns
          */
@@ -1432,7 +1075,6 @@ namespace eui.sys {
 
         /**
          * @private
-         *
          * @param value
          * @returns
          */
@@ -1445,10 +1087,9 @@ namespace eui.sys {
             return change;
         }
 
-
         /**
          * @private
-         * 标记属性失效
+         * Mark attribute invalid.
          */
         public invalidateProperties(): void {
             let values = this.$UIComponent;
@@ -1461,7 +1102,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 验证组件的属性
+         * Verify component properties.
          */
         public validateProperties(): void {
             let values = this.$UIComponent;
@@ -1473,7 +1114,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 标记提交过需要验证组件尺寸
+         * Mark submitted, need to verify component size.
          */
         public invalidateSize(): void {
             let values = this.$UIComponent;
@@ -1486,7 +1127,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 验证组件的尺寸
+         * Verify the dimensions of the components.
          */
         public validateSize(recursive?: boolean): void {
             if (recursive) {
@@ -1501,6 +1142,7 @@ namespace eui.sys {
                     }
                 }
             }
+
             let values = this.$UIComponent;
             if (values[sys.UIKeys.invalidateSizeFlag]) {
                 let changed = this.measureSizes();
@@ -1514,7 +1156,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 测量组件尺寸，返回尺寸是否发生变化
+         * Measure the component size and return whether the size has changed.
          */
         private measureSizes(): boolean {
             let changed = false;
@@ -1550,7 +1192,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 标记需要验证显示列表
+         * Mark needs to verify the display list.
          */
         public invalidateDisplayList(): void {
             let values = this.$UIComponent;
@@ -1563,7 +1205,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 验证子项的位置和大小，并绘制其他可视内容
+         * Verify the position and size of subitems and draw other visual content.
          */
         public validateDisplayList(): void {
             let values = this.$UIComponent;
@@ -1576,7 +1218,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 更新最终的组件宽高
+         * Update the final component width and height.
          */
         private updateFinalSize(): void {
             let unscaledWidth = 0;
@@ -1605,7 +1247,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 立即应用组件及其子项的所有属性
+         * Immediately apply all properties of the component and its children.
          */
         public validateNow(): void {
             if (this.$stage)
@@ -1614,7 +1256,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 标记父级容器的尺寸和显示列表为失效
+         * Mark the size and display list of the parent container as invalid.
          */
         protected invalidateParentLayout(): void {
             let parent = this.$parent;
@@ -1626,7 +1268,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 设置组件的布局宽高
+         * Set the layout width and height of the component.
          */
         public setLayoutBoundsSize(layoutWidth: number, layoutHeight: number): void {
             layoutHeight = +layoutHeight;
@@ -1676,7 +1318,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 设置组件的布局位置
+         * Set the layout position of the component.
          */
         public setLayoutBoundsPosition(x: number, y: number): void {
             let matrix = this.$getMatrix();
@@ -1694,9 +1336,9 @@ namespace eui.sys {
 
         /**
          * @private
-         * 组件的布局尺寸,常用于父级的updateDisplayList()方法中
-         * 按照：布局尺寸>外部显式设置尺寸>测量尺寸 的优先级顺序返回尺寸,
-         * 注意此方法返回值已经包含scale和rotation。
+         * The layout size of the component, commonly used in the updateDisplayList() method of the parent
+         * In accordance with the priority order of layout size > externally set size > measured size, return size,
+         * Note that the return value of this method already contains scale and rotation.
          */
         public getLayoutBounds(bounds: egret.Rectangle): void {
             let values = this.$UIComponent;
@@ -1723,10 +1365,8 @@ namespace eui.sys {
             this.applyMatrix(bounds, w, h);
         }
 
-
         /**
          * @private
-         *
          * @returns
          */
         private getPreferredUWidth(): number {
@@ -1737,7 +1377,6 @@ namespace eui.sys {
 
         /**
          * @private
-         *
          * @returns
          */
         private getPreferredUHeight(): number {
@@ -1748,16 +1387,15 @@ namespace eui.sys {
 
         /**
          * @private
-         * 获取组件的首选尺寸,常用于父级的measure()方法中
-         * 按照：外部显式设置尺寸>测量尺寸 的优先级顺序返回尺寸，
-         * 注意此方法返回值已经包含scale和rotation。
+         * Get the preferred size of the component, often used in the parent's measure() method
+         * In accordance with the priority order of externally set size > measured size, return the size
+         * Note that the return value of this method already contains scale and rotation.
          */
         public getPreferredBounds(bounds: egret.Rectangle): void {
             let w = this.getPreferredUWidth();
             let h = this.getPreferredUHeight();
             this.applyMatrix(bounds, w, h);
         }
-
 
         /**
          * @private
@@ -1774,7 +1412,6 @@ namespace eui.sys {
                 matrix.$transformBounds(bounds);
             }
         }
-
 
         /**
          * @private
@@ -1793,7 +1430,7 @@ namespace eui.sys {
     }
 
     /**
-     * 检查一个函数的方法体是否为空。
+     * Check if the method body of a function is empty.
      */
     function isEmptyFunction(prototype: any, key: string): boolean {
         if (typeof prototype[key] != "function") {
@@ -1808,9 +1445,9 @@ namespace eui.sys {
 
     /**
      * @private
-     * 拷贝模板类的方法体和属性到目标类上。
-     * @param target 目标类
-     * @param template 模板类
+     * Copy the method body and attributes of the template class to the target class.
+     * @param target Target class.
+     * @param template Template class.
      */
     export function mixin(target: any, template: any): void {
         for (let property in template) {
@@ -1836,13 +1473,14 @@ namespace eui.sys {
 
     /**
      * @private
-     * 自定义类实现UIComponent的步骤：
-     * 1.在自定义类的构造函数里调用：this.initializeUIValues();
-     * 2.拷贝UIComponent接口定义的所有内容(包括注释掉的protected函数)到自定义类，将所有子类需要覆盖的方法都声明为空方法体。
-     * 3.在定义类结尾的外部调用sys.implementUIComponent()，并传入自定义类。
-     * 4.若覆盖了某个UIComponent的方法，需要手动调用UIComponentImpl.prototype["方法名"].call(this);
-     * @param descendant 自定义的UIComponent子类
-     * @param base 自定义子类继承的父类
+     * The steps of custom class to implement UIComponent:
+     * 1. Called in the constructor of the custom class: this.initializeUIValues();
+     * 2. Copy all the contents defined by the UIComponent interface (including the commented protected function)
+     * to the custom class, and declare all the methods that need to be covered by the subclasses as empty method bodies.
+     * 3. Call sys.implementUIComponent () outside the end of the definition class and pass in the custom class.
+     * 4. If you override a method of UIComponent, you need to manually call UIComponentImpl.prototype ["method name"]. Call (this);
+     * @param descendant Custom UIComponent subclass.
+     * @param base Custom subclass inherited from the parent class.
      */
     export function implementUIComponent(descendant: any, base: any, isContainer?: boolean): void {
         mixin(descendant, UIComponentImpl);
@@ -1866,7 +1504,7 @@ namespace eui.sys {
             };
         }
 
-        if (DEBUG) {//用于调试时查看布局尺寸的便利属性，发行版时移除。
+        if (DEBUG) { // Convenient properties for viewing layout size during debugging, removed during release.
 
             Object.defineProperty(prototype, "preferredWidth", {
                 get: function () {

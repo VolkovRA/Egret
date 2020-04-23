@@ -29,31 +29,21 @@
 
 /// <reference path="EXMLParser.ts" />
 
-namespace EXML {
-
+namespace EXML
+{
     let parser = new eui.sys.EXMLParser();
-
     let requestPool: egret.HttpRequest[] = [];
     let callBackMap: any = {};
     let parsedClasses: any = {};
     let $prefixURL: string = "";
+
     /**
      * Set a prefix url.
      * The prefix url will add to the front of the Exml file path when it’s loading.
-     * @param text the text of a EXML file.
-     *
+     * @param text The text of a EXML file.
      * @version Egret 2.5.3
      * @version eui 1.0
      * @platform Web,Native
-     * @language en_US
-     */
-    /**
-     * 设置 EXML 文件加载的根路径。
-     * 设置后，再加载 EXML 文件时会自动把根路径加到文件路径前面
-     * @version Egret 2.5.3
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
      */
     export let prefixURL: string;
     Object.defineProperty(EXML, "prefixURL", {
@@ -64,65 +54,36 @@ namespace EXML {
     });
 
     /**
-     * Parsing a text of EXML file for a definition of class. You can declare the <code>class</code> property in the root
+     * Parsing a text of EXML file for a definition of class. You can declare the *class* property in the root
      * node of the EXML to register to the global as a class name.
      *
      * It will be fail to register and output a warning if the specified name already exists. You can get a definition
-     * of a class through <code>egret.getDefinitionByName(className)</code>.
+     * of a class through *egret.getDefinitionByName(className)*.
      *
-     * @param text the text of a EXML file.
-     *
+     * @param text The text of a EXML file.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @language en_US
-     */
-    /**
-     * 解析一个 EXML 文件的文本内容为一个类定义。您可以在 EXML 文件的根节点上声明 class 属性作为要注册到全局的类名。
-     * 若指定的类名已经存在，将会注册失败，并输出一个警告。注册成功后，您也可以通过 egret.getDefinitionByName(className) 方法获取这个 EXML 文件对应的类定义。
-     *
-     * @param text 要解析的 EXML 文件内容。
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
      */
     export function parse(text: string): { new(): any } {
         return parser.parse(text);
     }
 
     /**
-     * Load and parse an external EXML file for a class definition. You can declare the <code>class</code> property in the root
-     * node of the EXML to register to the global as a class name.
+     * Load and parse an external EXML file for a class definition.
+     * You can declare the *class* property in the root node of the EXML to register to the global as a class name.
      *
      * It will be fail to register and output a warning if the specified name already exists. You can get a definition
-     * of a class through <code>egret.getDefinitionByName(className)</code>.
+     * of a class through *egret.getDefinitionByName(className)*.
      *
-     * @param url the path of an EXML file
-     * @param callBack method to invoke with an argument of the result when load and parse completed or failed. The argument will be
-     * <code>undefined</code> if load or parse failed.
-     * @param thisObject <code>this</code> object of callBack
-     * @param useCache use cached EXML
-     *
+     * @param url The path of an EXML file.
+     * @param callBack Method to invoke with an argument of the result when load and parse completed or failed.
+     * The argument will be *undefined* if load or parse failed.
+     * @param thisObject *this* Object of callBack.
+     * @param useCache Use cached EXML.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @language en_US
-     */
-    /**
-     * 加载并解析一个外部的 EXML 文件为一个类定义。您可以在 EXML 文件的根节点上声明 class 属性作为要注册到全局的类名。
-     * 若指定的类名已经存在，将会注册失败，并输出一个警告。注册成功后，您也可以通过 egret.getDefinitionByName(className) 方法获取这个 EXML 文件对应的类定义。
-     *
-     * @param url 要加载的 EXML 文件路径
-     * @param callBack 加载并解析完成后的回调函数，无论加载成功还是失败，此函数均会被回调。失败时将传入 undefined 作为回调函数参数。
-     * @param thisObject 回调函数的 this 引用。
-     * @param useCache 使用缓存的EXML
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
      */
     export function load(url: string, callBack?: (clazz: any, url: string) => void, thisObject?: any, useCache = false): void {
         if (DEBUG) {
@@ -142,7 +103,6 @@ namespace EXML {
         callBackMap[url] = [[callBack, thisObject]];
         request(url, $parseURLContent);
     }
-
 
     /**
      * @private
@@ -206,7 +166,6 @@ namespace EXML {
         }
     }
 
-
     /**
      * @private
      * @param url
@@ -220,6 +179,7 @@ namespace EXML {
         }
 
     }
+    
     /**
      * @private
      */

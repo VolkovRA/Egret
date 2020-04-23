@@ -27,30 +27,26 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace eui {
-
+namespace eui
+{
     /**
-     * Default instance of interface <code>IThemeAdapter</code>.
+     * Default instance of interface *IThemeAdapter*.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @language en_US
      */
-    /**
-     * 默认的IThemeAdapter接口实现。
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
-     */
-    export class DefaultThemeAdapter implements IThemeAdapter {
+    export class DefaultThemeAdapter implements IThemeAdapter
+    {
         /**
-         * 解析主题
-         * @param url 待解析的主题url
-         * @param compFunc 解析完成回调函数，示例：compFunc(e:egret.Event):void;
-         * @param errorFunc 解析失败回调函数，示例：errorFunc():void;
-         * @param thisObject 回调的this引用
+         * Parse the theme.
+         * @param url The subject url to be parsed.
+         * @param compFunc Parse completion callback function.
+         * @example
+         * compFunc (e: egret.Event): void;
+         * @param errorFunc Parse failure callback function.
+         * @example
+         * errorFunc (): void;
+         * @param thisObject Callback this reference.
          */
         public getTheme(url:string,compFunc:Function,errorFunc:Function,thisObject:any):void {
             function onGet(event:egret.Event):void {

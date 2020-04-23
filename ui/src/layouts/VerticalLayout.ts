@@ -27,34 +27,22 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui {
-
+namespace eui
+{
     let UIComponentClass = "eui.UIComponent";
+
     /**
      * The VerticalLayout class arranges the layout elements in a vertical sequence,
      * top to bottom, with optional gaps between the elements and optional padding
      * around the sequence of elements.
-     *
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @includeExample  extension/eui/layout/VerticalLayoutExample.ts
-     * @language en_US
+     * @includeExample extension/eui/layout/VerticalLayoutExample.ts
      */
-    /**
-     * VerticalLayout 类按垂直顺序从上向下排列布局元素，在元素和围绕元素顺序的可选填充之间带有可选间隙。
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample  extension/eui/layout/VerticalLayoutExample.ts
-     * @language zh_CN
-     */
-    export class VerticalLayout extends LinearLayoutBase {
-
+    export class VerticalLayout extends LinearLayoutBase
+    {
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -83,8 +71,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -113,8 +99,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -299,8 +283,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -325,7 +307,7 @@ namespace eui {
 
             let endIndex = this.endIndex;
             target.setVirtualElementIndicesInView(this.startIndex, endIndex);
-            //获取垂直布局参数
+            // Get vertical layout parameters
             let justify = this.$horizontalAlign == JustifyAlign.JUSTIFY || this.$horizontalAlign == JustifyAlign.CONTENT_JUSTIFY;
             let contentJustify = this.$horizontalAlign == JustifyAlign.CONTENT_JUSTIFY;
             let hAlign = 0;
@@ -364,7 +346,7 @@ namespace eui {
             let needInvalidateSize = false;
             let elementSizeTable = this.elementSizeTable;
 
-            //对可见区域进行布局
+            // Layout the visible area
             for (let i = this.startIndex; i <= endIndex; i++) {
                 let exceesWidth = 0;
                 layoutElement = <UIComponent> (target.getVirtualElementAt(i));
@@ -409,8 +391,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -438,10 +418,7 @@ namespace eui {
             return startPos;
         }
 
-
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -462,8 +439,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -486,8 +461,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -500,8 +473,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -545,5 +516,4 @@ namespace eui {
             return oldStartIndex != this.startIndex || oldEndIndex != this.endIndex;
         }
     }
-
 }

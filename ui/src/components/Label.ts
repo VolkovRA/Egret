@@ -27,72 +27,46 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui {
-
+namespace eui
+{
     let UIImpl = sys.UIComponentImpl;
+    
     /**
      * Label is an UIComponent that can render one or more lines of text.
-     * The text to be displayed is determined by the <code>text</code> property.
+     * The text to be displayed is determined by the *text* property.
      * The formatting of the text is specified by the styles，
-     * such as <code>fontFamily</code> and <code>size</code>.
+     * such as *fontFamily* and *size*.
      *
-     * <p>Because Label is fast and lightweight, it is especially suitable
+     * Because Label is fast and lightweight, it is especially suitable
      * for use cases that involve rendering many small pieces of non-interactive
-     * text, such as item renderers and labels in Button skins.</p>
+     * text, such as item renderers and labels in Button skins.
      *
-     * <p>In Label, three character sequences are recognized
-     * as explicit line breaks: CR (<code>"\r"</code>), LF (<code>"\n"</code>),
-     * and CR+LF (<code>"\r\n"</code>).</p>
+     * In Label, three character sequences are recognized
+     * as explicit line breaks: CR (*"\r"*), LF (*"\n"*),
+     * and CR+LF (*"\r\n"*).
      *
-     * <p>If you don't specify any kind of width for a Label,
+     * If you don't specify any kind of width for a Label,
      * then the longest line, as determined by these explicit line breaks,
-     * determines the width of the Label.</p>
+     * determines the width of the Label.
      *
-     * <p>If you do specify some kind of width, then the specified text is
+     * If you do specify some kind of width, then the specified text is
      * word-wrapped at the right edge of the component's bounds.
      * If the text extends below the bottom of the component,
-     * it is clipped.</p>
+     * it is clipped.
      *
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @includeExample  extension/eui/components/LabelExample.ts
-     * @language en_US
+     * @includeExample extension/eui/components/LabelExample.ts
      */
-    /**
-     * Label 是可以呈示一行或多行统一格式文本的UI组件。要显示的文本由 text 属性确定。文本格式由样式属性指定，例如 fontFamily 和 size。
-     * 因为 Label 运行速度快且占用内存少，所以它特别适合用于显示多个小型非交互式文本的情况，例如，项呈示器和 Button 外观中的标签。
-     * 在 Label 中，将以下三个字符序列识别为显式换行符：CR（“\r”）、LF（“\n”）和 CR+LF（“\r\n”）。
-     * 如果没有为 Label 指定宽度，则由这些显式换行符确定的最长行确定 Label 的宽度。
-     * 如果指定了宽度，则指定文本将在组件边界的右边缘换行，如果文本扩展到低于组件底部，则将被剪切。
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample  extension/eui/components/LabelExample.ts
-     * @language zh_CN
-     */
-    export class Label extends egret.TextField implements UIComponent,IDisplayText {
-
+    export class Label extends egret.TextField implements UIComponent, IDisplayText
+    {
         /**
          * Constructor.
-         *
          * @param text The text displayed by this text component.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 构造函数。
-         *
-         * @param text 此文本组件所显示的文本。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor(text?:string) {
             super();
@@ -101,9 +75,10 @@ namespace eui {
         }
 
         /**
-         * style中属性是否允许被赋值，当主动赋值过属性之后将不允许被赋值
+         * Whether the attribute in the style is allowed to be assigned. When the attribute is actively assigned, it will not be assigned
          */
-        private $styleSetMap = {
+        private $styleSetMap =
+        {
             "fontFamily": true,
             "size": true,
             "bold": true,
@@ -123,7 +98,9 @@ namespace eui {
             "background": true,
             "backgroundColor": true
         };
+
         private $revertStyle = {};
+
         private $style: string = null;
 
         private $changeFromStyle:boolean = false;
@@ -132,13 +109,6 @@ namespace eui {
          * The style of text.
          * @version Egret 3.2.1
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 文本样式。
-         * @version Egret 3.2.1
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get style(): string {
             return this.$style;
@@ -327,7 +297,6 @@ namespace eui {
 
         /**
          * @private
-         *
          */
         $invalidateTextField():void {
             super.$invalidateTextField();
@@ -336,7 +305,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param value
          */
         $setWidth(value:number):boolean {
@@ -347,7 +315,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param value
          */
         $setHeight(value:number):boolean {
@@ -358,7 +325,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param value
          */
         $setText(value:string):boolean {
@@ -372,49 +338,42 @@ namespace eui {
          */
         private _widthConstraint:number = NaN;
 
-
-        //=======================UIComponent接口实现===========================
+        //=======================UIComponent interface implementation===========================
         /**
          * @private
-         * UIComponentImpl 定义的所有变量请不要添加任何初始值，必须统一在此处初始化。
+         * Please do not add any initial value to all variables defined by UIComponentImpl, they must be initialized here.
          */
         private initializeUIValues:()=>void;
 
         /**
          * @copy eui.UIComponent#createChildren
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         protected createChildren():void {
-
         }
 
         /**
          * @copy eui.UIComponent#childrenCreated
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         protected childrenCreated():void {
-
         }
 
         /**
          * @copy eui.UIComponent#commitProperties
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         protected commitProperties():void {
-
         }
+
         /**
          * @copy eui.UIComponent#measure
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -442,7 +401,6 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#updateDisplayList
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -454,7 +412,6 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#invalidateParentLayout
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -474,15 +431,14 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#includeInLayout
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         public includeInLayout:boolean;
+
         /**
          * @copy eui.UIComponent#left
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -491,7 +447,6 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#right
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -500,7 +455,6 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#top
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -509,7 +463,6 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#bottom
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -518,7 +471,6 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#horizontalCenter
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -527,7 +479,6 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#verticalCenter
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -536,7 +487,6 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#percentWidth
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -545,7 +495,6 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#percentHeight
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -554,7 +503,6 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#explicitWidth
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -563,25 +511,22 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#explicitHeight
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         public explicitHeight:number;
 
-
         /**
          * @copy eui.UIComponent#minWidth
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         public minWidth:number;
+
         /**
          * @copy eui.UIComponent#maxWidth
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -590,15 +535,14 @@ namespace eui {
 
         /**
          * @copy eui.UIComponent#minHeight
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         public minHeight:number;
+
         /**
          * @copy eui.UIComponent#maxHeight
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -606,8 +550,6 @@ namespace eui {
         public maxHeight:number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -616,8 +558,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -626,8 +566,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -636,8 +574,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -646,8 +582,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -656,8 +590,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -666,8 +598,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -676,8 +606,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -686,8 +614,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -710,8 +636,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -720,8 +644,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -730,8 +652,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native

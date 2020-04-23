@@ -27,15 +27,15 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace eui {
-
+namespace eui
+{
     let scrollerThrowEvent:ScrollerThrowEvent;
 
     /**
      * @private
      */
-    const enum Keys {
+    const enum Keys
+    {
         scrollPolicyV,
         scrollPolicyH,
         autoHideTimer,
@@ -47,140 +47,88 @@ namespace eui {
         touchScrollH,
         touchScrollV,
         viewport,
-        viewprotRemovedEvent, //表示是被移除触发的viewport设空
+        viewprotRemovedEvent, // Indicates that the viewport triggered by the removal is set to empty.
         touchCancle
     }
+
     /**
      * The Scroller component displays a single scrollable component,
      * called a viewport, and horizontal and vertical scroll bars.
      * The viewport must implement the IViewport interface.
-     * <p>The Group components implement the IViewport interface
+     * 
+     * The Group components implement the IViewport interface
      * and can be used as the children of the Scroller control,
-     * as the following example shows:</p>
-     * <pre>
+     * as the following example shows:
+     * 
      *       <s:Scroller width="100" height="100">
      *           <s:Group>
      *               <s:Image width="300" height="400" source="assets/logo.jpg"/>
      *           </s:Group>
      *       </s:Scroller>
-     * </pre>
-     * <p>The size of the Image control is set larger than that of its parent Group container.
+     * 
+     * The size of the Image control is set larger than that of its parent Group container.
      * By default, the child extends past the boundaries of the parent container.
      * Rather than allow the child to extend past the boundaries of the parent container,
-     * the Scroller specifies to clip the child to the boundaries and display scroll bars.</p>
+     * the Scroller specifies to clip the child to the boundaries and display scroll bars.
      *
-     * @event eui.UIEvent.CHANGE_START Dispatched when the scroll position is going to change
-     * @event eui.UIEvent.CHANGE_END Dispatched when the scroll position changed complete
-     * @event egret.Event.CHANGE Dispatched when the scroll position is changing
-     * @event egret.TouchEvent.TOUCH_CANCEL canceled the touch
-     *
-     * @defaultProperty viewport
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample  extension/eui/components/ScrollerExample.ts
-     * @language en_US
-     */
-    /**
-     * Scroller 组件显示一个称为视域的单个可滚动组件，以及水平滚动条和垂直滚动条。该视域必须实现 IViewport 接口。
-     * <p>Group 组件实现 IViewport 接口，且可以用作 Scroller 控件的子代，如下例所示：</p>
-     * <pre>
-     *       <s:Scroller width="100" height="100">
-     *           <s:Group>
-     *               <s:Image width="300" height="400" source="assets/logo.jpg"/>
-     *           </s:Group>
-     *       </s:Scroller>
-     * </pre>
-     * Image 控件的大小比其父 Group 容器设置得大。默认情况下，子代超过父容器的边界。
-     * Scroller 会指定将子代剪切到边界并显示滚动条，而不是让子代超过父容器的边界。
-     *
-     * @event eui.UIEvent.CHANGE_START 滚动位置改变开始
-     * @event eui.UIEvent.CHANGE_END 滚动位置改变结束
-     * @event egret.Event.CHANGE 滚动位置改变的时候
-     * @event egret.TouchEvent.TOUCH_CANCEL 取消触摸事件
+     * @event eui.UIEvent.CHANGE_START Dispatched when the scroll position is going to change.
+     * @event eui.UIEvent.CHANGE_END Dispatched when the scroll position changed complete.
+     * @event egret.Event.CHANGE Dispatched when the scroll position is changing.
+     * @event egret.TouchEvent.TOUCH_CANCEL Canceled the touch.
      *
      * @defaultProperty viewport
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @includeExample  extension/eui/components/ScrollerExample.ts
-     * @language zh_CN
+     * @includeExample extension/eui/components/ScrollerExample.ts
      */
-    export class Scroller extends Component {
-
+    export class Scroller extends Component
+    {
         /**
          * The threshold value(in pixels) trigger the rolling.
-         * when the touch points deviate from the initial touch point than this value will trigger the rolling.
-         *
+         * When the touch points deviate from the initial touch point than this value will trigger the rolling.
          * @default 5
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 开始触发滚动的阈值（以像素为单位），当触摸点偏离初始触摸点的距离超过这个值时才会触发滚动。
-         *
-         * @default 5
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public static scrollThreshold:number = 5;
 
         /**
          * Constructor.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 构造函数。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
             let touchScrollH = new sys.TouchScroll(this.horizontalUpdateHandler, this.horizontalEndHandler, this);
             let touchScrollV = new sys.TouchScroll(this.verticalUpdateHandler, this.verticalEndHanlder, this);
             this.$Scroller = {
-                0: "auto",          //scrollPolicyV,
-                1: "auto",          //scrollPolicyH,
-                2: null,            //autoHideTimer,
-                3: 0,               //touchStartX,
-                4: 0,               //touchStartY,
-                5: false,           //touchMoved,
-                6: false,           //horizontalCanScroll,
-                7: false,           //verticalCanScroll,
-                8: touchScrollH,    //touchScrollH,
-                9: touchScrollV,    //touchScrollV
-                10: null,           //viewport
-                11: false,          //viewprotRemovedEvent
-                12: false           //touchCancle
+                0: "auto",          // scrollPolicyV,
+                1: "auto",          // scrollPolicyH,
+                2: null,            // autoHideTimer,
+                3: 0,               // touchStartX,
+                4: 0,               // touchStartY,
+                5: false,           // touchMoved,
+                6: false,           // horizontalCanScroll,
+                7: false,           // verticalCanScroll,
+                8: touchScrollH,    // touchScrollH,
+                9: touchScrollV,    // touchScrollV
+                10: null,           // viewport
+                11: false,          // viewprotRemovedEvent
+                12: false           // touchCancle
             };
         }
 
         private $bounces:boolean = true;
 
         /**
-         * Whether to enable rebound, rebound When enabled, ScrollView contents allowed to continue to drag the border after arriving at the end user drag operation, and then bounce back boundary position
+         * Whether to enable rebound, rebound When enabled, ScrollView contents allowed to
+         * continue to drag the border after arriving at the end user drag operation, and
+         * then bounce back boundary position.
          * @default true
          * @version Egret 2.5.6
-         * @language en_US
-         */
-        /**
-         * 是否启用回弹，当启用回弹后，ScrollView中内容在到达边界后允许继续拖动，在用户拖动操作结束后，再反弹回边界位置
-         * @default true
-         * @version Egret 2.5.6
-         * @language zh_CN
          */
         public get bounces():boolean {
             return this.$bounces;
@@ -199,18 +147,10 @@ namespace eui {
         }
 
         /**
-         * Adjust the speed to get out of the slide end.When equal to 0,the scroll animation will not be play.
+         * Adjust the speed to get out of the slide end.When equal to 0, the scroll animation will not be play.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 调节滑动结束时滚出的速度。等于0时，没有滚动动画
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public set throwSpeed(val:number) {
             val = +val;
@@ -222,7 +162,6 @@ namespace eui {
         public get throwSpeed():number {
             return this.$Scroller[Keys.touchScrollH].$scrollFactor;
         }
-
 
         /**
          * @private
@@ -242,75 +181,34 @@ namespace eui {
          * @private
          */
         $Scroller:Object;
+
         /**
-         * the horizontal scroll bar
-         *
+         * The horizontal scroll bar.
          * @skinPart
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 水平滚动条
-         *
-         * @skinPart
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public horizontalScrollBar:eui.HScrollBar = null;
+
         /**
-         * the vertical scroll bar
-         *
+         * The vertical scroll bar.
          * @skinPart
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 垂直滚动条
-         *
-         * @skinPart
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public verticalScrollBar:eui.VScrollBar = null;
 
         /**
          * Indicates under what conditions the scroller can be moved and the vertical scroll bar is displayed.
-         * <p><code>ScrollPolicy.ON</code> - the scroller can be moved, and the scroll bar is displayed when it's move.</p>
-         * <p><code>ScrollPolicy.OFF</code> - the scroller can not be moved, the scroll bar is never displayed.</p>
-         * <p><code>ScrollPolicy.AUTO</code> - the scroller can not be moved when
-         *  the viewport's contentHeight is larger than its height. the scroll bar is displayed when it's move.
-         *
+         * * *ScrollPolicy.ON* - The scroller can be moved, and the scroll bar is displayed when it's move.
+         * * *ScrollPolicy.OFF* - The scroller can not be moved, the scroll bar is never displayed.
+         * * *ScrollPolicy.AUTO* - The scroller can not be moved when the viewport's contentHeight is larger than its height. The scroll bar is displayed when it's move.
          * @default ScrollPolicy.AUTO
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 指示在哪些条件可以滚动并且显示垂直滑动条。
-         * <p><code>ScrollPolicy.ON</code> - 可以滚动，滚动时显示滚动条。</p>
-         * <p><code>ScrollPolicy.OFF</code> - 不可以滚动并且不显示滚动条。</p>
-         * <p><code>ScrollPolicy.AUTO</code> - 当视域的 contentHeight 大于其自身的高度时可以滚动，滚动时显示滚动条。</p>
-         *
-         * @default ScrollPolicy.AUTO
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get scrollPolicyV():string {
             return this.$Scroller[Keys.scrollPolicyV];
@@ -327,30 +225,13 @@ namespace eui {
 
         /**
          * Indicates under what conditions the scroller can be moved and the horizontal scroll bar is displayed.
-         * <p><code>ScrollPolicy.ON</code> - the scroller can be moved, and the scroll bar is displayed when it's move.</p>
-         * <p><code>ScrollPolicy.OFF</code> - the scroller can not be moved, the scroll bar is never displayed.</p>
-         * <p><code>ScrollPolicy.AUTO</code> - the can not be moved  when
-         *  the viewport's contentWidth is larger than its width. the scroll bar is displayed when it's move.
-         *
+         * * *ScrollPolicy.ON* - The scroller can be moved, and the scroll bar is displayed when it's move.
+         * * *ScrollPolicy.OFF* - The scroller can not be moved, the scroll bar is never displayed.
+         * * *ScrollPolicy.AUTO* - The can not be moved  when the viewport's contentWidth is larger than its width. The scroll bar is displayed when it's move.
          * @default ScrollPolicy.AUTO
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 指示在哪些条件下可以滚动并且显示水平滑动条。
-         * <p><code>ScrollPolicy.ON</code> - 可以滚动，滚动时显示滚动条。</p>
-         * <p><code>ScrollPolicy.OFF</code> - 不可以滚动并且不显示滚动条。</p>
-         * <p><code>ScrollPolicy.AUTO</code> - 当视域的 contentWidth 大于其自身的宽度时可以滚动，滚动时显示滚动条。</p>
-         *
-         * @default ScrollPolicy.AUTO
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get scrollPolicyH():string {
             return this.$Scroller[Keys.scrollPolicyH];
@@ -366,19 +247,10 @@ namespace eui {
         }
 
         /**
-         * Stop the scroller animation
+         * Stop the scroller animation.
          * @version Egret 3.0.2
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 停止滚动的动画
-         *
-         * @version Egret 3.0.2
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public stopAnimation():void {
             let values = this.$Scroller;
@@ -403,19 +275,9 @@ namespace eui {
 
         /**
          * The viewport component to be scrolled.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 要滚动的视域组件。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get viewport():IViewport {
             return this.$Scroller[Keys.viewport];
@@ -433,7 +295,7 @@ namespace eui {
 
         /**
          * @private
-         * 安装并初始化视域组件
+         * Install and initialize the viewshed component.
          */
         private installViewport():void {
             let viewport = this.viewport;
@@ -455,7 +317,7 @@ namespace eui {
 
         /**
          * @private
-         * 卸载视域组件
+         * Uninstall the viewshed component.
          */
         private uninstallViewport():void {
             if (this.horizontalScrollBar) {
@@ -485,8 +347,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -547,7 +407,7 @@ namespace eui {
 
         /**
          * @private
-         * 检查当前滚动策略，若有一个方向可以滚动，返回true。
+         * Check the current scrolling strategy. If there is a direction to scroll, return true.
          */
         private checkScrollPolicy():boolean {
             let values = this.$Scroller;
@@ -598,7 +458,7 @@ namespace eui {
 
         /**
          * @private
-         * 记录按下的对象，touchCancle时使用
+         * Record the pressed object, used when touchCancle.
          */
         private downTarget:egret.DisplayObject;
 
@@ -606,7 +466,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param event
          */
         private onTouchBegin(event:egret.TouchEvent):void {
@@ -638,7 +497,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param event
          */
         private onTouchMove(event:egret.TouchEvent):void {
@@ -741,7 +599,6 @@ namespace eui {
             egret.Event.release(cancelEvent);
         }
 
-
         /**
          * @private
          * @param event
@@ -773,7 +630,6 @@ namespace eui {
             this.$dispatchPropagationEvent(cancelEvent, list, targetIndex);
             egret.Event.release(cancelEvent);
         }
-
 
         /**
          * @private
@@ -809,7 +665,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param scrollPos
          */
         private horizontalUpdateHandler(scrollPos: number): void {
@@ -822,7 +677,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param scrollPos
          */
         private verticalUpdateHandler(scrollPos: number): void {
@@ -835,7 +689,6 @@ namespace eui {
 
         /**
          * @private
-         *
          */
         private horizontalEndHandler():void {
             if (!this.$Scroller[Keys.touchScrollV].isPlaying()) {
@@ -845,7 +698,6 @@ namespace eui {
 
         /**
          * @private
-         *
          */
         private verticalEndHanlder():void {
             if (!this.$Scroller[Keys.touchScrollH].isPlaying()) {
@@ -855,7 +707,6 @@ namespace eui {
 
         /**
          * @private
-         *
          */
         private onChangeEnd():void {
             let values = this.$Scroller;
@@ -871,12 +722,10 @@ namespace eui {
             }
 
             UIEvent.dispatchUIEvent(this, UIEvent.CHANGE_END);
-
         }
 
         /**
          * @private
-         *
          * @param event
          */
         private onAutoHideTimer(event:egret.TimerEvent):void {
@@ -891,8 +740,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -901,15 +748,13 @@ namespace eui {
             super.updateDisplayList(unscaledWidth, unscaledHeight);
             let viewport = this.viewport;
             if (viewport) {
-                //必须先调用setLayoutBoundsSize()，因为尺寸改变会影响布局位置。
+                // You must call setLayoutBoundsSize () first, because the change in size will affect the layout position.
                 viewport.setLayoutBoundsSize(unscaledWidth, unscaledHeight);
                 viewport.setLayoutBoundsPosition(0, 0);
             }
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native

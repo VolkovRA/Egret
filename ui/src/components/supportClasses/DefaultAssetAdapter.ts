@@ -27,51 +27,31 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace eui {
-
+namespace eui
+{
     let loaderPool:egret.ImageLoader[] = [];
     let callBackMap:any = {};
     let loaderMap:any = {};
 
     /**
-     * Default instance of interface <code>IAssetAdapter</code>.
+     * Default instance of interface *IAssetAdapter*.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
      * @includeExample extension/eui/components/supportClasses/DefaultAssetAdapterExample.ts
-     * @language en_US
      */
-    /**
-     * 默认的IAssetAdapter接口实现。
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample extension/eui/components/supportClasses/DefaultAssetAdapterExample.ts
-     * @language zh_CN
-     */
-    export class DefaultAssetAdapter implements IAssetAdapter {
-
+    export class DefaultAssetAdapter implements IAssetAdapter
+    {
         /**
-         * resolve asset.
-         * @param source the identifier of new asset need to be resolved
-         * @param callBack callback function when resolving complete
-         * example：callBack(content:any,source:string):void;
-         * @param thisObject <code>this</code> object of callback method
+         * Resolve asset.
+         * @param source The identifier of new asset need to be resolved.
+         * @param callBack Callback function when resolving complete.
+         * @example
+         * callBack(content:any,source:string):void;
+         * @param thisObject *this* object of callback method
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 解析素材
-         * @param source 待解析的新素材标识符
-         * @param callBack 解析完成回调函数，示例：callBack(content:any,source:string):void;
-         * @param thisObject callBack的 this 引用
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public getAsset(source:string, callBack:(data:any, source:string) => void, thisObject:any):void {
             let list = callBackMap[source];
@@ -93,7 +73,6 @@ namespace eui {
 
         /**
          * @private
-         * 
          * @param event 
          */
         private onLoadFinish(event:egret.Event):void {

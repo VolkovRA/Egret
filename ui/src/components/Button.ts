@@ -27,52 +27,29 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui {
-
+namespace eui
+{
     /**
      * The Button component is a commonly used rectangular button.
      * The Button component looks like it can be pressed.
      * The default skin has a text label and a icon display object.
      *
-     * @event egret.TouchEvent.TOUCH_CANCEL canceled the touch
-     *
-     * @state up Button up state
-     * @state down Button down state
-     * @state disabled Button disabled state
+     * @event egret.TouchEvent.TOUCH_CANCEL Canceled the touch.
+     * @state Up Button up state.
+     * @state Down Button down state.
+     * @state Disabled Button disabled state.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
      * @includeExample extension/eui/components/ButtonExample.ts
-     * @language en_US
      */
-    /**
-     * Button 组件是常用的矩形按钮。Button 组件看起来可以按压。默认外观具有一个文本标签和图标显示对象。
-     *
-     * @event egret.TouchEvent.TOUCH_CANCEL 取消触摸事件
-     *
-     * @state up 按钮弹起状态
-     * @state down 按钮按下状态
-     * @state disabled 按钮禁用状态
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample extension/eui/components/ButtonExample.ts
-     * @language zh_CN
-     */
-    export class Button extends Component {
+    export class Button extends Component
+    {
         /**
          * Constructor.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 创建一个按钮实例
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
@@ -86,15 +63,6 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * [SkinPart] 按钮上的文本标签。
-         * @skinPart
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public labelDisplay:IDisplayText = null;
 
@@ -102,19 +70,12 @@ namespace eui {
          * @private
          */
         private _label:string = "";
+
         /**
          * Text to appear on the Button control.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 要在按钮上显示的文本。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get label():string {
             return this._label;
@@ -133,15 +94,6 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * [SkinPart] 按钮上的图标显示对象。
-         * @skinPart
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public iconDisplay:Image = null;
 
@@ -149,19 +101,12 @@ namespace eui {
          * @private
          */
         private _icon:string|egret.Texture = null;
+
         /**
          * Icon to appear on the Button control.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 要在按钮上显示的图标数据
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get icon():string|egret.Texture {
             return this._icon;
@@ -176,24 +121,16 @@ namespace eui {
 
         /**
          * @private
-         * 指示第一次分派 TouchEvent.TOUCH_BEGIN 时，触摸点是否在按钮上。
+         * Indicates whether the touch point is on the button when TouchEvent.TOUCH_BEGIN is dispatched for the first time.
          */
         private touchCaptured:boolean = false;
+
         /**
-         * This method handles the touchCancle events
-         * @param  The <code>egret.TouchEvent</code> object.
+         * This method handles the touchCancle events.
+         * @param event The *egret.TouchEvent* object.
          * @version Egret 3.0.1
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 解除触碰事件处理。
-         * @param event 事件 <code>egret.TouchEvent</code> 的对象。
-         * @version Egret 3.0.1
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected onTouchCancle(event:egret.TouchEvent):void {
             let stage = event.$currentTarget;
@@ -202,21 +139,13 @@ namespace eui {
             this.touchCaptured = false;
             this.invalidateState();
         }
+
         /**
-         * This method handles the touch events
-         * @param  The <code>egret.TouchEvent</code> object.
+         * This method handles the touch events.
+         * @param event The *egret.TouchEvent* object.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 触碰事件处理。
-         * @param event 事件 <code>egret.TouchEvent</code> 的对象。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected onTouchBegin(event:egret.TouchEvent):void {
             this.$stage.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
@@ -228,7 +157,7 @@ namespace eui {
 
         /**
          * @private
-         * 舞台上触摸弹起事件
+         * Touch up event on stage.
          */
         private onStageTouchEnd(event:egret.Event):void {
             let stage = event.$currentTarget;
@@ -242,8 +171,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -259,8 +186,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -275,21 +200,11 @@ namespace eui {
         }
 
         /**
-         * This method is called when handling a <code>egret.TouchEvent.TOUCH_END</code> event
-         * when the user touches on the button. It is only called when the button
-         * is the target and when <code>touchCaptured</code> is <code>true</code>.
+         * This method is called when handling a *egret.TouchEvent.TOUCH_END* event when the user touches on the button.
+         * It is only called when the button is the target and when *touchCaptured* is *true*.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 当在用户单击按钮之后处理 <code>egret.TouchEvent.TOUCH_END</code> 事件时，将调用此方法。
-         * 仅当以按钮为目标，并且 <code>touchCaptured</code> 为 <code>true</code> 时，才会调用此方法。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected buttonReleased():void {
         }

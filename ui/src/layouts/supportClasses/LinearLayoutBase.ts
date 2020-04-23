@@ -27,54 +27,30 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui {
+namespace eui
+{
     /**
      * Linear layout base class, usually as the parent class of
-     * <code>HorizontalLayout</code> and <code>VerticalLayout</code>.
-     *
+     * *HorizontalLayout* and *VerticalLayout*.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @language en_US
      */
-    /**
-     * 线性布局基类，通常作为 <code>HorizontalLayout</code> 和 <code>VerticalLayout</code> 的父类。
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
-     */
-    export class LinearLayoutBase extends LayoutBase {
-
+    export class LinearLayoutBase extends LayoutBase
+    {
         /**
          * @private
          */
-        $horizontalAlign:string = "left";
+        $horizontalAlign = "left";
 
         /**
          * The horizontal alignment of layout elements.
-         * <p>The <code>egret.HorizontalAlign</code> and <code>eui.JustifyAlign</code> class
-         * defines the possible values for this property.</p>
-         *
+         * 
+         * The *egret.HorizontalAlign* and *eui.JustifyAlign* class defines the possible values for this property.
          * @default "left"
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 布局元素的水平对齐策略。
-         * <p><code>egret.HorizontalAlign</code> 和
-         * <code>eui.JustifyAlign</code>类定义此属性的可能值。<p>
-         *
-         * @default "left"
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get horizontalAlign():string {
             return this.$horizontalAlign;
@@ -95,27 +71,13 @@ namespace eui {
 
         /**
          * The vertical alignment of layout elements.
-         * <p>The <code>egret.VerticalAlign</code> and <code>eui.JustifyAlign</code> class
-         * defines the possible values for this property.</p>
-         *
+         * 
+         * The *egret.VerticalAlign* and *eui.JustifyAlign* class
+         * defines the possible values for this property.
          * @default "top"
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 布局元素的垂直对齐策略。请使用 VerticalAlign 定义的常量。
-         * <p><code>egret.VerticalAlign</code> 和
-         * <code>eui.JustifyAlign</code>类定义此属性的可能值。<p>
-         *
-         * @default "top"
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get verticalAlign():string {
             return this.$verticalAlign;
@@ -136,23 +98,10 @@ namespace eui {
 
         /**
          * The space between layout elements, in pixels.
-         *
          * @default 6
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 布局元素之间的间隔（以像素为单位）。
-         *
-         * @default 6
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get gap():number {
             return this.$gap;
@@ -172,25 +121,11 @@ namespace eui {
         $paddingLeft:number = 0;
 
         /**
-         * Number of pixels between the container's left edge
-         * and the left edge of the first layout element.
-         *
+         * Number of pixels between the container's left edge and the left edge of the first layout element.
          * @default 0
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 容器的左边缘与第一个布局元素的左边缘之间的像素数。
-         *
-         * @default 0
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get paddingLeft():number {
             return this.$paddingLeft;
@@ -211,25 +146,11 @@ namespace eui {
         $paddingRight:number = 0;
 
         /**
-         * Number of pixels between the container's right edge
-         * and the right edge of the last layout element.
-         *
-         *  @default 0
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 容器的右边缘与最后一个布局元素的右边缘之间的像素数。
-         *
+         * Number of pixels between the container's right edge and the right edge of the last layout element.
          * @default 0
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language zh_CN
          */
         public get paddingRight():number {
             return this.$paddingRight;
@@ -252,23 +173,10 @@ namespace eui {
         /**
          * The minimum number of pixels between the container's top edge and
          * the top of all the container's layout elements.
-         *
          * @default 0
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 容器的顶边缘与所有容器的布局元素的顶边缘之间的最少像素数。
-         *
-         * @default 0
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get paddingTop():number {
             return this.$paddingTop;
@@ -289,25 +197,12 @@ namespace eui {
         $paddingBottom:number = 0;
 
         /**
-         * The minimum number of pixels between the container's bottom edge and
-         * the bottom of all the container's layout elements.
-         *
+         * The minimum number of pixels between the container's bottom edge
+         * and the bottom of all the container's layout elements.
          * @default 0
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 容器的底边缘与所有容器的布局元素的底边缘之间的最少像素数。
-         *
-         * @default 0
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get paddingBottom():number {
             return this.$paddingBottom;
@@ -324,22 +219,11 @@ namespace eui {
 
         /**
          * Convenience function for subclasses that invalidates the
-         * target's size and displayList so that both layout's <code>measure()</code>
-         * and <code>updateDisplayList</code> methods get called.
-         *
+         * target's size and displayList so that both layout's *measure()*
+         * and *updateDisplayList* methods get called.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 失效目标容器的尺寸和显示列表的简便方法，调用目标容器的
-         * <code>measure()</code>和<code>updateDisplayList</code>方法
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected invalidateTargetLayout():void {
             let target = this.$target;
@@ -350,8 +234,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -369,22 +251,11 @@ namespace eui {
 
         /**
          * Compute exact values for measuredWidth and measuredHeight.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 计算目标容器 measuredWidth 和 measuredHeight 的精确值
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected measureReal():void {
-
         }
 
         /**
@@ -392,23 +263,12 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 计算目标容器 measuredWidth 和 measuredHeight 的近似值
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected measureVirtual():void {
 
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -432,88 +292,45 @@ namespace eui {
             }
         }
 
-
         /**
          * An Array of the virtual layout elements size cache.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 虚拟布局使用的尺寸缓存。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected elementSizeTable:number[] = [];
 
         /**
-         * Gets the starting position of the specified index element
-         *
+         * Gets the starting position of the specified index element.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 获取指定索引元素的起始位置
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected getStartPosition(index:number):number {
             return 0;
         }
 
         /**
-         * Gets the size of the specified index element
-         *
+         * Gets the size of the specified index element.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 获取指定索引元素的尺寸
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected getElementSize(index:number):number {
             return 0;
         }
 
         /**
-         * Gets the sum of the size of cached elements
-         *
+         * Gets the sum of the size of cached elements.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 获取缓存的子对象尺寸总和
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected getElementTotalSize():number {
             return 0;
         }
 
         /**
-         * @inheritDoc
-         * 
          * @param index 
          * @version Egret 2.4
          * @version eui 1.0
@@ -527,8 +344,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -540,22 +355,11 @@ namespace eui {
             this.maxElementSize = 0;
         }
 
-
         /**
-         * The binary search to find the specified index position of the display object
-         *
+         * The binary search to find the specified index position of the display object.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 折半查找法寻找指定位置的显示对象索引
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected findIndexAt(x:number, i0:number, i1:number):number {
             let index = ((i0 + i1) * 0.5)|0;
@@ -572,60 +376,30 @@ namespace eui {
         }
 
         /**
-         * The first element index in the view of the virtual layout
-         *
+         * The first element index in the view of the virtual layout.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 虚拟布局使用的当前视图中的第一个元素索引
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected startIndex:number = -1;
+
         /**
-         * The last element index in the view of the virtual layout
-         *
+         * The last element index in the view of the virtual layout.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 虚拟布局使用的当前视图中的最后一个元素的索引
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected endIndex:number = -1;
+
         /**
          * A Flag of the first element and the end element has been calculated.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 视图的第一个和最后一个元素的索引值已经计算好的标志
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected indexInViewCalculated:boolean = false;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -645,103 +419,46 @@ namespace eui {
         /**
          * Get the index of the first and last element in the view,
          * and to return whether or not to change.
-         *
-         * @return has the index changed
-         *
+         * @return Has the index changed.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 获取视图中第一个和最后一个元素的索引,返回是否发生改变。
-         *
-         * @return 索引是否已改变
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected getIndexInView():boolean {
             return false;
         }
 
         /**
-         * The maximum size of elements
-         *
-         *
+         * The maximum size of elements.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 子元素最大的尺寸
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected maxElementSize:number = 0;
 
         /**
-         * Update the layout of the virtualized elements
-         *
+         * Update the layout of the virtualized elements.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 更新虚拟布局的显示列表
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected updateDisplayListVirtual(width:number, height:number):void {
-
         }
 
-
         /**
-         * Update the layout of the reality elements
-         *
+         * Update the layout of the reality elements.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 更新真实布局的显示列表
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected updateDisplayListReal(width:number, height:number):void {
-
         }
 
         /**
          * Allocate blank area for each variable size element.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 为每个可变尺寸的子项分配空白区域。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected flexChildrenProportionally(spaceForChildren:number, spaceToDistribute:number,
                                              totalPercent:number, childInfoArray:any[]):void {
@@ -810,40 +527,34 @@ namespace eui {
             while (!done);
         }
     }
-
 }
 
-namespace eui.sys {
-
+namespace eui.sys
+{
     /**
      * @private
      */
-    export class ChildInfo {
-
-
+    export class ChildInfo
+    {
         /**
          * @private
          */
         public layoutElement:eui.UIComponent = null;
-
 
         /**
          * @private
          */
         public size:number = 0;
 
-
         /**
          * @private
          */
         public percent:number = NaN;
 
-
         /**
          * @private
          */
         public min:number = NaN;
-
 
         /**
          * @private

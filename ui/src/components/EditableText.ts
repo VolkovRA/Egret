@@ -26,67 +26,53 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-namespace eui.sys {
+
+namespace eui.sys
+{
     /**
      * @private
      */
-    export const enum EditableTextKeys {
+    export const enum EditableTextKeys
+    {
         promptText,
         textColorUser,
         asPassword
     }
 }
-namespace eui {
 
+namespace eui
+{
     let UIImpl = sys.UIComponentImpl;
 
     /**
-     * Editable text for displaying,
-     * scrolling, selecting, and editing text.
-     * @includeExample  extension/eui/components/EditablTextExample.ts
+     * Editable text for displaying, scrolling, selecting, and editing text.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @language en_US
      */
-    /**
-     * 可编辑文本，用于显示、滚动、选择和编辑文本。
-     * @includeExample  extension/eui/components/EditablTextExample.ts
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
-     */
-    export class EditableText extends egret.TextField implements UIComponent, IDisplayText {
-
+    export class EditableText extends egret.TextField implements UIComponent, IDisplayText
+    {
         /**
          * Constructor.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 构造函数。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
             this.initializeUIValues();
             this.type = egret.TextFieldType.INPUT;
             this.$EditableText = {
-                0: null,         //promptText,
-                1: 0xffffff,     //textColorUser,
-                2: false         //asPassword
+                0: null,         // promptText,
+                1: 0xffffff,     // textColorUser,
+                2: false         // asPassword
             }
         }
+
         $EditableText: Object;
+
         /**
          * @private
-         *
          */
         $invalidateTextField(): void {
             super.$invalidateTextField();
@@ -95,7 +81,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param value
          */
         $setWidth(value: number): boolean {
@@ -106,7 +91,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param value
          */
         $setHeight(value: number): boolean {
@@ -114,9 +98,9 @@ namespace eui {
             let result2: boolean = UIImpl.prototype.$setHeight.call(this, value);
             return result1 && result2;
         }
+
         /**
          * @private
-         *
          * @param value
          */
         $getText(): string {
@@ -126,9 +110,9 @@ namespace eui {
             }
             return value;
         }
+
         /**
          * @private
-         *
          * @param value
          */
         $setText(value: string): boolean {
@@ -155,9 +139,9 @@ namespace eui {
          * @private
          */
         private _widthConstraint: number = NaN;
+
         /**
          * @private
-         *
          * @param stage
          * @param nestLevel
          */
@@ -168,9 +152,9 @@ namespace eui {
             this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
             this.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
         }
+
         /**
          * @private
-         *
          */
         public $onRemoveFromStage(): void {
             super.$onRemoveFromStage();
@@ -179,27 +163,17 @@ namespace eui {
             this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
             this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
         }
+
         /**
          * @private
          */
         private $isShowPrompt: boolean = false;
+
         /**
          * When the property of the text is empty, it will show the defalut string.
          * @version Egret 2.5.5
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 当text属性为空字符串时要显示的文本内容。
-         * 先创建文本控件时将显示提示文本。控件获得焦点时或控件的 text 属性为非空字符串时，提示文本将消失。
-         * 控件失去焦点时提示文本将重新显示，但仅当未输入文本时（如果文本字段的值为空字符串）。<p/>
-         * 对于文本控件，如果用户输入文本，但随后又将其删除，则控件失去焦点后，提示文本将重新显示。
-         * 您还可以通过编程方式将文本控件的 text 属性设置为空字符串使提示文本重新显示。
-         * @version Egret 2.5.5
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get prompt(): string {
             return this.$EditableText[sys.EditableTextKeys.promptText];
@@ -215,27 +189,22 @@ namespace eui {
                 this.showPromptText();
             }
         }
+
         /**
          * @private
          */
         private $promptColor: number = 0x666666;
+
         /**
          * @private
          */
         private $isFocusIn: boolean = false;
+
         /**
          * The color of the defalut string.
          * @version Egret 2.5.5
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 默认文本的颜色
-         * @version Egret 2.5.5
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public set promptColor(value: number) {
             value = +value | 0;
@@ -247,9 +216,11 @@ namespace eui {
                 }
             }
         }
+
         public get promptColor(): number {
             return this.$promptColor;
         }
+
         /**
          * @private
          */
@@ -259,22 +230,26 @@ namespace eui {
                 this.showPromptText();
             }
         }
+
         /**
          * @private
          */
         private $isTouchCancle: boolean = false;
+
         /**
          * @private
          */
         private onTouchBegin(): void {
             this.$isTouchCancle = false;
         }
+
         /**
          * @private
          */
         private onTouchCancle(): void {
             this.$isTouchCancle = true;
         }
+
         /**
          * @private
          */
@@ -293,6 +268,7 @@ namespace eui {
                 this.text = "";
             }
         }
+
         /**
          * @private
          */
@@ -303,6 +279,7 @@ namespace eui {
             super.$setDisplayAsPassword(false);
             this.text = values[sys.EditableTextKeys.promptText];
         }
+
         /**
          * @private
          */
@@ -314,6 +291,7 @@ namespace eui {
             }
             return true;
         }
+
         /**
          * @private
          */
@@ -324,16 +302,16 @@ namespace eui {
             }
             return true;
         }
-        //=======================UIComponent接口实现===========================
+
+        //=======================UIComponent interface implementation===========================
         /**
          * @private
-         * UIComponentImpl 定义的所有变量请不要添加任何初始值，必须统一在此处初始化。
+         * Please do not add any initial value to all variables defined by UIComponentImpl, they must be initialized here.
          */
         private initializeUIValues: () => void;
 
         /**
          * @copy eui.Component#createChildren()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -344,29 +322,24 @@ namespace eui {
 
         /**
          * @copy eui.Component#childrenCreated()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         protected childrenCreated(): void {
-
         }
 
         /**
          * @copy eui.Component#commitProperties()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         protected commitProperties(): void {
-
         }
 
         /**
          * @copy eui.Component#measure()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -394,7 +367,6 @@ namespace eui {
 
         /**
          * @copy eui.Component#updateDisplayList()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -406,7 +378,6 @@ namespace eui {
 
         /**
          * @copy eui.Component#invalidateParentLayout()
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -425,16 +396,13 @@ namespace eui {
         $includeInLayout: boolean;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         public includeInLayout: boolean;
+
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -442,8 +410,6 @@ namespace eui {
         public left: any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -451,8 +417,6 @@ namespace eui {
         public right: any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -460,8 +424,6 @@ namespace eui {
         public top: any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -469,8 +431,6 @@ namespace eui {
         public bottom: any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -478,8 +438,6 @@ namespace eui {
         public horizontalCenter: any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -487,8 +445,6 @@ namespace eui {
         public verticalCenter: any;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -496,8 +452,6 @@ namespace eui {
         public percentWidth: number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -505,8 +459,6 @@ namespace eui {
         public percentHeight: number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -514,8 +466,6 @@ namespace eui {
         public explicitWidth: number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -523,8 +473,6 @@ namespace eui {
         public explicitHeight: number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -532,8 +480,6 @@ namespace eui {
         public minWidth: number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -541,8 +487,6 @@ namespace eui {
         public maxWidth: number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -550,8 +494,6 @@ namespace eui {
         public minHeight: number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -559,8 +501,6 @@ namespace eui {
         public maxHeight: number;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -569,8 +509,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -579,8 +517,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -589,8 +525,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -599,8 +533,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -609,8 +541,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -619,8 +549,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -629,8 +557,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -639,8 +565,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -650,6 +574,7 @@ namespace eui {
             if (isNaN(layoutWidth) || layoutWidth === this._widthConstraint || layoutWidth == 0) {
                 return;
             }
+
             let values = this.$UIComponent;
             if (!isNaN(values[sys.UIKeys.explicitHeight])) {
                 return;
@@ -657,13 +582,12 @@ namespace eui {
             if (layoutWidth == values[sys.UIKeys.measuredWidth]) {
                 return;
             }
+
             this._widthConstraint = layoutWidth;
             this.invalidateSize();
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -672,8 +596,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -682,8 +604,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native

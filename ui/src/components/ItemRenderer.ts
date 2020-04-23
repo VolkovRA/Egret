@@ -26,52 +26,29 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-/// <reference path="../utils/registerBindable.ts" />
-namespace eui {
 
+/// <reference path="../utils/registerBindable.ts" />
+
+namespace eui
+{
     /**
      * The ItemRenderer class is the base class for item renderers.
-     *
-     * @state up Up state
-     * @state down Down state
-     * @state upAndSelected Up state when the button is selected
-     * @state downAndSelected Down state when the button is selected
+     * @state up Up state.
+     * @state down Down state.
+     * @state upAndSelected Up state when the button is selected.
+     * @state downAndSelected Down state when the button is selected.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @includeExample  extension/eui/components/ItemRendererExample.ts
-     * @language en_US
+     * @includeExample extension/eui/components/ItemRendererExample.ts
      */
-    /**
-     * ItemRenderer 类是项呈示器的基类。
-     *
-     * @state up 弹起状态
-     * @state down 按下状态
-     * @state upAndSelected 选择时的弹起状态
-     * @state downAndSelected 选择时的按下状态
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample  extension/eui/components/ItemRendererExample.ts
-     * @language zh_CN
-     */
-    export class ItemRenderer extends Component implements IItemRenderer {
-
+    export class ItemRenderer extends Component implements IItemRenderer
+    {
         /**
          * Constructor.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 构造函数。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
@@ -82,21 +59,12 @@ namespace eui {
          * @private
          */
         private _data: any = null;
+
         /**
          * The data to render or edit.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 要呈示或编辑的数据。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get data(): any {
             return this._data;
@@ -109,20 +77,10 @@ namespace eui {
         }
 
         /**
-         * Update the view when the <code>data</code> property changes.
-         *
+         * Update the view when the *data* property changes.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 当数据改变时，更新视图。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected dataChanged(): void {
 
@@ -132,22 +90,12 @@ namespace eui {
          * @private
          */
         private _selected: boolean = false;
+
         /**
-         * Contains <code>true</code> if the item renderer
-         * can show itself as selected.
-         *
+         * Contains *true* if the item renderer can show itself as selected.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 如果项呈示器可以将其自身显示为已选中，则为 true。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get selected(): boolean {
             return this._selected;
@@ -156,47 +104,30 @@ namespace eui {
         public set selected(value: boolean) {
             if (this._selected == value)
                 return;
+            
             this._selected = value;
             this.invalidateState();
         }
 
         /**
-         * The index of the item in the data provider
-         * of the host component of the item renderer.
-         *
+         * The index of the item in the data provider of the host component of the item renderer.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 项呈示器的数据提供程序中的项目索引。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public itemIndex: number = -1;
 
         /**
          * @private
-         * 指示第一次分派 TouchEvent.TOUCH_BEGIN 时，触摸点是否在按钮上。
+         * Indicates whether the touch point is on the button when TouchEvent.TOUCH_BEGIN is dispatched for the first time.
          */
         private touchCaptured: boolean = false;
+
         /**
          * Dispatched when an event of some kind occurred that canceled the touch.
          * @version Egret 3.0.1
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 由于某个事件取消了触摸时触发
-         * @version Egret 3.0.1
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected onTouchCancle(event: egret.TouchEvent): void {
             this.touchCaptured = false;
@@ -207,20 +138,10 @@ namespace eui {
         }
 
         /**
-         * Handles <code>TouchEvent.TOUCH_BEGIN</code> events
-         *
+         * Handles *TouchEvent.TOUCH_BEGIN* events.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 触碰开始时触发事件
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected onTouchBegin(event: egret.TouchEvent): void {
             if(!this.$stage) {
@@ -232,9 +153,10 @@ namespace eui {
             this.invalidateState();
             event.updateAfterEvent();
         }
+
         /**
          * @private
-         * 舞台上触摸弹起事件
+         * Touch up event on stage.
          */
         private onStageTouchEnd(event: egret.Event): void {
             let stage = event.$currentTarget;
@@ -245,8 +167,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native

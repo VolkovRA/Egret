@@ -27,46 +27,53 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui.sys {
+namespace eui.sys
+{
     /**
      * @private
-     * 需要记录的历史速度的最大次数。
+     * The maximum number of historical speeds that need to be recorded.
      */
     let MAX_VELOCITY_COUNT = 4;
+
     /**
      * @private
-     * 记录的历史速度的权重列表。
+     * A weighted list of recorded historical speeds.
      */
     let VELOCITY_WEIGHTS:number[] = [1, 1.33, 1.66, 2];
+
     /**
      * @private
-     * 当前速度所占的权重。
+     * The weight of the current speed.
      */
     let CURRENT_VELOCITY_WEIGHT = 2.33;
+
     /**
      * @private
-     * 最小的改变速度，解决浮点数精度问题。
+     * The smallest change speed solves the floating point precision problem.
      */
     let MINIMUM_VELOCITY = 0.02;
+
     /**
      * @private
-     * 当容器自动滚动时要应用的摩擦系数
+     * The friction coefficient to be applied when the container is automatically rolling.
      */
     let FRICTION = 0.998;
+
     /**
      * @private
-     * 当容器自动滚动时并且滚动位置超出容器范围时要额外应用的摩擦系数
+     * The coefficient of friction to be applied additionally when the container is automatically
+     * scrolling and the scrolling position exceeds the range of the container.
      */
     let EXTRA_FRICTION = 0.95;
+
     /**
      * @private
-     * 摩擦系数的自然对数
+     * Natural logarithm of friction coefficient.
      */
     let FRICTION_LOG = Math.log(FRICTION);
 
     /**
      * @private
-     *
      * @param ratio
      * @returns
      */
@@ -77,17 +84,22 @@ namespace eui.sys {
 
     /**
      * @private
-     * 一个工具类,用于容器的滚屏拖动操作，计算在一段时间持续滚动后释放，应该继续滚动到的值和缓动时间。
-     * 使用此工具类，您需要创建一个 ScrollThrown 实例,并在滚动发生时调用start()方法，然后在触摸移动过程中调用update()更新当前舞台坐标。
-     * 内部将会启动一个计时器定时根据当前位置计算出速度值，并缓存下来最后4个值。当停止滚动时，再调用finish()方法，
-     * 将立即停止记录位移，并将计算出的最终结果存储到 Thrown.scrollTo 和 Thrown.duration 属性上。
+     * A tool class for the scrolling drag operation of the container.
+     * It calculates the value that should be scrolled to and the easing time after the
+     * scrolling is continued for a period of time. To use this tool class, you need to
+     * create a ScrollThrown instance and call the start () method when scrolling occurs,
+     * and then call update () to update the current stage coordinates during touch movement.
+     * A timer will be started internally to calculate the speed value based on the current
+     * position and cache the last 4 values. When the scrolling is stopped, the finish ()
+     * method is called again, the displacement will be stopped immediately and the final
+     * result will be stored in the Thrown.scrollTo and Thrown.duration properties.
      */
-    export class TouchScroll {
-
+    export class TouchScroll
+    {
         /**
          * @private
-         * 创建一个 TouchScroll 实例
-         * @param updateFunction 滚动位置更新回调函数
+         * Create a TouchScroll instance.
+         * @param updateFunction Scroll position update callback function.
          */
         public constructor(updateFunction:(scrollPos:number)=>void, endFunction:()=>void, target:egret.IEventDispatcher) {
             if (DEBUG && !updateFunction) {
@@ -103,7 +115,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 当前容器滚动外界可调节的系列
+         * Adjustable series of current container rolling outside.
          */
         $scrollFactor = 1.0;
 
@@ -111,10 +123,12 @@ namespace eui.sys {
          * @private
          */
         private target:egret.IEventDispatcher;
+
         /**
          * @private
          */
         private updateFunction:(scrollPos:number)=>void;
+
         /**
          * @private
          */
@@ -124,38 +138,46 @@ namespace eui.sys {
          * @private
          */
         private previousTime:number = 0;
+
         /**
          * @private
          */
         private velocity:number = 0;
+
         /**
          * @private
          */
         private previousVelocity:number[] = [];
+
         /**
          * @private
          */
         private currentPosition:number = 0;
+
         /**
          * @private
          */
         private previousPosition:number = 0;
+
         /**
          * @private
          */
         private currentScrollPos:number = 0;
+
         /**
          * @private
          */
         private maxScrollPos:number = 0;
+
         /**
          * @private
-         * 触摸按下时的偏移量
+         * Offset when touch is pressed.
          */
         private offsetPoint:number = 0;
+
         /**
          * @private
-         * 停止触摸时继续滚动的动画实例
+         * Animation instance that continues to scroll when you stop touching.
          */
         private animation:sys.Animation;
 
@@ -163,7 +185,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 正在播放缓动动画的标志。
+         * The sign of the slow motion animation is playing.
          */
         public isPlaying():boolean {
             return this.animation.isPlaying;
@@ -171,7 +193,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 如果正在执行缓动滚屏，停止缓动。
+         * If you are performing a jog scroll, stop the jog.
          */
         public stop():void {
             this.animation.stop();
@@ -183,7 +205,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * true表示已经调用过start方法。
+         * True means that the start method has been called.
          */
         public isStarted():boolean {
             return this.started;
@@ -191,8 +213,10 @@ namespace eui.sys {
 
         /**
          * @private
-         * 开始记录位移变化。注意：当使用完毕后，必须调用 finish() 方法结束记录，否则该对象将无法被回收。
-         * @param touchPoint 起始触摸位置，以像素为单位，通常是stageX或stageY。
+         * Start recording displacement changes.
+         * Note: When finished using, you must call the finish () method to end the recording,
+         * otherwise the object cannot be recycled.
+         * @param touchPoint The starting touch position, in pixels, usually stageX or stageY.
          */
         public start(touchPoint:number):void {
             this.started = true;
@@ -206,8 +230,8 @@ namespace eui.sys {
 
         /**
          * @private
-         * 更新当前移动到的位置
-         * @param touchPoint 当前触摸位置，以像素为单位，通常是stageX或stageY。
+         * Update the current location.
+         * @param touchPoint The current touch position, in pixels, usually stageX or stageY.
          */
         public update(touchPoint:number, maxScrollValue:number, scrollValue):void {
             maxScrollValue = Math.max(maxScrollValue, 0);
@@ -238,9 +262,11 @@ namespace eui.sys {
 
         /**
          * @private
-         * 停止记录位移变化，并计算出目标值和继续缓动的时间。
-         * @param currentScrollPos 容器当前的滚动值。
-         * @param maxScrollPos 容器可以滚动的最大值。当目标值不在 0~maxValue之间时，将会应用更大的摩擦力，从而影响缓动时间的长度。
+         * Stop recording displacement changes, and calculate the target value and the time to continue easing.
+         * @param currentScrollPos The current scroll value of the container.
+         * @param maxScrollPos The maximum value that the container can scroll.
+         * When the target value is not between 0 ~ maxValue, greater friction will be applied, which will
+         * affect the length of the slow motion time.
          */
         public finish(currentScrollPos:number, maxScrollPos:number):void {
             egret.stopTick(this.onTick, this);
@@ -286,7 +312,7 @@ namespace eui.sys {
                 posTo = event.toPos;
             }
             if (duration > 0) {
-                //如果取消了回弹,保证动画之后不会超出边界
+                // If the rebound is canceled, ensure that the border will not be exceeded after the animation.
                 if (!this.$bounces) {
                     if (posTo < 0) {
                         posTo = 0;
@@ -304,7 +330,6 @@ namespace eui.sys {
 
         /**
          * @private
-         *
          * @param timeStamp
          * @returns
          */
@@ -322,9 +347,9 @@ namespace eui.sys {
             }
             return true;
         }
+
         /**
          * @private
-         *
          * @param animation
          */
         private finishScrolling(animation?:Animation):void {
@@ -342,7 +367,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 缓动到水平滚动位置
+         * Jog to the horizontal scroll position.
          */
         private throwTo(hspTo:number, duration:number = 500):void {
             let hsp = this.currentScrollPos;
@@ -359,7 +384,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 更新水平滚动位置
+         * Update horizontal scroll position.
          */
         private onScrollingUpdate(animation:Animation):void {
             this.currentScrollPos = animation.currentValue;

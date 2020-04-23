@@ -27,54 +27,30 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui {
-
+namespace eui
+{
     /**
      * Represents events that are dispatched when a item has been touched.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @includeExample  extension/eui/events/ItemTapEventExample.ts
-     * @language en_US
+     * @includeExample extension/eui/events/ItemTapEventExample.ts
      */
-    /**
-     * 列表项触碰事件
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample  extension/eui/events/ItemTapEventExample.ts
-     * @language zh_CN
-     */
-    export class ItemTapEvent extends egret.Event {
+    export class ItemTapEvent extends egret.Event
+    {
         /**
-         * The type of the event object for an <code>itemTap</code> event.
+         * The type of the event object for an *itemTap* event.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
          */
-        /**
-         * <code>itemTap</code> 事件的对象类型。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
-         */
-        public static ITEM_TAP:string = "itemTap";
+        public static ITEM_TAP = "itemTap";
 
         /**
          * The item in the data provider of the associated item.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 触发触摸事件的项呈示器数据源项。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public item:any = null;
 
@@ -83,14 +59,6 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 触发触摸事件的项呈示器。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public itemRenderer:IItemRenderer = null;
 
@@ -99,20 +67,10 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 触发触摸事件的项索引
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public itemIndex:number = -1;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -123,29 +81,14 @@ namespace eui {
         }
 
         /**
-         * Dispatch an event with specified EventDispatcher. The dispatched event will be cached in the object pool,
-         * for the next cycle of reuse.
-         *
+         * Dispatch an event with specified EventDispatcher.
+         * The dispatched event will be cached in the object pool, for the next cycle of reuse.
          * @param target the target of event dispatcher.
          * @param eventType The event type; indicates the action that triggered the event.
          * @param itemRenderer The item renderer in the list of the associated item.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 使用指定的 EventDispatcher 对象来抛出事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
-         *
-         * @param target 事件派发目标
-         * @param eventType 事件类型；指示触发事件的动作。
-         * @param itemRenderer 触发触摸事件的项呈示器。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public static dispatchItemTapEvent(target:egret.IEventDispatcher, eventType:string, itemRenderer?:IItemRenderer):boolean {
             if (!target.hasEventListener(eventType)) {
@@ -160,5 +103,4 @@ namespace eui {
             return result;
         }
     }
-
 }

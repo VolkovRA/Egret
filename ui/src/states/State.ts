@@ -27,8 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace eui {
+namespace eui
+{
 
     /**
      * The State class defines a view state, a particular view of a component.
@@ -40,45 +40,17 @@ namespace eui {
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @language en_US
      */
-    /**
-     * State 类定义视图状态，即组件的特定视图。
-     *
-     * 例如，产品缩略图可以有两个视图状态，包含最少信息的基本视图状态和包含附加信息的丰富视图状态。
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
-     */
-    export class State extends egret.HashObject {
+    export class State extends egret.HashObject
+    {
         /**
          * Constructor.
-         *
-         * @param name The name of the view state.
-         * State names must be unique for a given component.
-         * This property must be set.
-         * @param overrides The overrides for this view state, as an Array of objects that implement
-         * the IOverride interface. These overrides are applied in order when the
-         * state is entered, and removed in reverse order when the state is exited.
-         *
+         * @param name The name of the view state. State names must be unique for a given component. This property must be set.
+         * @param overrides The overrides for this view state, as an Array of objects that implement the IOverride interface.
+         * These overrides are applied in order when the state is entered, and removed in reverse order when the state is exited.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 创建一个State实例。
-         *
-         * @param name 视图状态的名称。给定组件的状态名称必须唯一。必须设置此属性。
-         * @param overrides 该视图状态的覆盖，表现为实现 IOverride 接口的对象的数组。
-         * 这些覆盖在进入状态时按顺序应用，在退出状态时按相反的顺序删除。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor(name:string, overrides:IOverride[]=[]) {
             super();
@@ -90,54 +62,26 @@ namespace eui {
          * The name of the view state.
          * State names must be unique for a given component.
          * This property must be set.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 视图状态的名称。给定组件的状态名称必须唯一。必须设置此属性。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public name:string;
 
         /**
-         * The overrides for this view state, as an Array of objects that implement
-         * the IOverride interface. These overrides are applied in order when the
-         * state is entered, and removed in reverse order when the state is exited.
-         *
+         * The overrides for this view state, as an Array of objects that implement the IOverride interface.
+         * These overrides are applied in order when the state is entered, and removed in reverse order when the state is exited.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 该视图状态的覆盖，表现为实现 IOverride 接口的对象的数组。
-         * 这些覆盖在进入状态时按顺序应用，在退出状态时按相反的顺序删除。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public overrides:IOverride[];
+
         /**
          * The state groups that this view state belongs to as an array of String.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 此视图状态作为 string 数组所属的状态组。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public stateGroups:string[];
 
@@ -146,14 +90,6 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 初始化视图状态
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public initialize(host:any, stage:egret.Stage):void {
             let overrides = this.overrides;
@@ -170,16 +106,15 @@ namespace eui {
             }
         }
     }
-
 }
 
-namespace eui.sys {
-
+namespace eui.sys
+{
     /**
      * @private
      */
-    export class StateClient {
-
+    export class StateClient
+    {
         /**
          * @private
          */
@@ -187,7 +122,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 为此组件定义的视图状态。
+         * The view state defined for this component.
          */
         public get states():eui.State[] {
             return this.$stateValues.states;
@@ -212,7 +147,8 @@ namespace eui.sys {
 
         /**
          * @private
-         * 组件的当前视图状态。将其设置为 "" 或 null 可将组件重置回其基本状态。
+         * The current view state of the component.
+         * Set it to "" or null to reset the component back to its basic state.
          */
         public get currentState():string {
             return this.$stateValues.currentState;
@@ -227,7 +163,8 @@ namespace eui.sys {
 
         /**
          * @private
-         * 应用当前的视图状态。子类覆盖此方法在视图状态发生改变时执行相应更新操作。
+         * Apply the current view state.
+         * Subclasses override this method to perform corresponding update operations when the view state changes.
          */
         private commitCurrentState():void {
             let values = this.$stateValues;
@@ -271,8 +208,8 @@ namespace eui.sys {
 
         /**
          * @private
-         * 返回是否含有指定名称的视图状态
-         * @param stateName 要检查的视图状态名称
+         * Returns whether the view state contains the specified name.
+         * @param stateName The name of the view state to check.
          */
         public hasState(stateName:string):boolean {
             return !!this.$stateValues.statesMap[stateName];
@@ -280,7 +217,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 初始化所有视图状态
+         * Initialize all view states.
          */
         private initializeStates(stage:egret.Stage):void {
             this.$stateValues.intialized = true;
@@ -295,8 +232,8 @@ namespace eui.sys {
     /**
      * @private
      */
-    export class StateValues {
-
+    export class StateValues
+    {
         /**
          * @private
          */

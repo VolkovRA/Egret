@@ -27,10 +27,10 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui {
-
-    export interface IAssetAdapter {
-
+namespace eui
+{
+    export interface IAssetAdapter
+    {
         getAsset(source: string, callBack: (content: any, source: string) => void, thisObject: any): void;
     }
 }

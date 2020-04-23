@@ -27,8 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui.sys {
-
+namespace eui.sys
+{
     let STATE = "eui.State";
     let ADD_ITEMS = "eui.AddItems";
     let SET_PROPERTY = "eui.SetProperty";
@@ -37,13 +37,12 @@ namespace eui.sys {
 
     /**
      * @private
-     * 代码生成工具基类
+     * Code generation tool base class.
      */
-    export class CodeBase {
-
+    export class CodeBase
+    {
         /**
          * @private
-         *
          * @returns
          */
         public toCode():string {
@@ -57,7 +56,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 获取缩进字符串
+         * Get indented string.
          */
         public getIndent(indent?:number):string {
             if (indent === void 0)
@@ -70,38 +69,38 @@ namespace eui.sys {
         }
     }
 
-
     /**
      * @private
      */
-    export class EXClass extends CodeBase {
+    export class EXClass extends CodeBase
+    {
+        /**
+         * @private
+         * Constructor code block.
+         */
+        public constructCode:EXCodeBlock;
 
         /**
          * @private
-         * 构造函数代码块
-         */
-        public constructCode:EXCodeBlock;
-        /**
-         * @private
-         * 类名,不包括模块名
+         * Class name, excluding module name.
          */
         public className:string = "";
 
         /**
          * @private
-         * 父类类名,包括完整模块名
+         * Parent class name, including full module name.
          */
         public superClass:string = "";
 
         /**
          * @private
-         * 内部类区块
+         * Internal block.
          */
         private innerClassBlock:EXClass[] = [];
 
         /**
          * @private
-         * 添加一个内部类
+         * Add an inner class.
          */
         public addInnerClass(clazz:EXClass):void {
             if (this.innerClassBlock.indexOf(clazz) == -1) {
@@ -111,13 +110,13 @@ namespace eui.sys {
 
         /**
          * @private
-         * 变量定义区块
+         * Variable definition block.
          */
         private variableBlock:EXVariable[] = [];
 
         /**
          * @private
-         * 添加变量
+         * Add variables.
          */
         public addVariable(variableItem:EXVariable):void {
             if (this.variableBlock.indexOf(variableItem) == -1) {
@@ -127,7 +126,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 根据变量名获取变量定义
+         * Get variable definition based on variable name.
          */
         public getVariableByName(name:string):EXVariable {
             let list = this.variableBlock;
@@ -143,13 +142,13 @@ namespace eui.sys {
 
         /**
          * @private
-         * 函数定义区块
+         * Function definition block.
          */
         private functionBlock:EXFunction[] = [];
 
         /**
          * @private
-         * 添加函数
+         * Add function.
          */
         public addFunction(functionItem:EXFunction):void {
             if (this.functionBlock.indexOf(functionItem) == -1) {
@@ -159,7 +158,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 根据函数名返回函数定义块
+         * Return function definition block based on function name.
          */
         public getFuncByName(name:string):EXFunction {
             let list = this.functionBlock;
@@ -175,17 +174,15 @@ namespace eui.sys {
 
         /**
          * @private
-         *
          * @returns
          */
         public toCode():string {
-
             let indent = this.indent;
             let indentStr = this.getIndent(indent);
             let indent1Str = this.getIndent(indent + 1);
             let indent2Str = this.getIndent(indent + 2);
 
-            //打印类起始块
+            // Print class start block
             let returnStr = indentStr + "(function (";
             if (this.superClass) {
                 returnStr += "_super) {\n" + indent1Str + "__extends(" + this.className + ", _super);\n";
@@ -194,7 +191,7 @@ namespace eui.sys {
                 returnStr += ") {\n";
             }
 
-            //打印内部类列表
+            // Print a list of internal classes
             let innerClasses = this.innerClassBlock;
             let length = innerClasses.length;
             for (let i = 0; i < length; i++) {
@@ -208,7 +205,7 @@ namespace eui.sys {
                 returnStr += indent2Str + "_super.call(this);\n";
             }
 
-            //打印变量列表
+            // Print variable list
             let variables = this.variableBlock;
             length = variables.length;
             for (let i = 0; i < length; i++) {
@@ -218,7 +215,7 @@ namespace eui.sys {
                 }
             }
 
-            //打印构造函数
+            // Print constructor
             if (this.constructCode) {
                 let codes = this.constructCode.toCode().split("\n");
                 length = codes.length;
@@ -230,7 +227,7 @@ namespace eui.sys {
             returnStr += indent1Str + "}\n";
             returnStr += indent1Str + "var _proto = " + this.className + ".prototype;\n\n";
 
-            //打印函数列表
+            // Print function list
             let functions = this.functionBlock;
             length = functions.length;
             for (let i = 0; i < length; i++) {
@@ -239,7 +236,7 @@ namespace eui.sys {
                 returnStr += functionItem.toCode() + "\n";
             }
 
-            //打印类结尾
+            // Print end of class
             returnStr += indent1Str + "return " + this.className + ";\n" + indentStr;
             if (this.superClass) {
                 returnStr += "})(" + this.superClass + ");";
@@ -249,19 +246,18 @@ namespace eui.sys {
             }
             return returnStr;
         }
-
     }
 
     /**
      * @private
      */
-    export class EXCodeBlock extends CodeBase {
-
+    export class EXCodeBlock extends CodeBase
+    {
         /**
          * @private
-         * 添加变量声明语句
-         * @param name 变量名
-         * @param value 变量初始值
+         * Add variable declaration statement.
+         * @param name Variable name.
+         * @param value Variable initial value.
          */
         public addVar(name:string, value?:string):void {
             let valueStr = value ? " = " + value : "";
@@ -270,10 +266,10 @@ namespace eui.sys {
 
         /**
          * @private
-         * 添加赋值语句
-         * @param target 要赋值的目标
-         * @param value 值
-         * @param prop 目标的属性(用“.”访问)，不填则是对目标赋值
+         * Add assignment statement.
+         * @param target Target to be assigned.
+         * @param value Value.
+         * @param prop The attribute of the target (accessed with "."), If not filled, it is assigned to the target.
          */
         public addAssignment(target:string, value:string, prop?:string):void {
             let propStr = prop ? "." + prop : "";
@@ -282,7 +278,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 添加返回值语句
+         * Add return value statement.
          */
         public addReturn(data:string):void {
             this.addCodeLine("return " + data + ";");
@@ -290,7 +286,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 添加一条空行
+         * Add a blank line.
          */
         public addEmptyLine():void {
             this.addCodeLine("");
@@ -298,7 +294,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 开始添加if语句块,自动调用startBlock();
+         * Start adding if statement blocks, and automatically call startBlock();
          */
         public startIf(expression:string):void {
             this.addCodeLine("if(" + expression + ")");
@@ -307,7 +303,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 开始else语句块,自动调用startBlock();
+         * Start the else statement block and automatically call startBlock();
          */
         public startElse():void {
             this.addCodeLine("else");
@@ -316,7 +312,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 开始else if语句块,自动调用startBlock();
+         * Tart else if statement block, automatically call startBlock();
          */
         public startElseIf(expression:string):void {
             this.addCodeLine("else if(" + expression + ")");
@@ -325,7 +321,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 添加一个左大括号，开始新的语句块
+         * Add a left brace to start a new statement block.
          */
         public startBlock():void {
             this.addCodeLine("{");
@@ -334,7 +330,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 添加一个右大括号,结束当前的语句块
+         * Add a closing brace to end the current statement block.
          */
         public endBlock():void {
             this.indent--;
@@ -343,9 +339,9 @@ namespace eui.sys {
 
         /**
          * @private
-         * 添加执行函数语句块
-         * @param functionName 要执行的函数名称
-         * @param args 函数参数列表
+         * Add execution function statement block.
+         * @param functionName The name of the function to be executed.
+         * @param args Function parameter list.
          */
         public doFunction(functionName:string, args:string[]):void {
             let argsStr = args.join(",");
@@ -359,7 +355,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 添加一行代码
+         * Add a line of code.
          */
         public addCodeLine(code:string):void {
             this.lines.push(this.getIndent() + code);
@@ -367,7 +363,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 添加一行代码到指定行
+         * Add a line of code to the specified line.
          */
         public addCodeLineAt(code:string, index:number):void {
             this.lines.splice(index, 0, this.getIndent() + code);
@@ -375,7 +371,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 是否存在某行代码内容
+         * Whether there is a line of code.
          */
         public containsCodeLine(code:string):boolean {
             return this.lines.indexOf(code) != -1;
@@ -383,7 +379,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 在结尾追加另一个代码块的内容
+         * Append another block of code at the end.
          */
         public concat(cb:EXCodeBlock):void {
             this.lines = this.lines.concat(cb.lines);
@@ -391,7 +387,6 @@ namespace eui.sys {
 
         /**
          * @private
-         *
          * @returns
          */
         public toCode():string {
@@ -402,11 +397,11 @@ namespace eui.sys {
     /**
      * @private
      */
-    export class EXFunction extends CodeBase {
-
+    export class EXFunction extends CodeBase
+    {
         /**
          * @private
-         * 代码块
+         * Code block.
          */
         public codeBlock:EXCodeBlock = null;
 
@@ -417,13 +412,12 @@ namespace eui.sys {
 
         /**
          * @private
-         * 函数名
+         * Function name.
          */
         public name:string = "";
 
         /**
          * @private
-         *
          * @returns
          */
         public toCode():string {
@@ -464,8 +458,8 @@ namespace eui.sys {
     /**
      * @private
      */
-    export class EXVariable extends CodeBase {
-
+    export class EXVariable extends CodeBase
+    {
         /**
          * @private
          */
@@ -478,18 +472,18 @@ namespace eui.sys {
 
         /**
          * @private
-         * 变量名
+         * Variable name.
          */
         public name:string;
+
         /**
          * @private
-         * 默认值
+         * Defaults.
          */
         public defaultValue:string;
 
         /**
          * @private
-         *
          * @returns
          */
         public toCode():string {
@@ -500,12 +494,11 @@ namespace eui.sys {
         }
     }
 
-
     /**
      * @private
      */
-    export class EXState extends CodeBase {
-
+    export class EXState extends CodeBase
+    {
         /**
          * @private
          */
@@ -518,7 +511,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 视图状态名称
+         * View state name.
          */
         public name:string = "";
 
@@ -539,7 +532,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 添加一个覆盖
+         * Add an overlay.
          */
         public addOverride(item:CodeBase):void {
             if (item instanceof EXAddItems)
@@ -550,7 +543,6 @@ namespace eui.sys {
 
         /**
          * @private
-         *
          * @returns
          */
         public toCode():string {
@@ -582,7 +574,8 @@ namespace eui.sys {
     /**
      * @private
      */
-    export class EXAddItems extends CodeBase {
+    export class EXAddItems extends CodeBase
+    {
         /**
          * @private
          */
@@ -596,31 +589,30 @@ namespace eui.sys {
 
         /**
          * @private
-         * 要添加的实例
+         * The instance to be added.
          */
         public target:string;
 
         /**
          * @private
-         * 要添加到的属性
+         * The attribute to add to.
          */
         public property:string;
 
         /**
          * @private
-         * 添加的位置
+         * Added location.
          */
         public position:number;
 
         /**
          * @private
-         * 相对的显示元素
+         * Relative display element.
          */
         public relativeTo:string;
 
         /**
          * @private
-         *
          * @returns
          */
         public toCode():string {
@@ -632,7 +624,8 @@ namespace eui.sys {
     /**
      * @private
      */
-    export class EXSetProperty extends CodeBase {
+    export class EXSetProperty extends CodeBase
+    {
         /**
          * @private
          */
@@ -645,35 +638,36 @@ namespace eui.sys {
 
         /**
          * @private
-         * 要修改的属性名
+         * The property name to be modified.
          */
         public name:string;
 
         /**
          * @private
-         * 目标实例名
+         * Target instance name.
          */
         public target:string;
 
         /**
          * @private
-         * 属性值
+         * Attribute value.
          */
         public value:string;
 
         /**
          * @private
-         *
          * @returns
          */
         public toCode():string {
             return "new " + SET_PROPERTY + "(\"" + this.target + "\",\"" + this.name + "\"," + this.value + ")";
         }
     }
+
     /**
      * @private
      */
-    export class EXSetStateProperty extends CodeBase {
+    export class EXSetStateProperty extends CodeBase
+    {
         /**
          * @private
          */
@@ -692,30 +686,30 @@ namespace eui.sys {
 
         /**
          * @private
-         * 目标实例名
+         * Target instance name.
          */
         public target:string;
+
         /**
          * @private
-         * 目标属性名
+         * Target attribute name.
          */
         public property:string;
 
         /**
          * @private
-         * 绑定的模板列表
+         * List of bound templates.
          */
         public templates:string[];
 
         /**
          * @private
-         * chainIndex是一个索引列表，每个索引指向templates中的一个值，该值是代表属性链。
+         * ChainIndex is a list of indexes, and each index points to a value in templates, which represents the attribute chain.
          */
         public chainIndex:number[];
 
         /**
          * @private
-         *
          * @returns
          */
         public toCode():string {
@@ -725,11 +719,12 @@ namespace eui.sys {
                 this.target + ",\"" + this.property + "\")";
         }
     }
+
     /**
      * @private
      */
-    export class EXBinding extends CodeBase {
-
+    export class EXBinding extends CodeBase
+    {
         /**
          * @private
          */
@@ -743,30 +738,30 @@ namespace eui.sys {
 
         /**
          * @private
-         * 目标实例名
+         * Target instance name.
          */
         public target:string;
+
         /**
          * @private
-         * 目标属性名
+         * Target attribute name.
          */
         public property:string;
+
         /**
          * @private
-         * 绑定的模板列表
+         * List of bound templates.
          */
         public templates:string[];
 
         /**
          * @private
-         * chainIndex是一个索引列表，每个索引指向templates中的一个值，该值是代表属性链。
+         * ChainIndex is a list of indexes, and each index points to a value in templates, which represents the attribute chain.
          */
         public chainIndex:number[];
 
-
         /**
          * @private
-         *
          * @returns
          */
         public toCode():string {

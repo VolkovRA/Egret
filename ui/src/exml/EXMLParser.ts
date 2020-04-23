@@ -27,11 +27,11 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui.sys {
-
+namespace eui.sys
+{
     /**
      * @private
-     * EXML配置管理器实例
+     * EXML configuration manager example.
      */
     export let exmlConfig:EXMLConfig;
 
@@ -57,13 +57,12 @@ namespace eui.sys {
     /**
      * @private
      */
-    export class EXMLParser {
-
+    export class EXMLParser
+    {
         /**
          * @private
          */
         public constructor() {
-
             if (DEBUG) {
                 this.repeatedIdMap = {};
                 this.getRepeatedIds = getRepeatedIds;
@@ -74,17 +73,20 @@ namespace eui.sys {
 
         /**
          * @private
-         * 获取重复的ID名
+         * Get duplicate ID name.
          */
         public getRepeatedIds:(xml:egret.XML)=>string[];
+
         /**
          * @private
          */
         private getIds:(xml:any, result:string[])=>void;
+
         /**
          * @private
          */
         private repeatedIdMap:any;
+
         /**
          * @private
          */
@@ -92,31 +94,36 @@ namespace eui.sys {
 
         /**
          * @private
-         * 当前类
+         * Current class.
          */
         private currentClass:EXClass;
+
         /**
-         * 当前exml的根节点是否为Skin
+         * Whether the root node of the current exml is Skin.
          */
         private isSkinClass:boolean;
+
         /**
          * @private
-         * 当前编译的类名
+         * The currently compiled class name.
          */
         private currentClassName:string;
+
         /**
          * @private
-         * 当前要编译的EXML文件
+         * The current EXML file to be compiled.
          */
         private currentXML:egret.XML;
+
         /**
          * @private
-         * id缓存字典
+         * ID Cache dictionary.
          */
         private idDic:any;
+
         /**
          * @private
-         * 状态代码列表
+         * Status code list.
          */
         private stateCode:EXState[];
 
@@ -124,9 +131,10 @@ namespace eui.sys {
          * @private
          */
         private stateNames:string[];
+
         /**
          * @private
-         * 需要单独创建的实例id列表
+         * List of instance ids that need to be created separately.
          */
         private stateIds:string[];
 
@@ -144,20 +152,21 @@ namespace eui.sys {
          * @private
          */
         private declarations:any;
+
         /**
          * @private
-         * 延迟赋值字典
+         * Deferred assignment dictionary.
          */
         private delayAssignmentDic:any = {};
 
         /**
          * @private
-         * 将已有javascript代码注册
-         * @param codeText 执行的javascript代码
-         * @param classStr 类名
+         * Register existing JavaScript code.
+         * @param codeText Javascript code executed.
+         * @param classStr Class name.
          */
         public $parseCode(codeText:string, classStr:string):{new():any} {
-            //传入的是编译后的js字符串
+            // The incoming JS string is compiled
             let className = classStr ? classStr : "$exmlClass" + innerClassCount++;
             let geval = eval;
             let clazz = geval(codeText);
@@ -189,8 +198,8 @@ namespace eui.sys {
 
         /**
          * @private
-         * 编译指定的XML对象为JavaScript代码。
-         * @param xmlData 要编译的EXML文件内容
+         * Compile the specified XML object to JavaScript code.
+         * @param xmlData The content of the EXML file to be compiled.
          *
          */
         public parse(text:string):{new():any} {
@@ -234,7 +243,8 @@ namespace eui.sys {
                     egret.log(code);
                     return null;
                 }
-            } else {
+            }
+            else {
                 clazz = geval(code);
             }
 
@@ -264,7 +274,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 编译指定的XML对象为CpClass对象。
+         * Compile the specified XML object as a CpClass object.
          */
         private parseClass(xmlData:egret.XML, className:string):EXClass {
             if (!exmlConfig) {
@@ -298,7 +308,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 开始编译
+         * Start compiling.
          */
         private startCompile():void {
             if (DEBUG) {
@@ -348,7 +358,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 添加必须的id
+         * Add required id.
          */
         private addIds(items:any):void {
             if (!items) {
@@ -396,7 +406,7 @@ namespace eui.sys {
                             this.skinParts.push(id);
                         }
                         this.createVarForNode(node);
-                        if (this.isStateNode(node))//检查节点是否只存在于一个状态里，需要单独实例化
+                        if (this.isStateNode(node)) // Check if the node only exists in one state, need to be instantiated separately
                             this.stateIds.push(id);
                     }
                     else {
@@ -410,7 +420,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 是否为内部类。
+         * Whether it is an internal class.
          */
         private isInnerClass(node:egret.XML):boolean {
             if (node.hasOwnProperty("isInnerClass")) {
@@ -447,7 +457,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 检测指定节点的属性是否含有视图状态
+         * Check if the attribute of the specified node contains the view state.
          */
         private containsState(node:egret.XML):boolean {
             let attributes = node.attributes;
@@ -467,7 +477,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 为指定节点创建id属性
+         * Create an id attribute for the specified node.
          */
         private createIdForNode(node:egret.XML):void {
             let idName = this.getNodeId(node);
@@ -481,7 +491,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 获取节点ID
+         * Get node ID.
          */
         private getNodeId(node:egret.XML):string {
             if (node.attributes["id"])
@@ -491,7 +501,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 为指定节点创建变量
+         * Create a variable for the specified node.
          */
         private createVarForNode(node:egret.XML):void {
             let moduleName = this.getClassNameOfNode(node);
@@ -503,7 +513,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 为指定节点创建初始化函数,返回函数名引用
+         * Create an initialization function for the specified node and return the function name reference.
          */
         private createFuncForNode(node:egret.XML):string {
             let className = node.localName;
@@ -548,7 +558,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 检查目标类名是否是基本数据类型
+         * Check if the target class name is a basic data type.
          */
         private isBasicTypeData(className:string):boolean {
             return basicTypes.indexOf(className) != -1;
@@ -556,7 +566,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 为指定基本数据类型节点实例化,返回实例化后的值。
+         * Instantiate the node for the specified basic data type and return the instantiated value.
          */
         private createBasicTypeForNode(node:egret.XML):string {
             let className = node.localName;
@@ -603,14 +613,14 @@ namespace eui.sys {
 
         /**
          * @private
-         * 将节点属性赋值语句添加到代码块
+         * Add the node attribute assignment statement to the code block.
          */
         private addAttributesToCodeBlock(cb:EXCodeBlock, varName:string, node:egret.XML):void {
             let key:string;
             let value:string;
             let attributes = node.attributes;
             let keyList:string[] = Object.keys(attributes);
-            keyList.sort();//排序一下防止出现随机顺序
+            keyList.sort(); // Sort it to prevent random order.
             let length = keyList.length;
             for (let i = 0; i < length; i++) {
                 key = keyList[i];
@@ -623,7 +633,7 @@ namespace eui.sys {
                 if (!value) {
                     continue;
                 }
-                if (this.currentClass.getVariableByName(value)) {//赋的值对象是一个id
+                if (this.currentClass.getVariableByName(value)) { // The assigned value object is an ID.
                     let THIS = "this.";
                     let id = attributes.id;
                     let codeLine = THIS + id + " = t;";
@@ -654,7 +664,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 初始化子项
+         * Initialize child.
          */
         private initlizeChildNode(node:egret.XML, cb:EXCodeBlock, varName:string):void {
             let children:any[] = node.children;
@@ -730,7 +740,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 解析内部类节点，并返回类名。
+         * Parse the internal class node and return the class name.
          */
         private parseInnerClass(node:egret.XML):string {
             let parser = exmlParserPool.pop();
@@ -746,7 +756,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 添加多个子节点到指定的属性
+         * Add multiple child nodes to the specified attribute.
          */
         private addChildrenToProp(children:any[], type:string, prop:string,
                                   cb:EXCodeBlock, varName:string, errorInfo:string,
@@ -840,7 +850,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 指定节点是否是属性节点
+         * Specifies whether the node is an attribute node.
          */
         private isProperty(node:egret.XML):boolean {
             if (node.hasOwnProperty("isProperty")) {
@@ -864,10 +874,9 @@ namespace eui.sys {
             return result;
         }
 
-
         /**
          * @private
-         * 是否是普通赋值的key
+         * Whether it is the key of ordinary assignment.
          */
         private isNormalKey(key:string):boolean {
             if (!key || key.indexOf(".") != -1
@@ -878,7 +887,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 格式化key
+         * Format key.
          */
         private formatKey(key:string, value:string):string {
             if (value.indexOf("%") != -1) {
@@ -892,13 +901,13 @@ namespace eui.sys {
 
         /**
          * @private
-         * 格式化值
+         * Formatted value.
          */
         private formatValue(key:string, value:string, node:egret.XML):string {
             if (!value) {
                 value = "";
             }
-            let stringValue = value;//除了字符串，其他类型都去除两端多余空格。
+            let stringValue = value; // Except for strings, other types remove extra spaces at both ends.
             value = value.trim();
             let className = this.getClassNameOfNode(node);
             let type:string = exmlConfig.getPropertyType(key, className);
@@ -976,7 +985,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 格式化字符串
+         * Format string.
          */
         private formatString(value:string):string {
             value = this.unescapeHTMLEntity(value);
@@ -1029,16 +1038,16 @@ namespace eui.sys {
         }
 
         private parseTemplates(value:string):string[] {
-            //仅仅是表达式相加 如:{a.b+c.d}
+            // Just add expressions like: {a.b + c.d}
             if (value.indexOf("'") == -1) {
                 return value.split("+");
             }
-            //包含文本的需要提取文本并对文本进行处理
-            let isSingleQuoteLeak = false;//是否缺失单引号
+            // Contains text needs to extract text and process text
+            let isSingleQuoteLeak = false; // Whether single quotes are missing
             let trimText = "";
             value = value.split("\\\'").join("\v0\v");
             while (value.length > 0) {
-                //'成对出现 这是第一个
+                // Appear in pairs, this is the first
                 let index = value.indexOf("'");
                 if (index == -1) {
                     trimText += value;
@@ -1046,7 +1055,7 @@ namespace eui.sys {
                 }
                 trimText += value.substring(0, index + 1);
                 value = value.substring(index + 1);
-                //'成对出现 这是第二个
+                // Appear in pairs, this is the second
                 index = value.indexOf("'");
                 if (index == -1) {
                     index = value.length - 1;
@@ -1057,7 +1066,7 @@ namespace eui.sys {
                 value = value.substring(index + 1);
             }
             value = trimText.split("\v0\v").join("\\\'");
-            //补全缺失的单引号
+            // Complete missing single quotes
             if (isSingleQuoteLeak) {
                 value += "'";
             }
@@ -1071,8 +1080,7 @@ namespace eui.sys {
 
         /**
          * @private
-         /**
-         * 转换HTML实体字符为普通字符
+         * Convert HTML entity characters to ordinary characters.
          */
         private unescapeHTMLEntity(str:string):string {
             if (!str)
@@ -1089,7 +1097,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 创建构造函数
+         * Create a constructor.
          */
         private createConstructFunc():void {
             let cb:EXCodeBlock = new EXCodeBlock;
@@ -1146,7 +1154,7 @@ namespace eui.sys {
 
 
             this.currentXML.attributes.id = "";
-            //生成视图状态代码
+            // Generate view status codes
             this.createStates(this.currentXML);
             let states:EXState[];
             let node = this.currentXML;
@@ -1177,7 +1185,7 @@ namespace eui.sys {
                 }
             }
 
-            //打印视图状态初始化代码
+            // Print view state initialization code
             let stateCode = this.stateCode;
             length = stateCode.length;
             if (length > 0) {
@@ -1202,7 +1210,7 @@ namespace eui.sys {
                 cb.addCodeLine("];");
             }
 
-            //生成绑定代码
+            // Generate binding code
             let bindings = this.bindings;
             length = bindings.length;
             if (length > 0) {
@@ -1218,7 +1226,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 是否含有includeIn和excludeFrom属性
+         * Whether to include includeIn and excludeFrom attributes.
          */
         private isStateNode(node:egret.XML):boolean {
             let attributes = node.attributes;
@@ -1227,7 +1235,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 获取视图状态名称列表
+         * Get a list of view state names.
          */
         private getStateNames():void {
             let root = this.currentXML;
@@ -1318,7 +1326,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 解析视图状态代码
+         * Parsing view status codes.
          */
         private createStates(parentNode:egret.XML):void {
             let items:any[] = parentNode.children;
@@ -1408,7 +1416,7 @@ namespace eui.sys {
                             let stateLength = excludeNames.length;
                             for (let j = 0; j < stateLength; j++) {
                                 let name:string = excludeNames[j];
-                                this.getStateByName(name, node);//检查exlcudeFrom是否含有未定义的视图状态名
+                                this.getStateByName(name, node); // Check if exlcudeFrom contains undefined view state name.
                             }
                             stateLength = this.stateCode.length;
                             for (let j = 0; j < stateLength; j++) {
@@ -1474,7 +1482,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 检查指定的ID是否创建了类成员变量，若没创建则为其创建。
+         * Check whether the specified ID has created a class member variable, if not, create it for it.
          */
         private checkIdForState(node:egret.XML):void {
             if (!node || this.currentClass.getVariableByName(node.attributes.id)) {
@@ -1497,7 +1505,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 通过视图状态名称获取对应的视图状态
+         * Get the corresponding view state by the view state name.
          */
         private getStateByName(name:string, node:egret.XML):EXState[] {
             let states:EXState[] = [];
@@ -1533,7 +1541,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 寻找节点的临近节点ID和位置
+         * Find the neighboring node ID and location of the node.
          */
         private findNearNodeId(node:egret.XML):any {
             let parentNode:egret.XML = node.parent;
@@ -1581,10 +1589,9 @@ namespace eui.sys {
             return {position: sys.AddPosition.LAST, relativeTo: targetId};
         }
 
-
         /**
          * @private
-         * 获取节点的完整类名，包括模块名
+         * Get the full class name of the node, including the module name.
          */
         private getClassNameOfNode(node:egret.XML):string {
             let className = exmlConfig.getClassNameById(node.localName, node.namespace);
@@ -1598,7 +1605,7 @@ namespace eui.sys {
 
     if (DEBUG) {
         /**
-         * 获取重复的ID名
+         * Get duplicate ID name.
          */
         function getRepeatedIds(xml:egret.XML):string[] {
             let result:string[] = [];
@@ -1656,7 +1663,7 @@ namespace eui.sys {
         }
 
         /**
-         * 清理声明节点里的状态标志
+         * Clean up the status flags in the declaration node.
          */
         function checkDeclarations(declarations:egret.XML, list:string[]):void {
             if (!declarations) {

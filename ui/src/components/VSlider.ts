@@ -27,9 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace eui {
-
+namespace eui
+{
     /**
      * The VSlider (vertical slider) control lets users select a value
      * by moving a slider thumb between the end points of the slider track.
@@ -39,43 +38,21 @@ namespace eui {
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @includeExample  extension/eui/components/VSliderExample.ts
-     * @language en_US
+     * @includeExample extension/eui/components/VSliderExample.ts
      */
-    /**
-     * 使用 VSlider（垂直滑块）控件，用户可通过在滑块轨道的端点之间移动滑块来选择值。
-     * 滑块的当前值由滑块端点（对应于滑块的最小值和最大值）之间滑块的相对位置确定。
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample  extension/eui/components/VSliderExample.ts
-     * @language zh_CN
-     */
-    export class VSlider extends SliderBase {
+    export class VSlider extends SliderBase
+    {
         /**
          * Constructor.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 构造函数。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -92,7 +69,6 @@ namespace eui {
 
         /**
          * @private
-         * 
          * @returns 
          */
         private getThumbRange():number {
@@ -103,10 +79,7 @@ namespace eui {
             return thumbRange - bounds.height;
         }
 
-
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -134,5 +107,4 @@ namespace eui {
             }
         }
     }
-
 }

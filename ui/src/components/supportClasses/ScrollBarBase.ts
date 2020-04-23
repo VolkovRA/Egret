@@ -27,49 +27,26 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace eui {
-
+namespace eui
+{
     /**
-     * The ScrollBarBase class helps to position
-     * the portion of data that is displayed when there is too much data
-     * to fit in a display area.
+     * The ScrollBarBase class helps to position the portion of data that is displayed
+     * when there is too much data to fit in a display area.
      * The ScrollBarBase class displays a pair of viewport and a thumb.
-     * viewport is a instance that implements IViewport.
+     * Viewport is a instance that implements IViewport.
      *
      * @see eui.IViewport
-     *
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @language en_US
      */
-    /**
-     * <code>ScrollBarBase</code> 滚动条基类，该类帮助在因数据太多而不能在显示区域完全显示时定位显示的数据部分。
-     * ScrollBarBase 类显示视区的一部分和一个指示滑块。
-     * 视区是一个IViewport接口实现的实例。
-     *
-     * @see eui.IViewport
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
-     */
-    export class ScrollBarBase extends Component {
+    export class ScrollBarBase extends Component
+    {
         /**
          * Constructor.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 创建一个ScrollBarBase实例。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
@@ -77,19 +54,9 @@ namespace eui {
 
         /**
          * [SkinPart] Thumb display object.
-         * @skinPart
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * [SkinPart]滑块显示对象。
-         * @skinPart
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public thumb:eui.UIComponent = null;
 
@@ -101,45 +68,19 @@ namespace eui {
         /**
          * The viewport controlled by this scrollbar.
          *
-         * If a viewport is specified, then changes to its actual size, content
-         * size, and scroll position cause the corresponding ScrollBarBase methods to
-         * run:
-         * <ul>
-         *     <li><code>onViewportResize()</code></li>
-         *     <li><code>onPropertyChanged()</code></li>
-         * </ul><p/>
+         * If a viewport is specified, then changes to its actual size, content size,
+         * and scroll position cause the corresponding ScrollBarBase methods to run:
+         * * *onViewportResize()*
+         * * *onPropertyChanged()*
          *
-         * The VScrollBar and HScrollBar classes override these methods to keep their properties in
-         * sync with the viewport.
-         *
+         * The VScrollBar and HScrollBar classes override these methods to keep their
+         * properties in sync with the viewport.
          * @default null
          * @see eui.VScrollBar
          * @see eui.HScrollBar
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 由该滚动条控制的视区。
-         *
-         * 如果指定了视区，则对其实际大小、内容大小和滚动位置的更改会导致运行相对应的 ScrollBarBase 方法：
-         * <ul>
-         *     <li><code>onViewportResize()</code></li>
-         *     <li><code>onPropertyChanged()</code></li>
-         * </ul><p/>
-         *
-         * VScrollBar 和 HScrollBar 类需要重写这些方法以保证属性与视区的同步。
-         *
-         * @default null
-         * @see eui.VScrollBar
-         * @see eui.HScrollBar
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get viewport():IViewport {
             return this.$viewport;
@@ -166,7 +107,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param event
          */
         private onViewportResize(event?:egret.Event):void{
@@ -179,34 +119,16 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 视区属性发生改变。
-         * @param event
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected onPropertyChanged(event:eui.PropertyEvent):void{
-
         }
+
         /**
          * Whether the scrollbar can be autohide.
          * @version Egret 3.0.2
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 是否自动隐藏 scrollbar
-         * @version Egret 3.0.2
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public autoVisibility:boolean = true;
     }
-
 }

@@ -1,28 +1,28 @@
-namespace eui {
-
+namespace eui
+{
     /**
      * @private
      */
-    export class ScrollerThrowEvent extends egret.Event {
-
-        public static THROW:string = "throw";
+    export class ScrollerThrowEvent extends egret.Event
+    {
+        public static THROW = "throw";
 
         /**
-         * 滚动区域当前滚动位置
+         * Scroll area current scroll position.
          */
         public currentPos:number;
 
         /**
-         * 要滚动到的位置
-         * 修改当前值会修改要滚动到得位置，但是当 moveFlag 为 false 时修改此值依然不会滚动，若此时依然要调整滚动区域的位置可以自己设置
+         * The position to scroll to modifying the current value will modify the position to be scrolled to,
+         * but when moveFlag is false, modifying this value will still not scroll.
+         * If you still want to adjust the position of the scroll area at this time, you can set it.
          */
         public toPos:number;
 
         /**
-         * 动画信息，可调节或修改
+         * Animation information, can be adjusted or modified.
          */
         //public tween;
-
 
         public constructor(type:string, bubbles?:boolean, cancelable?:boolean,currentPos?:number,toPos?:number) {
             super(type, bubbles, cancelable);

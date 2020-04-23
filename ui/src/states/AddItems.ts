@@ -27,65 +27,54 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui.sys {
-
+namespace eui.sys
+{
     /**
      * @private
      */
-    export const enum AddPosition {
+    export const enum AddPosition
+    {
         /**
          * @private
-         * 添加父级容器的底层
+         * Add the bottom layer of the parent container.
          */
         FIRST,
+
         /**
          * @private
-         * 添加在父级容器的顶层
+         * Add to the top level of the parent container.
          */
         LAST,
+
         /**
          * @private
-         * 添加在相对对象之前
+         * Add before relative object.
          */
         BEFORE,
+
         /**
          * @private
-         * 添加在相对对象之后
+         * Add after relative object.
          */
         AFTER
     }
 }
 
-namespace eui {
-
+namespace eui
+{
     /**
      * The operation of adding a state to view.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @language en_US
      */
-    /**
-     * 视图添加状态显示元素操作
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
-     */
-    export class AddItems implements IOverride {
+    export class AddItems implements IOverride
+    {
         /**
          * Constructor.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 创建一个AddItems实例
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor(target:string, propertyName:string, position:number, relativeTo:string) {
             this.target = target;
@@ -99,46 +88,23 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 要添加到的属性
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public propertyName:string;
 
         /**
-         * The position to be added. Valid values: "first","last","before","after"
+         * The position to be added.
+         * Valid values: "first","last","before","after".
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 添加的位置，有效值为: "first","last","before","after"
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public position:number;
 
         /**
-         * an instance name of relative visual element.
+         * An instance name of relative visual element.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 相对的显示元素的实例名
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public relativeTo:string;
 
@@ -147,20 +113,10 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 目标实例名
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public target:string;
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -196,8 +152,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -219,6 +173,4 @@ namespace eui {
             }
         }
     }
-
 }
-

@@ -27,16 +27,16 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui.sys {
-
+namespace eui.sys
+{
     let SOLUTION_TOLERANCE = 0.1;
     let MIN_MAX_TOLERANCE = 0.1;
 
     /**
      * @private
      */
-    export class MatrixUtil {
-
+    export class MatrixUtil
+    {
         /**
          * @private
          */
@@ -195,7 +195,6 @@ namespace eui.sys {
 
         return actualSize;
     }
-
 
     /**
      * @private

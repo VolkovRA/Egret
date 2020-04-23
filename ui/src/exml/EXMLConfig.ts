@@ -27,32 +27,31 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui.sys {
-
+namespace eui.sys
+{
     /**
      * @private
-     * EUI 命名空间
+     * EUI namespaces.
      */
     export let NS_S:string = "http://ns.egret.com/eui";
+
     /**
      * @private
-     * Wing命名空间
+     * Wing namespace.
      */
     export let NS_W:string = "http://ns.egret.com/wing";
+
     let coreClasses:string[] = ["Point","Matrix","Rectangle"];
     let basicTypes:string[] = ["Array", "boolean", "string", "number"];
-
     let MODULE_NAME = "eui.";
-
     let hashCount = 0;
-
     let properties: any = {};
 
     /**
      * @private
      */
-    export class EXMLConfig {
-
+    export class EXMLConfig
+    {
         /**
          * @private
          */
@@ -128,9 +127,9 @@ namespace eui.sys {
 
         /**
          * @private
-         * 根据类的短名ID和命名空间获取完整类名(以"."分隔)
-         * @param id 类的短名ID
-         * @param ns 命名空间
+         * Get the full class name based on the short name ID of the class and the namespace (separated by ".")
+         * @param id Class short name ID.
+         * @param ns Namespaces.
          */
         public getClassNameById(id:string, ns:string):string {
             if(ns==NS_S){
@@ -163,10 +162,10 @@ namespace eui.sys {
 
         /**
          * @private
-         * 根据ID获取对应的默认属性
-         * @param id 类的短名ID
-         * @param ns 命名空间
-         * @return 默认属性名
+         * Get the corresponding default attribute according to ID.
+         * @param id Class short name ID.
+         * @param ns Namespaces.
+         * @return Default property name.
          */
         public getDefaultPropById(id:string, ns:string):string {
             let className:string = this.getClassNameById(id, ns);
@@ -180,9 +179,9 @@ namespace eui.sys {
 
         /**
          * @private
-         * 获取指定属性的类型,返回基本数据类型："boolean","string","number","any"。
-         * @param property 属性名
-         * @param className 要查询的完整类名
+         * Get the type of the specified attribute and return the basic data types: "boolean", "string", "number", "any".
+         * @param property Attribute name.
+         * @param className The full class name to query.
          */
         public getPropertyType(property:string, className:string):string {
             if (className == "Object") {
@@ -213,7 +212,7 @@ namespace eui.sys {
 
     /**
      * @private
-     * 判断一个对象是数组
+     * Determine an object is an array.
      */
     function isArray(o:any):boolean {
         return Object.prototype.toString.call(o) === '[object Array]';
@@ -221,7 +220,7 @@ namespace eui.sys {
 
     /**
      * @private
-     * 获取一个类名对应的prototype引用
+     * Get a prototype reference corresponding to a class name.
      */
     function getPrototypeOf(className:string):any {
         let clazz = egret.getDefinitionByName(className);
@@ -233,7 +232,7 @@ namespace eui.sys {
 
     /**
      * @private
-     * 创建一个类名对应的实例
+     * Create an instance corresponding to the class name.
      */
     function getInstanceOf(clazz:any):any {
         if (!clazz) {
@@ -254,5 +253,4 @@ namespace eui.sys {
 
         return instance;
     }
-
 }

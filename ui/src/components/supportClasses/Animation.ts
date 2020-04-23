@@ -27,13 +27,10 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-
-namespace eui.sys {
-
+namespace eui.sys
+{
     /**
      * @private
-     * 
      * @param fraction 
      * @returns 
      */
@@ -43,9 +40,10 @@ namespace eui.sys {
 
     /**
      * @private
-     * 数值缓动工具类
+     * Numerical easing tools.
      */
-    export class Animation {
+    export class Animation
+    {
         /**
          * @private
          */
@@ -56,7 +54,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 此动画的缓动行为。设置为null意味着不使用缓动，默认值为 sineInOut
+         * The easing behavior of this animation. Set to null means no easing, the default value is sineInOut.
          */
         public easerFunction:(fraction:number)=>number = sineInOut;
 
@@ -67,53 +65,57 @@ namespace eui.sys {
 
         /**
          * @private
-         * 是否正在播放动画，不包括延迟等待和暂停的阶段
+         * Whether the animation is being played, excluding the stages of delayed waiting and pause.
          */
         public isPlaying:boolean = false;
 
         /**
          * @private
-         * 动画持续时间,单位毫秒，默认值500
+         * Animation duration, in milliseconds, default value 500.
          */
         public duration:number = 500;
 
         /**
          * @private
-         * 动画到当前时间对应的值。
+         * The value corresponding to the current time from the animation.
          */
         public currentValue:number = 0;
 
         /**
          * @private
-         * 起始值
+         * Starting value.
          */
         public from:number = 0;
+
         /**
          * @private
-         * 终点值。
+         * End point value.
          */
         public to:number = 0;
 
         /**
          * @private
-         * 动画启动时刻
+         * Animation start time.
          */
         private startTime:number = 0;
+
         /**
          * @private
-         * 动画播放结束时的回调函数
+         * Callback function at the end of animation playback.
          */
         public endFunction:(animation:Animation) => void = null;
 
         /**
          * @private
-         * 动画更新时的回调函数
+         * Callback function when the animation is updated.
          */
         public updateFunction:Function;
 
         /**
          * @private
-         * 开始正向播放动画,无论何时调用都重新从零时刻开始，若设置了延迟会首先进行等待。
+         * Start playing the animation in the forward direction.
+         * Whenever it is called, it will start from the zero time again.
+         * If a delay is set, it will first wait.
          */
         public play():void {
             this.stop();
@@ -122,7 +124,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 开始播放动画
+         * Start the animation.
          */
         private start():void {
             this.isPlaying = false;
@@ -134,7 +136,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 停止播放动画
+         * Stop the animation.
          */
         public stop():void {
             this.isPlaying = false;
@@ -144,7 +146,7 @@ namespace eui.sys {
 
         /**
          * @private
-         * 计算当前值并返回动画是否结束
+         * Calculate the current value and return whether the animation ends.
          */
         private doInterval(currentTime:number):boolean {
             let runningTime = currentTime - this.startTime;
@@ -168,6 +170,5 @@ namespace eui.sys {
             }
             return true;
         }
-
     }
 }

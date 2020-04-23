@@ -27,16 +27,18 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace eui {
-
+namespace eui
+{
     /**
      * @private
      */
     let listeners = "__listeners__";
+
     /**
      * @private
      */
     let bindables = "__bindables__";
+
     /**
      * @private
      */
@@ -44,7 +46,6 @@ namespace eui {
 
     /**
      * @private
-     *
      * @param host
      * @param property
      * @returns
@@ -74,58 +75,31 @@ namespace eui {
     /**
      * The Watcher class defines utility method that you can use with bindable properties.
      * These methods let you define an event handler that is executed whenever a bindable property is updated.
-     *
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
      * @includeExample extension/eui/binding/WatcherExample.ts
-     * @language en_US
      */
-    /**
-     * Watcher 类能够监视可绑定属性的改变，您可以定义一个事件处理函数作为 Watcher 的回调方法，在每次可绑定属性的值改变时都执行此函数。
-     *
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @includeExample extension/eui/binding/WatcherExample.ts
-     * @language zh_CN
-     */
-    export class Watcher {
-
+    export class Watcher
+    {
         /**
          * Creates and starts a Watcher instance.
          * The Watcher can only watch the property of a Object which host is instance of egret.IEventDispatcher.
          * @param host The object that hosts the property or property chain to be watched.
-         * You can use the use the <code>reset()</code> method to change the value of the <code>host</code> argument
+         * You can use the use the *reset()* method to change the value of the *host* argument
          * after creating the Watcher instance.
-         * The <code>host</code> maintains a list of <code>handlers</code> to invoke when <code>prop</code> changes.
+         * The *host* maintains a list of *handlers* to invoke when *prop* changes.
          * @param chain A value specifying the property or chain to be watched.
-         * For example, to watch the property <code>host.a.b.c</code>,
-         * call the method as: <code>watch(host, ["a","b","c"], ...)</code>.
+         * For example, to watch the property *host.a.b.c*,
+         * call the method as: *watch(host, ["a","b","c"], ...)*.
          * @param handler  An event handler function called when the value of the watched property
          * (or any property in a watched chain) is modified.
-         * @param thisObject <code>this</code> object of which binding with handler
+         * @param thisObject *this* object of which binding with handler
          * @returns he ChangeWatcher instance, if at least one property name has been specified to
-         * the <code>chain</code> argument; null otherwise.
+         * the *chain* argument; null otherwise.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 创建并启动 Watcher 实例。注意：Watcher 只能监视 host 为 egret.IEventDispatcher 对象的属性改变。若属性链中某个属性所对应的实例不是 egret.IEventDispatcher，
-         * 则属性链中在它之后的属性改变将无法检测到。
-         * @param host 用于承载要监视的属性或属性链的对象。
-         * 创建Watcher实例后，您可以利用<code>reset()</code>方法更改<code>host</code>参数的值。
-         * 当<code>prop</code>改变的时候，会使得host对应的一系列<code>handlers</code>被触发。
-         * @param chain 用于指定要监视的属性链的值。例如，要监视属性 host.a.b.c，需按以下形式调用此方法：watch¬(host, ["a","b","c"], ...)。
-         * @param handler 在监视的目标属性链中任何属性的值发生改变时调用的事件处理函数。
-         * @param thisObject handler 方法绑定的this对象
-         * @returns 如果已为 chain 参数至少指定了一个属性名称，则返回 Watcher 实例；否则返回 null。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public static watch(host:any, chain:string[], handler:(value:any)=>void, thisObject:any):Watcher {
             if (DEBUG) {
@@ -147,7 +121,9 @@ namespace eui {
 
         /**
          * @private
-         * 检查属性是否可以绑定。若还未绑定，尝试添加绑定事件。若是只读或只写属性，返回false。
+         * Check if the property can be bound:
+         * * If it is not bound yet, try to add a binding event.
+         * * If the attribute is read-only or write-only, return false.
          */
         private static checkBindable(host:any, property:string):boolean {
             let list:string[] = host[bindables];
@@ -201,20 +177,12 @@ namespace eui {
         }
 
         /**
-         * Constructor.
-         * Not for public use. This method is called only from the <code>watch()</code> method.
-         * See the <code>watch()</code> method for parameter usage.
+         * Constructor. Not for public use.
+         * This method is called only from the *watch()* method.
+         * See the *watch()* method for parameter usage.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 构造函数，非公开。只能从 watch() 方法中调用此方法。有关参数用法，请参阅 watch() 方法。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor(property:string, handler:(value:any)=>void, thisObject:any, next?:Watcher) {
             this.property = property;
@@ -258,14 +226,6 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 从当前宿主中断开此 Watcher 实例及其处理函数。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public unwatch():void {
             this.reset(null);
@@ -278,24 +238,10 @@ namespace eui {
         /**
          * Retrieves the current value of the watched property or property chain, or null if the host object is null.
          * @example
-         * <pre>
          * watch(obj, ["a","b","c"], ...).getValue() === obj.a.b.c
-         * </pre>
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 检索观察的属性或属性链的当前值，当宿主对象为空时此值为空。
-         * @example
-         * <pre>
-         * watch(obj, ["a","b","c"], ...).getValue() === obj.a.b.c
-         * </pre>
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public getValue():any {
             if (this.next) {
@@ -310,15 +256,6 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 设置处理函数。
-         * @param handler 处理函数，此参数必须为非空。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public setHandler(handler:(value:any)=>void, thisObject:any):void {
             this.handler = handler;
@@ -326,7 +263,6 @@ namespace eui {
             if (this.next) {
                 this.next.setHandler(handler, thisObject);
             }
-
         }
 
         /**
@@ -335,15 +271,6 @@ namespace eui {
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 重置此 Watcher 实例使用新的宿主对象。
-         * 您可以通过该方法实现一个Watcher实例用于不同的宿主。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public reset(newHost:egret.IEventDispatcher):void {
             let oldHost = this.host;
@@ -372,15 +299,12 @@ namespace eui {
                 }
             }
 
-
             if (this.next)
                 this.next.reset(this.getHostPropertyValue());
         }
 
-
         /**
          * @private
-         *
          * @returns
          */
         private getHostPropertyValue():any {
@@ -411,5 +335,4 @@ namespace eui {
             }
         }
     }
-
 }

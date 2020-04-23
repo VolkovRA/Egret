@@ -27,13 +27,13 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace eui {
-
+namespace eui
+{
     /**
      * @private
      */
-    const enum Keys {
+    const enum Keys
+    {
         useVirtualLayout,
         useVirtualLayoutChanged,
         rendererToClassMap,
@@ -56,67 +56,41 @@ namespace eui {
      * The DataGroup class converts data items to visual elements for display.
      * While this container can hold visual elements, it is often used only
      * to hold data items as children.
-     *
      * @see eui.Group
-     * @see http://edn.egret.com/cn/article/index/id/527 Data container
-     * @see http://edn.egret.com/cn/article/index/id/528 Array collection
-     * @defaultProperty dataProvider
+     * @see http://edn.egret.com/cn/article/index/id/527 Data container.
+     * @see http://edn.egret.com/cn/article/index/id/528 Array collection.
+     * @defaultProperty DataProvider.
      * @includeExample  extension/eui/components/DataGroupExample.ts
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web,Native
-     * @language en_US
      */
-    /**
-     * DataGroup 类将数据项目转换为可视元素以进行显示。
-     * 尽管此容器可以包含可视元素，但它通常仅用于包含作为子项的数据项目。
-     *
-     * @see eui.Group
-     * @see http://edn.egret.com/cn/article/index/id/527 数据容器
-     * @see http://edn.egret.com/cn/article/index/id/528 数组集合
-     * @defaultProperty dataProvider
-     * @includeExample  extension/eui/components/DataGroupExample.ts
-     * @version Egret 2.4
-     * @version eui 1.0
-     * @platform Web,Native
-     * @language zh_CN
-     */
-    export class DataGroup extends Group {
-
+    export class DataGroup extends Group
+    {
         /**
          * Constructor.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 构造函数。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public constructor() {
             super();
             this.$DataGroup = {
-                0: true,      //useVirtualLayout
-                1: false,     //useVirtualLayoutChanged
-                2: {},        //rendererToClassMap
-                3: {},        //freeRenderers
-                4: false,     //createNewRendererFlag
-                5: false,     //itemRendererChanged
-                6: null,      //itemRenderer
-                7: null,      //itemRendererFunction
-                8: false,     //typicalItemChanged
-                9: null,      //typicalLayoutRect
-                10: false,    //cleanFreeRenderer
-                11: false,    //renderersBeingUpdated
-                12: null,     //typicalItem
-                13: null,     //itemRendererSkinName
-                14: false,    //itemRendererSkinNameChange
+                0: true,      // useVirtualLayout
+                1: false,     // useVirtualLayoutChanged
+                2: {},        // rendererToClassMap
+                3: {},        // freeRenderers
+                4: false,     // createNewRendererFlag
+                5: false,     // itemRendererChanged
+                6: null,      // itemRenderer
+                7: null,      // itemRendererFunction
+                8: false,     // typicalItemChanged
+                9: null,      // typicalLayoutRect
+                10: false,    // cleanFreeRenderer
+                11: false,    // renderersBeingUpdated
+                12: null,     // typicalItem
+                13: null,     // itemRendererSkinName
+                14: false,    // itemRendererSkinNameChange
             };
         }
 
@@ -124,7 +98,6 @@ namespace eui {
 
         /**
          * @copy eui.LayoutBase#useVirtualLayout
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -147,7 +120,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param value
          */
         $setLayout(value: LayoutBase): boolean {
@@ -176,7 +148,7 @@ namespace eui {
 
         /**
          * @private
-         * 是否使用虚拟布局标记改变
+         * Whether to use the virtual layout tag change.
          */
         private onUseVirtualLayoutChanged(event?: egret.Event): void {
             let values = this.$DataGroup;
@@ -187,8 +159,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -209,8 +179,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -220,8 +188,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.5.2
          * @version eui 1.0
          * @platform Web,Native
@@ -230,6 +196,7 @@ namespace eui {
             index = +index | 0;
             if (index < 0 || index >= this.$dataProvider.length)
                 return null;
+            
             let renderer = this.$indexToRenderer[index];
             if (!renderer) {
                 let item: any = this.$dataProvider.getItemAt(index);
@@ -243,12 +210,13 @@ namespace eui {
                     this.rendererAdded(renderer, index, item);
                 }
             }
+
             return renderer;
         }
 
         /**
          * @private
-         * 释放指定索引处的项呈示器
+         * Release the item renderer at the specified index.
          */
         private freeRendererByIndex(index: number): void {
             let renderer = this.$indexToRenderer[index];
@@ -260,7 +228,6 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param renderer
          */
         private doFreeRenderer(renderer: IItemRenderer): void {
@@ -275,21 +242,19 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
          */
         public invalidateSize(): void {
-            if (!this.$DataGroup[Keys.createNewRendererFlag]) {//虚拟布局时创建子项不需要重新验证
+            if (!this.$DataGroup[Keys.createNewRendererFlag]) { // No need to re-authenticate when creating children in virtual layout.
                 super.invalidateSize();
             }
         }
 
         /**
          * @private
-         * 为指定索引创建虚拟的项呈示器
+         * Create a virtual item renderer for the specified index.
          */
         private createVirtualRenderer(item: any): IItemRenderer {
             let renderer: IItemRenderer;
@@ -309,7 +274,7 @@ namespace eui {
 
         /**
          * @private
-         * 根据rendererClass创建一个Renderer,并添加到显示列表
+         * Create a renderer based on rendererClass and add it to the display list.
          */
         private createOneRenderer(rendererClass: any): IItemRenderer {
             let renderer = <IItemRenderer>(new rendererClass());
@@ -327,7 +292,7 @@ namespace eui {
 
         /**
          * @private
-         * 设置项呈示器的默认皮肤
+         * Set the default skin of the item renderer.
          */
         private setItemRenderSkinName(renderer: IItemRenderer, skinName: any): void {
             if (renderer && renderer instanceof Component) {
@@ -352,26 +317,12 @@ namespace eui {
 
         /**
          * The data provider for this DataGroup.
-         * It must be an ICollection, such as ArrayCollection
-         *
+         * It must be an ICollection, such as ArrayCollection.
          * @see eui.ICollection
          * @see eui.ArrayCollection
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 列表数据源，请使用实现了ICollection接口的数据类型，例如 ArrayCollection
-         *
-         * @see eui.ICollection
-         * @see eui.ArrayCollection
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get dataProvider(): ICollection {
             return this.$dataProvider;
@@ -383,12 +334,12 @@ namespace eui {
 
         /**
          * @private
-         *
          * @param value
          */
         $setDataProvider(value: ICollection): boolean {
             if (this.$dataProvider == value || (value && !value.getItemAt))
                 return false;
+            
             this.removeDataProviderListener();
             this.$dataProvider = value;
             this.$dataProviderChanged = true;
@@ -402,7 +353,7 @@ namespace eui {
 
         /**
          * @private
-         * 移除数据源监听
+         * Remove data source monitoring.
          */
         private removeDataProviderListener(): void {
             if (this.$dataProvider)
@@ -410,25 +361,12 @@ namespace eui {
         }
 
         /**
-         * Called when contents within the dataProvider changes.  We will catch certain
-         * events and update our children based on that.
-         *
-         * @param event 事件<code>eui.CollectionEvent</code>的对象。
-         *
+         * Called when contents within the dataProvider changes. 
+         * We will catch certain events and update our children based on that.
+         * @param event Object of event *eui.CollectionEvent*.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 数据源改变事件处理。
-         *
-         * @param event 事件<code>eui.CollectionEvent</code>的对象。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected onCollectionChange(event: CollectionEvent): void {
             switch (event.kind) {
@@ -468,7 +406,7 @@ namespace eui {
 
         /**
          * @private
-         * 数据源添加项目事件处理
+         * Add event processing from data source.
          */
         private itemAddedHandler(items: any[], index: number): void {
             let length = items.length;
@@ -480,7 +418,7 @@ namespace eui {
 
         /**
          * @private
-         * 数据源移除项目事件处理
+         * Data source removal project event handling.
          */
         private itemRemovedHandler(items: any[], location: number): void {
             let length = items.length;
@@ -499,24 +437,9 @@ namespace eui {
          *
          * @param item The item that was added, the value of dataProvider[index].
          * @param index The index where the dataProvider item was added.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 添加一个指定的数据到数据源。
-         *
-         * 这个方法不应该由开发者直接调用，而用于本类自动内调用。
-         *
-         * @param item 添加的数据项。
-         * @param index 被添加到的索引。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected itemAdded(item: any, index: number): void {
             if (this.$layout)
@@ -546,24 +469,9 @@ namespace eui {
          *
          * @param item The item that is being removed.
          * @param index The index of the item that is being removed.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 删除数据源中指定的项。
-         *
-         * 这个方法不应该由开发者直接调用，而用于本类自动内调用。
-         *
-         * @param item 移除的数据项。
-         * @param index 被移除的索引。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected itemRemoved(item: any, index: number): void {
             if (this.$layout)
@@ -586,7 +494,7 @@ namespace eui {
 
         /**
          * @private
-         * 更新当前所有项的索引
+         * Update the index of all current items.
          */
         private resetRenderersIndices(): void {
             let indexToRenderer = this.$indexToRenderer;
@@ -611,11 +519,11 @@ namespace eui {
 
         /**
          * @private
-         * 数据源更新或替换项目事件处理
+         * Data source update or replacement project event handling.
          */
         private itemUpdatedHandler(item: any, location: number): void {
             if (this.$DataGroup[Keys.renderersBeingUpdated]) {
-                return;//防止无限循环
+                return; // Prevent infinite loop
             }
 
             let renderer = this.$indexToRenderer[location];
@@ -625,7 +533,7 @@ namespace eui {
 
         /**
          * @private
-         * 调整指定项呈示器的索引值
+         * Adjust the index value of the specified item renderer.
          */
         private resetRendererItemIndex(index: number): void {
             let renderer = this.$indexToRenderer[index];
@@ -633,26 +541,13 @@ namespace eui {
                 renderer.itemIndex = index;
         }
 
-
         /**
          * The item renderer to use for data items.
          * The class must implement the IItemRenderer interface.
-         * If defined, the <code>itemRendererFunction</code> property
-         * takes precedence over this property.
-         *
+         * If defined, the *itemRendererFunction* property takes precedence over this property.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 用于数据项目的项呈示器。您应该直接为此属性赋值自定义类的类定义，而不是一个实例。注意：该类必须实现 IItemRenderer 接口。<br/>
-         * rendererClass获取顺序：itemRendererFunction > itemRenderer > 默认ItemRenerer。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get itemRenderer(): any {
             return this.$DataGroup[Keys.itemRenderer];
@@ -671,21 +566,12 @@ namespace eui {
         }
 
         /**
-         * The skinName property of the itemRenderer.This property will be passed to itemRenderer.skinName as default value,if you
-         * did not set it explicitly.<br>
+         * The skinName property of the itemRenderer.This property will be passed to itemRenderer.skinName as default value,
+         * if you did not set it explicitly.
          * Note: This property is invalid if the itemRenderer is not a subclass of the Component class.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 条目渲染器的可选皮肤标识符。在实例化itemRenderer时，若其内部没有设置过skinName,则将此属性的值赋值给它的skinName。
-         * 注意:若 itemRenderer 不是 Component 的子类，则此属性无效。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get itemRendererSkinName(): any {
             return this.$DataGroup[Keys.itemRendererSkinName];
@@ -703,24 +589,11 @@ namespace eui {
         }
 
         /**
-         * Function that returns an item renderer for a
-         * specific item.
-         *
-         * If defined, this property
-         * takes precedence over the <code>itemRenderer</code> property.
-         *
+         * Function that returns an item renderer for a specific item.
+         * If defined, this property takes precedence over the *itemRenderer* property.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 为某个特定数据项返回一个项呈示器类定义的函数。
-         * rendererClass获取顺序：itemRendererFunction > itemRenderer > 默认ItemRenerer。
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public get itemRendererFunction(): (item: any) => any {
             return this.$DataGroup[Keys.itemRendererFunction];
@@ -739,7 +612,7 @@ namespace eui {
 
         /**
          * @private
-         * 为特定的数据项返回项呈示器的工厂实例
+         * Factory instance that returns an item renderer for a specific data item.
          */
         private itemToRendererClass(item: any): any {
             let rendererClass: any;
@@ -760,8 +633,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -776,10 +647,7 @@ namespace eui {
             super.createChildren();
         }
 
-
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -843,8 +711,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -856,10 +722,7 @@ namespace eui {
             super.measure();
         }
 
-
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -872,7 +735,7 @@ namespace eui {
             super.updateDisplayList(unscaledWidth, unscaledHeight);
             let values = this.$DataGroup;
             if (useVirtualLayout) {
-                //检查索引 0 处的项测量大小是否发生改变，若改变就重新计算 typicalLayoutRect
+                // Check if the measurement size of the item at index 0 has changed, if it changes, recalculate typicalLayoutRect
                 let rect = values[Keys.typicalLayoutRect];
                 if (rect) {
                     let renderer = this.$indexToRenderer[0];
@@ -889,7 +752,7 @@ namespace eui {
 
         /**
          * @private
-         * 确保测量过默认条目大小。
+         * Make sure to measure the default entry size.
          */
         private ensureTypicalLayoutElement(): void {
             if (this.$DataGroup[Keys.typicalLayoutRect])
@@ -903,7 +766,7 @@ namespace eui {
 
         /**
          * @private
-         * 测量项呈示器默认尺寸
+         * Measurement item renderer default size.
          */
         private measureRendererSize(): void {
             let values = this.$DataGroup;
@@ -911,11 +774,13 @@ namespace eui {
                 this.setTypicalLayoutRect(null);
                 return;
             }
+
             let typicalRenderer = this.createVirtualRenderer(values[Keys.typicalItem]);
             if (!typicalRenderer) {
                 this.setTypicalLayoutRect(null);
                 return;
             }
+
             this.updateRenderer(typicalRenderer, 0, values[Keys.typicalItem]);
             typicalRenderer.validateNow();
             let bounds = egret.$TempRectangle;
@@ -936,7 +801,7 @@ namespace eui {
 
         /**
          * @private
-         * 设置项目默认大小
+         * Set the default size of the project.
          */
         private setTypicalLayoutRect(rect: egret.Rectangle): void {
             this.$DataGroup[Keys.typicalLayoutRect] = rect;
@@ -950,16 +815,15 @@ namespace eui {
             }
         }
 
-
         /**
          * @private
-         * 索引到项呈示器的转换数组
+         * Index-to-item renderer conversion array.
          */
         $indexToRenderer: IItemRenderer[] = [];
 
         /**
          * @private
-         * 移除所有项呈示器
+         * Remove all item renderers.
          */
         private removeAllRenderers(): void {
             let indexToRenderer = this.$indexToRenderer;
@@ -997,7 +861,7 @@ namespace eui {
 
         /**
          * @private
-         * 为数据项创建项呈示器
+         * Create item renderers for data items.
          */
         private createRenderers(): void {
             if (!this.$dataProvider)
@@ -1019,35 +883,17 @@ namespace eui {
 
         /**
          * Updates the renderer for reuse.
-         * This method first prepares the item
-         * renderer for reuse by cleaning out any stale properties
-         * as well as updating it with new properties.<p/>
+         * This method first prepares the item renderer for reuse by cleaning out any stale properties
+         * as well as updating it with new properties.
          *
-         * The last thing this method should do is set the <code>data</code> property
-         * of the item renderer.
+         * The last thing this method should do is set the *data* property of the item renderer.
          *
          * @param renderer The item renderer.
          * @param itemIndex The index of the data in the data provider.
          * @param data The data object this item renderer is representing.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 此方法首先会准备项呈示器以重用，方法是清除任何旧属性，同时使用新属性进行更新。<p/>
-         *
-         * 最后，此方法应对项呈示器设置 data 属性。
-         *
-         * @param renderer 项呈示器。
-         * @param itemIndex 数据提供程序中的数据索引。
-         * @param data 此项呈示器正在表示的数据对象。
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         public updateRenderer(renderer: IItemRenderer, itemIndex: number, data: any): IItemRenderer {
             let values = this.$DataGroup;
@@ -1062,8 +908,6 @@ namespace eui {
         }
 
         /**
-         * @inheritDoc
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
@@ -1074,7 +918,6 @@ namespace eui {
             return this.$dataProvider.length;
         }
 
-
         /**
          * Adds the itemRenderer for the specified dataProvider item to this DataGroup.
          *
@@ -1084,25 +927,9 @@ namespace eui {
          * @param renderer The renderer that was added.
          * @param index The index where the dataProvider item was added.
          * @param item The item that was added, the value of dataProvider[index].
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 项呈示器被添加.
-         *
-         * 这个方法不能直接调用，它是由该类自身自动调用的。
-         *
-         * @param renderer 添加的项呈示器
-         * @param index 项呈示器的索引
-         * @param item 项呈示器对应的数据
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected rendererAdded(renderer: IItemRenderer, index: number, item: any): void {
         }
@@ -1116,24 +943,9 @@ namespace eui {
          * @param renderer The renderer that is being removed.
          * @param index The index of the item that is being removed.
          * @param item The item that is being removed.
-         *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web,Native
-         * @language en_US
-         */
-        /**
-         * 项呈示器被移除。
-         * 这个方法不能直接调用，它是由该类自身自动调用的。
-         *
-         * @param renderer 移除的项呈示器
-         * @param index 项呈示器的索引
-         * @param item 项呈示器对应的数据
-         *
-         * @version Egret 2.4
-         * @version eui 1.0
-         * @platform Web,Native
-         * @language zh_CN
          */
         protected rendererRemoved(renderer: IItemRenderer, index: number, item: any): void {
         }
@@ -1142,5 +954,4 @@ namespace eui {
     registerProperty(DataGroup, "itemRenderer", "Class");
     registerProperty(DataGroup, "itemRendererSkinName", "Class");
     registerProperty(DataGroup, "dataProvider", "eui.ICollection", true);
-
 }
