@@ -50,7 +50,7 @@ namespace egret.localStorage.web
             return true;
         }
         catch(e){
-            egret.warn(1047, key, value);
+            egret.$warn(1047, key, value);
             return false;
         }
     }

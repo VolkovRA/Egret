@@ -122,6 +122,9 @@ namespace egret.web
         public load(url?: string, cache: boolean = true) {
             url = url || this.src;
             this.src = url;
+            if (DEBUG && !url) {
+                egret.$error(3002);
+            }
             if (this.video && this.video.src == url) {
                 return;
             }
@@ -287,7 +290,7 @@ namespace egret.web
         }
 
         private screenError(): void {
-            egret.error(3014);
+            egret.$error(3014);
         }
 
         private screenChanged = (e): void => {

@@ -43,7 +43,7 @@ namespace egret
             gl.linkProgram(shaderProgram);
 
             if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-                warn(1020);
+                $warn(1020);
             }
 
             return shaderProgram;
@@ -91,6 +91,10 @@ namespace egret
                 return;
             }
             if (webglTexture[engine_default_empty_texture]) {
+                if (DEBUG) {
+                    // The engine's default blank texture is not allowed to be deleted
+                    console.warn('deleteWebGLTexture:' + engine_default_empty_texture);
+                }
                 return;
             }
             const gl = webglTexture[glContext] as WebGLRenderingContext;
@@ -98,6 +102,9 @@ namespace egret
                 gl.deleteTexture(webglTexture);
             }
             else {
+                if (DEBUG) {
+                    console.error('deleteWebGLTexture gl = ' + gl);
+                }
             }
             /*old
             if (webglTexture && !webglTexture['engine_default_empty_texture']) {

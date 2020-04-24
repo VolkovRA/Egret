@@ -387,7 +387,7 @@ namespace egret
                             xPos += emptyWidth;
                         }
                         else {
-                            egret.warn(1046, character);
+                            egret.$warn(1046, character);
                         }
                         continue;
                     }
@@ -555,7 +555,7 @@ namespace egret
                             textureHeight = emptyHeight;
                         }
                         else {
-                            egret.warn(1046, character);
+                            egret.$warn(1046, character);
                             if (isFirstChar) {
                                 isFirstChar = false;
                             }

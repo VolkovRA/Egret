@@ -138,7 +138,7 @@ namespace egret.web
 
             sys.CanvasRenderBuffer = web.CanvasRenderBuffer;
             if (ua.indexOf("egretnative") >= 0 && renderMode != "webgl") {
-                egret.warn(1051);
+                egret.$warn(1051);
                 renderMode = "webgl";
             }
 
@@ -254,4 +254,12 @@ namespace egret.web
         resizeTimer = NaN;
         egret.updateAllScreens();
     }
+}
+
+if (DEBUG) {
+    let language = navigator.language || navigator["browserLanguage"] || "en_US";
+    language = language.replace("-", "_");
+
+    if (language in egret.$locale_strings)
+        egret.$language = language;
 }

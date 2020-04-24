@@ -59,6 +59,9 @@ namespace egret.sys
          * @private
          */
         public constructor() {
+            if (DEBUG && ticker) {
+                $error(1008, "egret.sys.SystemTicker");
+            }
             $START_TIME = Date.now();
             this.frameDeltaTime = 1000 / this.$frameRate;
             this.lastCount = this.frameInterval = Math.round(60000 / this.$frameRate);
@@ -77,7 +80,9 @@ namespace egret.sys
             if (this.playerList.indexOf(player) != -1) {
                 return;
             }
-
+            if (DEBUG) {
+                egret_stages.push(player.stage);
+            }
             this.playerList = this.playerList.concat();
             this.playerList.push(player);
         }
@@ -89,6 +94,10 @@ namespace egret.sys
         $removePlayer(player: Player): void {
             let index = this.playerList.indexOf(player);
             if (index !== -1) {
+                if (DEBUG) {
+                    let i = egret_stages.indexOf(player.stage);
+                    egret_stages.splice(i, 1);
+                }
                 this.playerList = this.playerList.concat();
                 this.playerList.splice(index, 1);
             }
@@ -487,3 +496,6 @@ module egret {
  * @private
  */
 declare let egret_stages: egret.Stage[];
+if (DEBUG) {
+    global.egret_stages = [];
+}

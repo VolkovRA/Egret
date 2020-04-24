@@ -31,12 +31,16 @@
 
 declare var global;
 declare var __global;
+
 if (typeof global == 'undefined') {
     var global: any = window;
 }
 if (typeof __global == 'undefined') {
     var __global = global;
 }
+
+declare var __define;
+__define = this && this.__define || function (o, p, g, s) { Object.defineProperty(o, p, { configurable: true, enumerable: true, get: g, set: s }) };
 
 namespace egret
 {

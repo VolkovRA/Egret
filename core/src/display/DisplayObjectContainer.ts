@@ -130,6 +130,15 @@ namespace egret
          */
         $doAddChild(child: DisplayObject, index: number, notifyListeners: boolean = true): DisplayObject {
             let self = this;
+            if (DEBUG) {
+                if (child == self) {
+                    $error(1005);
+                }
+                else if ((child instanceof egret.DisplayObjectContainer) && (<DisplayObjectContainer>child).contains(self)) {
+                    $error(1004);
+                }
+            }
+
             let host: DisplayObjectContainer = child.$parent;
             if (host == self) {
                 self.doSetChildIndex(child, index);
@@ -217,6 +226,10 @@ namespace egret
             if (index >= 0 && index < this.$children.length) {
                 return this.$children[index];
             }
+            else {
+                DEBUG && $error(1007);
+                return null;
+            }
 
             return null;
         }
@@ -273,6 +286,10 @@ namespace egret
             if (index >= 0) {
                 return this.$doRemoveChild(index);
             }
+            else {
+                DEBUG && $error(1006);
+                return null;
+            }
 
             return null;
         }
@@ -291,6 +308,10 @@ namespace egret
             index = +index | 0;
             if (index >= 0 && index < this.$children.length) {
                 return this.$doRemoveChild(index);
+            }
+            else {
+                DEBUG && $error(1007);
+                return null;
             }
 
             return null;
@@ -374,6 +395,9 @@ namespace egret
         private doSetChildIndex(child: DisplayObject, index: number): void {
             let self = this;
             let lastIndex = this.$children.indexOf(child);
+            if (lastIndex < 0) {
+                DEBUG && $error(1006);
+            }
             if (lastIndex == index) {
                 return;
             }
@@ -419,6 +443,9 @@ namespace egret
             if (index1 >= 0 && index1 < this.$children.length && index2 >= 0 && index2 < this.$children.length) {
                 this.doSwapChildrenAt(index1, index2);
             }
+            else {
+                DEBUG && $error(1007);
+            }
         }
 
         /**
@@ -434,7 +461,7 @@ namespace egret
             let index1 = this.$children.indexOf(child1);
             let index2 = this.$children.indexOf(child2);
             if (index1 == -1 || index2 == -1) {
-                
+                DEBUG && $error(1006);
             }
             else {
                 this.doSwapChildrenAt(index1, index2);

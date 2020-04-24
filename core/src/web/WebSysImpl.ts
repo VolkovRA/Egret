@@ -142,7 +142,7 @@ namespace egret.web
             }
         }
         if (!gl) {
-            error(1021);
+            $error(1021);
         }
         return gl as WebGLRenderingContext;
     }

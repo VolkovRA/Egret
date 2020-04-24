@@ -44,6 +44,9 @@ namespace egret
      * @platform Web,Native
      */
     export function startTick(callBack:(timeStamp:number)=>boolean, thisObject:any):void {
+        if (DEBUG && !callBack) {
+            $error(1003, "callBack");
+        }
         ticker.$startTick(callBack, thisObject);
     }
 }

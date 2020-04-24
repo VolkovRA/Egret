@@ -244,6 +244,9 @@ namespace egret.web
          * @private
          */
         private onTimeout(): void {
+            if (DEBUG) {
+                egret.$warn(1052, this._url);
+            }
             this.dispatchEventWith(IOErrorEvent.IO_ERROR);
         }
 
@@ -258,6 +261,9 @@ namespace egret.web
                 let self = this;
                 window.setTimeout(function (): void {
                     if (ioError) {//Request error
+                        if (DEBUG && !self.hasEventListener(IOErrorEvent.IO_ERROR)) {
+                            $error(1011, url);
+                        }
                         self.dispatchEventWith(IOErrorEvent.IO_ERROR);
                     }
                     else {
@@ -287,6 +293,9 @@ namespace egret.web
             let ioError = (xhr.status >= 400);
             window.setTimeout(function (): void {
                 if (ioError) {//Request error
+                    if (DEBUG && !self.hasEventListener(IOErrorEvent.IO_ERROR)) {
+                        $error(1011, url);
+                    }
                     self.dispatchEventWith(IOErrorEvent.IO_ERROR);
                 }
                 else {
@@ -302,6 +311,9 @@ namespace egret.web
             let url = this._url;
             let self = this;
             window.setTimeout(function (): void {
+                if (DEBUG && !self.hasEventListener(IOErrorEvent.IO_ERROR)) {
+                    $error(1011, url);
+                }
                 self.dispatchEventWith(IOErrorEvent.IO_ERROR);
             }, 0);
         }

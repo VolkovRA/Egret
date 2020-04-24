@@ -102,7 +102,7 @@ namespace egret
 
                     let fontEnd = htmltext.indexOf(">", starIdx);
                     if (fontEnd == -1) {
-                        egret.error(1038);
+                        egret.$error(1038);
                         fontEnd = starIdx;
                     }
                     else if (htmltext.charAt(starIdx + 1) == "\/") { // Shut down.

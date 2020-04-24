@@ -111,6 +111,9 @@ namespace egret.web
                     request.addEventListener(egret.IOErrorEvent.IO_ERROR, this.onBlobError, this);
                     request.responseType = "blob";
                 }
+                if (DEBUG) {
+                    this.currentURL = url;
+                }
                 request.open(url);
                 request.send();
             }
@@ -192,6 +195,9 @@ namespace egret.web
         private dispatchIOError(url:string):void {
             let self = this;
             window.setTimeout(function ():void {
+                if (DEBUG && !self.hasEventListener(IOErrorEvent.IO_ERROR)) {
+                    $error(1011, url);
+                }
                 self.dispatchEventWith(IOErrorEvent.IO_ERROR);
             }, 0);
         }
@@ -207,7 +213,7 @@ namespace egret.web
                     winURL.revokeObjectURL(image.src);
                 }
                 catch(e) {
-                    egret.warn(1037);
+                    egret.$warn(1037);
                 }
             }
             image.onerror = null;

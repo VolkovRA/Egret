@@ -104,7 +104,7 @@ namespace egret.web
 
         $play():void {
             if (this.isStopped) {
-                egret.error(1036);
+                egret.$error(1036);
                 return;
             }
 
@@ -181,7 +181,7 @@ namespace egret.web
          */
         public set volume(value:number) {
             if (this.isStopped) {
-                egret.error(1036);
+                egret.$error(1036);
                 return;
             }
 

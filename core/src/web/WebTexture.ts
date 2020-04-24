@@ -111,7 +111,7 @@ namespace egret.web
             return result;
         }
         catch (e) {
-            egret.error(1033);
+            egret.$error(1033);
         }
 
         return null;
@@ -137,7 +137,7 @@ namespace egret.web
     }
 
     function getPixel32(x: number, y: number): number[] {
-        egret.warn(1041, "getPixel32", "getPixels");
+        egret.$warn(1041, "getPixel32", "getPixels");
         return this.getPixels(x, y);
     }
 
@@ -163,7 +163,7 @@ namespace egret.web
             return <number[]><any>result;
         }
         catch (e) {
-            egret.error(1039);
+            egret.$error(1039);
         }
     }
 

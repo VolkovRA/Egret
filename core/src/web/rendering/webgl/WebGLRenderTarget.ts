@@ -71,9 +71,15 @@ namespace egret.web
             width = width || 1;
             height = height || 1;
             if (width < 1) {
+                if (DEBUG) {
+                    egret.warn('WebGLRenderTarget _resize width = ' + width);
+                }
                 width = 1;
             }
             if (height < 1) {
+                if (DEBUG) {
+                    egret.warn('WebGLRenderTarget _resize height = ' + height);
+                }
                 height = 1;
             }
 

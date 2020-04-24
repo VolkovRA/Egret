@@ -51,6 +51,9 @@ namespace egret.sys
          */
         public constructor(buffer: RenderBuffer, stage: Stage, entryClassName: string) {
             super();
+            if (DEBUG && !buffer) {
+                $error(1003, "buffer");
+            }
 
             this.entryClassName = entryClassName;
             this.stage = stage;
@@ -136,6 +139,12 @@ namespace egret.sys
                 if (rootContainer instanceof egret.DisplayObject) {
                     this.stage.addChild(rootContainer);
                 }
+                else {
+                    DEBUG && $error(1002, this.entryClassName);
+                }
+            }
+            else {
+                DEBUG && $error(1001, this.entryClassName);
             }
         }
 
