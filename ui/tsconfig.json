@@ -4,7 +4,6 @@
         "outDir": "bin",
         "outFile": "bin/egret-tween.js",
         "newLine": "LF",
-        "strict": true,
         "sourceMap": true,
         "composite": true,
         "declaration": true,
@@ -19,4 +18,7 @@
     "references": [
         { "path": "../core" }
     ],
+    "exclude": [
+        "bin"
+    ]
 }
