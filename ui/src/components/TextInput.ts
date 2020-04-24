@@ -1,3 +1,5 @@
+/// <reference path="Component.ts" />
+
 namespace eui.sys
 {
     /**

@@ -27,6 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="supportClasses/LinearLayoutBase.ts" />
+
 namespace eui
 {
     let UIComponentClass = "eui.UIComponent";

@@ -27,6 +27,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="supportClasses/LayoutBase.ts" />
+
 namespace eui
 {
     let UIComponentClass = "eui.UIComponent";
