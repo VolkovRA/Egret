@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "outDir": "bin",
-        "outFile": "bin/egret-tween.js",
+        "outFile": "bin/egret-ui.js",
         "newLine": "LF",
         "sourceMap": true,
         "composite": true,
